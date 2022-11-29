@@ -1,0 +1,41 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!21 &2100000
+Material:
+  serializedVersion: 6
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: BrightStar
+  m_Shader: {fileID: -6465566751694194690, guid: ad83e384e1153024fafe2dd507b84be6, type: 3}
+  m_ShaderKeywords: 
+  m_LightmapFlags: 2
+  m_EnableInstancingVariants: 0
+  m_DoubleSidedGI: 0
+  m_CustomRenderQueue: -1
+  stringTagMap: {}
+  disabledShaderPasses: []
+  m_SavedProperties:
+    serializedVersion: 3
+    m_TexEnvs:
+    - unity_Lightmaps:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - unity_LightmapsInd:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - unity_ShadowMasks:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    m_Floats:
+    - Vector1_04906e56613041199c56abc8aba0c1fe: 11.28
+    - Vector1_2a46ecce53ad4cc39d721d42d759743f: 2
+    - Vector1_5146f50d01cb4ec3a40fc1f07a882357: 6.92
+    m_Colors:
+    - Color_f2fea14b2b224458b5e9d5744cc1b42b: {r: 1.2973534, g: 21.622555, b: 27.53272, a: 0}
+    - Color_fc43e42575c0451eacd7d9dd63eb2fe9: {r: 0.110918716, g: 2.1961904, b: 4.237095, a: 0}
+  m_BuildTextureStacks: []

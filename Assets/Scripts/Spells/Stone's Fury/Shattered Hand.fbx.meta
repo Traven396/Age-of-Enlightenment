@@ -1,0 +1,186 @@
+fileFormatVersion: 2
+guid: b35496bc226bb7f4c8011e06736ea45d
+ModelImporter:
+  serializedVersion: 20200
+  internalIDToNameTable:
+  - first:
+      74: 8294345191461796814
+    second: Fragment 8|11538_Hand_v2Action
+  - first:
+      74: -988355617543807077
+    second: Fragment 8|11538_Hand_v2Action.001
+  - first:
+      74: 5247924328739458577
+    second: Fragment 1|11538_Hand_v2Action
+  - first:
+      74: -5143849326549277001
+    second: Fragment 1|11538_Hand_v2Action.001
+  - first:
+      74: -8919355469422077742
+    second: Fragment 3|11538_Hand_v2Action
+  - first:
+      74: 4382505851821231016
+    second: Fragment 3|11538_Hand_v2Action.001
+  - first:
+      74: -3296708901468271086
+    second: Fragment 2|11538_Hand_v2Action
+  - first:
+      74: 6897739041692550756
+    second: Fragment 2|11538_Hand_v2Action.001
+  - first:
+      74: -882145008792993628
+    second: Fragment 7|11538_Hand_v2Action
+  - first:
+      74: 1602668050033316042
+    second: Fragment 7|11538_Hand_v2Action.001
+  - first:
+      74: 4725740192086073269
+    second: Fragment 6|11538_Hand_v2Action
+  - first:
+      74: -5690422609502876686
+    second: Fragment 6|11538_Hand_v2Action.001
+  - first:
+      74: 5803682195251238628
+    second: Fragment 5|11538_Hand_v2Action
+  - first:
+      74: -8441526089763841345
+    second: Fragment 5|11538_Hand_v2Action.001
+  - first:
+      74: 7574033549545936626
+    second: Fragment 4|11538_Hand_v2Action
+  - first:
+      74: -3039397920912178380
+    second: Fragment 4|11538_Hand_v2Action.001
+  - first:
+      74: 4425457814688686064
+    second: Fragment|11538_Hand_v2Action
+  - first:
+      74: 754841705549018045
+    second: Fragment|11538_Hand_v2Action.001
+  - first:
+      74: 7053091025741986555
+    second: Fragment 9|11538_Hand_v2Action
+  - first:
+      74: 7241556950277901132
+    second: Fragment 9|11538_Hand_v2Action.001
+  - first:
+      74: 2692465505775534321
+    second: Fragment 9.001|11538_Hand_v2Action
+  - first:
+      74: 4015200581858742366
+    second: Fragment 9.001|11538_Hand_v2Action.001
+  - first:
+      74: 7362004403165430974
+    second: Fragment 9.002|11538_Hand_v2Action
+  - first:
+      74: -7633859019186680432
+    second: Fragment 9.002|11538_Hand_v2Action.001
+  - first:
+      74: -9067136327081198839
+    second: Fragment 11|11538_Hand_v2Action
+  - first:
+      74: -1953823593293128909
+    second: Fragment 11|11538_Hand_v2Action.001
+  - first:
+      74: -8216275399571542496
+    second: Fragment 10|11538_Hand_v2Action
+  - first:
+      74: 2280121337805982483
+    second: Fragment 10|11538_Hand_v2Action.001
+  externalObjects: {}
+  materials:
+    materialImportMode: 2
+    materialName: 0
+    materialSearch: 1
+    materialLocation: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    rigImportErrors: 
+    rigImportWarnings: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    importAnimatedCustomProperties: 0
+    importConstraints: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    extraUserProperties: []
+    clipAnimations: []
+    isReadable: 0
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 0.1
+    meshCompression: 0
+    addColliders: 0
+    useSRGBMaterialColor: 1
+    sortHierarchyByName: 1
+    importVisibility: 1
+    importBlendShapes: 1
+    importCameras: 1
+    importLights: 1
+    fileIdsGeneration: 2
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    keepQuads: 0
+    weldVertices: 1
+    bakeAxisConversion: 0
+    preserveHierarchy: 0
+    skinWeightsMode: 0
+    maxBonesPerVertex: 4
+    minBoneWeight: 0.001
+    meshOptimizationFlags: -1
+    indexFormat: 0
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVMarginMethod: 1
+    secondaryUVMinLightmapResolution: 40
+    secondaryUVMinObjectScale: 1
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+    normalCalculationMode: 4
+    legacyComputeAllNormalsFromSmoothingGroupsWhenMeshHasBlendShapes: 0
+    blendShapeNormalImportMode: 1
+    normalSmoothingSource: 0
+  referencedClips: []
+  importAnimation: 0
+  humanDescription:
+    serializedVersion: 3
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    globalScale: 0.001
+    rootMotionBoneName: 
+    hasTranslationDoF: 0
+    hasExtraRoot: 1
+    skeletonHasParents: 1
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  autoGenerateAvatarMappingIfUnspecified: 1
+  animationType: 0
+  humanoidOversampling: 1
+  avatarSetup: 0
+  addHumanoidExtraRootOnlyWhenUsingAvatar: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
