@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 8079358317217706807}
   - component: {fileID: 4986641805265291665}
   - component: {fileID: 3941421876438792274}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Visuals
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -120,7 +120,7 @@ GameObject:
   - component: {fileID: 1262282425024108339}
   - component: {fileID: 7694499189721227449}
   - component: {fileID: -4247769665422312080}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Blade Projectile
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -171,8 +171,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hitEffects: {fileID: 0}
+  trails: []
   rotateTowardsMotion: 1
   speedMultiplier: 500
-  gravityAffected: 1
   damageType: 3
   lifeTime: 4
+  Explosive: 0
+  explosionRadius: 0

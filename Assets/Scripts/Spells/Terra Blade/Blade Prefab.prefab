@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7761161507329893632}
   - component: {fileID: 9102230112832822972}
-  m_Layer: 6
+  m_Layer: 3
   m_Name: Audio
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -140,7 +140,7 @@ GameObject:
   - component: {fileID: 8079358317217706807}
   - component: {fileID: 4986641805265291665}
   - component: {fileID: 3941421876438792274}
-  m_Layer: 6
+  m_Layer: 3
   m_Name: Visuals
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -247,7 +247,7 @@ GameObject:
   - component: {fileID: 1262282425024108339}
   - component: {fileID: 7694499189721227449}
   - component: {fileID: 4507066940056318418}
-  m_Layer: 6
+  m_Layer: 3
   m_Name: Blade Prefab
   m_TagString: Untagged
   m_Icon: {fileID: 0}

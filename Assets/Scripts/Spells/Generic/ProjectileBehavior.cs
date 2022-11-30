@@ -38,6 +38,7 @@ public class ProjectileBehavior : MonoBehaviour
     }
     private void OnCollisionEnter(Collision collision)
     {
+        gameObject.SetActive(false);
         if (hitEffects)
             Instantiate(hitEffects, collision.GetContact(0).point, Quaternion.identity);
 
