@@ -12,7 +12,7 @@ public class ThrowGesture : MonoBehaviour, IMovement
         if (GestureOverride)
             return true;
         
-        if (_gestureManager.angX > 145 && _gestureManager.dotProdX < -requiredSpeed)
+        if (_gestureManager.dotProdX < -requiredSpeed)
         {
             return true;
         }
