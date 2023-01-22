@@ -90,6 +90,7 @@ public class SpellManager : MonoBehaviour
         {
             if (_spawnedLeftSpell)
             {
+                _inputManager.ClearControlsLeft(_spawnedLeftBlueprint);
                 Destroy(_spawnedLeftSpell);
                 _spawnedLeftBlueprint = null;
             }
@@ -98,6 +99,7 @@ public class SpellManager : MonoBehaviour
         {
             if (_spawnedRightSpell)
             {
+                _inputManager.ClearControlsRight(_spawnedRightBlueprint);
                 Destroy(_spawnedRightSpell);
                 _spawnedRightBlueprint = null;
             }

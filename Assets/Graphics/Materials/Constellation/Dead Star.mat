@@ -2,14 +2,15 @@
 %TAG !u! tag:unity3d.com,2011:
 --- !u!21 &2100000
 Material:
-  serializedVersion: 6
+  serializedVersion: 8
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: Dead Star
   m_Shader: {fileID: -6465566751694194690, guid: ad83e384e1153024fafe2dd507b84be6, type: 3}
-  m_ShaderKeywords: 
+  m_ValidKeywords: []
+  m_InvalidKeywords: []
   m_LightmapFlags: 2
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
@@ -31,11 +32,27 @@ Material:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    m_Ints: []
     m_Floats:
     - Vector1_04906e56613041199c56abc8aba0c1fe: 11.28
     - Vector1_2a46ecce53ad4cc39d721d42d759743f: 1
     - Vector1_5146f50d01cb4ec3a40fc1f07a882357: 6.74
+    - _QueueControl: 0
+    - _QueueOffset: 0
     m_Colors:
     - Color_f2fea14b2b224458b5e9d5744cc1b42b: {r: 0, g: 0, b: 0.0006063915, a: 0}
     - Color_fc43e42575c0451eacd7d9dd63eb2fe9: {r: 0.16386834, g: 0.62816197, b: 1.3928808, a: 0}
   m_BuildTextureStacks: []
+--- !u!114 &7665045426392634365
+MonoBehaviour:
+  m_ObjectHideFlags: 11
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0353a89b1f911e48b9e16bdc9f2e058, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  version: 5

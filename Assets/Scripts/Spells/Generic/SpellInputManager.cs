@@ -56,6 +56,30 @@ public class SpellInputManager : MonoBehaviour
         currentRightSpell = spell;
     }
 
+    public void ClearControlsLeft(SpellBlueprint spell)
+    {
+        leftTrigger.action.started -= ctx => spell.TriggerPress();
+        leftTrigger.action.canceled -= ctx => spell.TriggerRelease();
+
+        leftGrip.action.started -= ctx => spell.GripPress();
+        leftGrip.action.canceled -= ctx => spell.GripRelease();
+
+        currentLeftSpell = null;
+    }
+
+    public void ClearControlsRight(SpellBlueprint spell)
+    {
+        rightTrigger.action.started -= ctx => spell.TriggerPress();
+        leftTrigger.action.canceled -= ctx => spell.TriggerRelease();
+
+        rightGrip.action.started -= ctx => spell.GripPress();
+        rightGrip.action.canceled -= ctx => spell.GripRelease();
+
+        currentRightSpell = null;
+
+    }
+
+
 
     private void Update()
     {

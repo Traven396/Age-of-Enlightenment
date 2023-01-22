@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public abstract class SpellBlueprint : MonoBehaviour
 {
@@ -27,6 +28,8 @@ public abstract class SpellBlueprint : MonoBehaviour
     [HideInInspector] public float gripPressedValue;
 
     #region Input Events
+
+    public virtual void TriggerTest(InputAction.CallbackContext obj) { }
     public virtual void TriggerPress()
     {
         triggerPressed = true;
