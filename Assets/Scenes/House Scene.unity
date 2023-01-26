@@ -13682,34 +13682,6 @@ PrefabInstance:
       propertyPath: _spellManager
       value: 
       objectReference: {fileID: 6257067206515754980}
-    - target: {fileID: 2039792266381594586, guid: 65a9e9e90e08f2d408e57799b831e8ea, type: 3}
-      propertyPath: spellList.Array.size
-      value: 9
-      objectReference: {fileID: 0}
-    - target: {fileID: 2039792266381594586, guid: 65a9e9e90e08f2d408e57799b831e8ea, type: 3}
-      propertyPath: spellList.Array.data[8].spellIcon
-      value: 
-      objectReference: {fileID: 21300000, guid: 04dd4fcda4762f549a5c78ffde8a8a0a, type: 3}
-    - target: {fileID: 2039792266381594586, guid: 65a9e9e90e08f2d408e57799b831e8ea, type: 3}
-      propertyPath: spellList.Array.data[8].spellName
-      value: Shield
-      objectReference: {fileID: 0}
-    - target: {fileID: 2039792266381594586, guid: 65a9e9e90e08f2d408e57799b831e8ea, type: 3}
-      propertyPath: spellList.Array.data[8].spellDescription
-      value: Protect yo self fool
-      objectReference: {fileID: 0}
-    - target: {fileID: 2039792266381594586, guid: 65a9e9e90e08f2d408e57799b831e8ea, type: 3}
-      propertyPath: spellList.Array.data[2].spellCouple.spellCircle
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 2039792266381594586, guid: 65a9e9e90e08f2d408e57799b831e8ea, type: 3}
-      propertyPath: spellList.Array.data[8].spellCouple.spellCircle
-      value: 
-      objectReference: {fileID: 776886629064782777, guid: 8c527fa7e926332449296b3ae3380429, type: 3}
-    - target: {fileID: 2039792266381594586, guid: 65a9e9e90e08f2d408e57799b831e8ea, type: 3}
-      propertyPath: spellList.Array.data[8].spellCouple.spellMechanics
-      value: 
-      objectReference: {fileID: 6834804205108281816, guid: 95ed91ef08526f54ab91cab38731bb5f, type: 3}
     - target: {fileID: 2234728145318906582, guid: 65a9e9e90e08f2d408e57799b831e8ea, type: 3}
       propertyPath: m_RootOrder
       value: 1
