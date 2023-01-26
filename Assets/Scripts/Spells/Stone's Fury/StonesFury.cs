@@ -5,55 +5,111 @@ using UnityEngine;
 public class StonesFury : SpellBlueprint
 {
     private ObjectSpawn _objectSpawn;
-    private TargettingIndicator _targettingIndicator;
+    private PositionTargetIndicator _positionTarget;
     private IMovement _requiredGesture;
 
     [SerializeField] private float distance;
 
-
+    private GameObject spellCircle;
 
     private bool performedThisPress = false;
-    RaycastHit hit = new RaycastHit();
+    RaycastHit hit = new();
 
     void Start()
     {
         _objectSpawn = GetComponent<ObjectSpawn>();
-        _targettingIndicator = GetComponent<TargettingIndicator>();
+        _positionTarget = GetComponent<PositionTargetIndicator>();
         _requiredGesture = GetComponent<IMovement>();
+
+
+        spellCircle = circleHolder.transform.GetChild(0).gameObject;
+    }
+
+    public override void GripPress()
+    {
+        base.GripPress();
+        if(triggerPressed)
+            iTween.ScaleTo(spellCircle, Vector3.one*3, 1f);
+    }
+
+    public override void GripRelease()
+    {
+        base.GripRelease();
+        iTween.ScaleTo(spellCircle, Vector3.one, 1f);
     }
 
     public override void TriggerHold()
     {
+        //A raycast from the hand, first step of targetting
+        hit = _targetManager.RaycastFromHand(whichHand, distance);
+
+        //Check if the grip is pressed, if so continue on to the summoning part
         if (gripPressed)
         {
+            //If the hand has not already been summoned, and the targetted surface is the top of something
             if (!performedThisPress && hit.normal == Vector3.up)
             {
-                
+                //Wait until the player pulls their hand up to summon it
                 if (_requiredGesture.GesturePerformed(_gestureManager, out Vector3 direction))
                 {
-                    _objectSpawn.Cast(_targettingIndicator.GetCurrentTarget());
+                    _objectSpawn.Cast(spellCircle.transform);
                     performedThisPress = true;
-                } 
+                    //iTween.MoveTo(spellCircle, circleHolder.transform.position, Time.deltaTime * 80);
+                    //iTween.RotateTo(spellCircle, circleHolder.transform.rotation.eulerAngles, Time.deltaTime * 80);
+                }
             }
             return;
         }
-        
-        hit = _targetManager.RaycastFromHand(whichHand, distance);
-        
-        if (hit.normal == Vector3.up)
+
+        //If the hand is not already summoned, constantly move the targetting indicator
+        if (!performedThisPress)
         {
-            _targettingIndicator.Cast(hit.point, false);
+            if (hit.normal == Vector3.up)
+            {
+                if (spellCircle.transform.parent != null)
+                    spellCircle.transform.parent = null;
+                iTween.MoveUpdate(spellCircle, _positionTarget.MoveIndicator(hit.point).position + new Vector3(0, 0.05f, 0), .5f);
+                iTween.RotateUpdate(spellCircle, Vector3.zero, .5f);
+            }
+            else
+            {
+                spellCircle.transform.parent = circleHolder.transform;
+
+                //spellCircle.transform.position = circleHolder.transform.position;
+
+                spellCircle.transform.rotation = circleHolder.transform.rotation;
+            }
         }
-        else
-        {
-            _targettingIndicator.Cast(Vector3.zero, true);
-        }
+
+        
+
     }
 
     public override void TriggerRelease()
     {
         base.TriggerRelease();
-        _targettingIndicator.Cast(Vector3.zero, true);
+
+        spellCircle.transform.parent = circleHolder.transform;
+
+        iTween.ScaleTo(spellCircle, Vector3.one, .6f);
+
+        spellCircle.transform.rotation = circleHolder.transform.rotation;
+
         performedThisPress = false;
+    }
+
+    public override void SpellUpdate()
+    {
+        base.SpellUpdate();
+        if (spellCircle)
+        {
+            if (!triggerPressed)
+            {
+                if (Vector3.Distance(spellCircle.transform.position, circleHolder.transform.position) > .05f)
+                {
+                    iTween.MoveUpdate(spellCircle, circleHolder.transform.position, .2f);
+                }
+            } 
+        }
     }
 }

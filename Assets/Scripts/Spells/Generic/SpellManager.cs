@@ -12,6 +12,7 @@ public class SpellManager : MonoBehaviour
     private TargetManager _targetManager;
     private SpellParameterSupplier _parameterSupplier;
     private SpellInputManager _inputManager;
+    private SpellVisualsManager _visualsManager;
 
     //All left hand stuff
     [SerializeField] private GameObject leftSpell;
@@ -24,12 +25,12 @@ public class SpellManager : MonoBehaviour
     private SpellBlueprint _spawnedRightBlueprint;
 
 
-    private UnityEngine.XR.InputDevice _rightController;
     private void Start()
     {
         _targetManager = GetComponent<TargetManager>();
         _parameterSupplier = GetComponent<SpellParameterSupplier>();
         _inputManager = GetComponent<SpellInputManager>();
+        _visualsManager = GetComponent<SpellVisualsManager>();
 
         _parameterSupplier.SetupTargetManger(_targetManager);
 
@@ -37,24 +38,20 @@ public class SpellManager : MonoBehaviour
         SpawnSpell(LeftRight.Right);
     }
 
-    private void Update()
-    {
-
-        
-        
-    }
-    public void ChangeRightSpell(GameObject spellToBe)
+    public void ChangeRightSpell(SpellGameObjectCouple spellToBe)
     {
         DespawnSpell(LeftRight.Right);
-        rightSpell = spellToBe;
+        rightSpell = spellToBe.spellMechanics;
         SpawnSpell(LeftRight.Right);
+        _visualsManager.ChangeRightCircle(spellToBe.spellCircle);
     }
 
-    public void ChangeLeftSpell(GameObject spellToBe)
+    public void ChangeLeftSpell(SpellGameObjectCouple spellToBe)
     {
         DespawnSpell(LeftRight.Left);
-        leftSpell = spellToBe;
+        leftSpell = spellToBe.spellMechanics;
         SpawnSpell(LeftRight.Left);
+        _visualsManager.ChangeLeftCircle(spellToBe.spellCircle);
     }
 
     private void SpawnSpell(LeftRight side)
@@ -91,7 +88,9 @@ public class SpellManager : MonoBehaviour
             if (_spawnedLeftSpell)
             {
                 _inputManager.ClearControlsLeft(_spawnedLeftBlueprint);
+
                 Destroy(_spawnedLeftSpell);
+
                 _spawnedLeftBlueprint = null;
             }
         }
@@ -100,7 +99,9 @@ public class SpellManager : MonoBehaviour
             if (_spawnedRightSpell)
             {
                 _inputManager.ClearControlsRight(_spawnedRightBlueprint);
+
                 Destroy(_spawnedRightSpell);
+
                 _spawnedRightBlueprint = null;
             }
         }

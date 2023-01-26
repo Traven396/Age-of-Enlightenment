@@ -9,11 +9,18 @@ public class SpellParameterSupplier : MonoBehaviour
     public Transform leftPalm;
     public Transform leftBackOfHand;
     public Transform leftHand;
+    public GameObject leftCircleHolder;
+
+    [Space(10)]
     public GestureManager leftGesture;
+
     [Space(10)]
     public Transform rightPalm;
     public Transform rightBackOfHand;
     public Transform rightHand;
+    public GameObject rightCircleHolder;
+
+    [Space(10)]
     public GestureManager rightGesture;
 
     public void SetParametersLeft(SpellBlueprint spell)
@@ -21,6 +28,7 @@ public class SpellParameterSupplier : MonoBehaviour
         spell._palmLocation = leftPalm;
         spell._backOfHandLocation = leftBackOfHand;
         spell._handLocation = leftHand;
+        spell.circleHolder = leftCircleHolder;
         spell._gestureManager = leftGesture;
         spell.playerRb = playerRb;
     }
@@ -29,6 +37,7 @@ public class SpellParameterSupplier : MonoBehaviour
         spell._palmLocation = rightPalm;
         spell._backOfHandLocation = rightBackOfHand;
         spell._handLocation = rightHand;
+        spell.circleHolder = rightCircleHolder;
         spell._gestureManager = rightGesture;
         spell.playerRb = playerRb;
     }

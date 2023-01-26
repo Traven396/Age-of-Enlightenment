@@ -92,6 +92,9 @@ public class SpellInputManager : MonoBehaviour
             //Button pressed values
             currentLeftSpell.gripPressedValue = leftGrip.action.ReadValue<float>();
             currentLeftSpell.triggerPressedValue = leftTrigger.action.ReadValue<float>();
+
+            //Spell update
+            currentLeftSpell.SpellUpdate();
         }
         if (currentRightSpell)
         {
@@ -102,6 +105,9 @@ public class SpellInputManager : MonoBehaviour
             //Button pressed values
             currentRightSpell.gripPressedValue = rightGrip.action.ReadValue<float>();
             currentRightSpell.triggerPressedValue = rightTrigger.action.ReadValue<float>();
+
+            //Spell update
+            currentRightSpell.SpellUpdate();
         }
     }
 }

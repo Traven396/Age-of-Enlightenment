@@ -5,6 +5,7 @@ using UnityEngine;
 public class SummonedObjectBehavior : MonoBehaviour
 {
     [SerializeField] private float lifeExpectancy = 5;
+    [SerializeField] private float postMortemTime = 2;
     [SerializeField] private AnimationClip destroyAnimation;
 
     private Animation selfAnimation;
@@ -16,12 +17,10 @@ public class SummonedObjectBehavior : MonoBehaviour
     public void DeathThroes()
     {
         Invoke(nameof(PlayDeathAnimation), lifeExpectancy);
-        Debug.Log("I SHOT YOU, YOU ALL SAW IT");
-        Destroy(this.gameObject, lifeExpectancy + destroyAnimation.length);
+        Destroy(this.gameObject, lifeExpectancy + destroyAnimation.length + postMortemTime);
     }
     private void PlayDeathAnimation()
     {
-        Debug.Log("Tis but a flesh wound");
         selfAnimation.clip = destroyAnimation;
         selfAnimation.Play();
     }

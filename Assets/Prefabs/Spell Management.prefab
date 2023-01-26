@@ -12,6 +12,8 @@ GameObject:
   - component: {fileID: 2546794762288433276}
   - component: {fileID: 2546794762288433274}
   - component: {fileID: 435378931629056528}
+  - component: {fileID: 35419538201059109}
+  - component: {fileID: 5564505102573603787}
   m_Layer: 0
   m_Name: Spell Management
   m_TagString: Untagged
@@ -29,6 +31,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -86,3 +89,34 @@ MonoBehaviour:
   rightTrigger: {fileID: 83097790271614945, guid: c348712bda248c246b8c49b3db54643f, type: 3}
   rightGrip: {fileID: 187161793506945269, guid: c348712bda248c246b8c49b3db54643f, type: 3}
   rightAButton: {fileID: 0}
+--- !u!114 &35419538201059109
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2546794762288433279}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cb3d207cc26f880469464fbb45c24d97, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ignoreLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  leftHandPosition: {fileID: 0}
+  rightHandPosition: {fileID: 0}
+--- !u!114 &5564505102573603787
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2546794762288433279}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 43b6b0251f8673f4f81777fc6d039d68, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  leftCircleHolder: {fileID: 0}
+  rightCircleHolder: {fileID: 0}

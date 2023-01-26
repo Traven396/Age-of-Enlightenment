@@ -12,6 +12,7 @@ public abstract class SpellBlueprint : MonoBehaviour
 
     //Physical world parameters
     [HideInInspector] public Rigidbody playerRb;
+    [HideInInspector] public GameObject circleHolder;
 
     //Location parameters
     [HideInInspector] public Transform _palmLocation;
@@ -29,7 +30,6 @@ public abstract class SpellBlueprint : MonoBehaviour
 
     #region Input Events
 
-    public virtual void TriggerTest(InputAction.CallbackContext obj) { }
     public virtual void TriggerPress()
     {
         triggerPressed = true;

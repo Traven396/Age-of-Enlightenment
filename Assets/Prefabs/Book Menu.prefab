@@ -1,5 +1,139 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &443276771807523583
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8685764594601103760}
+  - component: {fileID: 2298041281123189335}
+  - component: {fileID: 607383036412758699}
+  - component: {fileID: 8277648765760447235}
+  m_Layer: 0
+  m_Name: Write Button
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &8685764594601103760
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 443276771807523583}
+  m_LocalRotation: {x: -0, y: -0, z: -0.70710605, w: 0.70710754}
+  m_LocalPosition: {x: 0, y: 0, z: 0.00000012396264}
+  m_LocalScale: {x: 0.19333333, y: 0.19333334, z: 0.19333334}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 1227824863751419692}
+  m_Father: {fileID: 1779868114767232066}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: -90}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 13.1, y: 4.8}
+  m_SizeDelta: {x: 50, y: 50}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!222 &2298041281123189335
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 443276771807523583}
+  m_CullTransparentMesh: 1
+--- !u!114 &607383036412758699
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 443276771807523583}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 0.6289308, b: 0.92603695, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 21300000, guid: e78ce04c9b4bc8745a1011576b08a3b7, type: 3}
+  m_Type: 0
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
+--- !u!114 &8277648765760447235
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 443276771807523583}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Navigation:
+    m_Mode: 3
+    m_WrapAround: 0
+    m_SelectOnUp: {fileID: 0}
+    m_SelectOnDown: {fileID: 0}
+    m_SelectOnLeft: {fileID: 0}
+    m_SelectOnRight: {fileID: 0}
+  m_Transition: 1
+  m_Colors:
+    m_NormalColor: {r: 0.7264151, g: 0.669307, b: 0.72061074, a: 1}
+    m_HighlightedColor: {r: 0.7254868, g: 0.22706768, b: 0.8396226, a: 1}
+    m_PressedColor: {r: 0.30831215, g: 0.09365726, b: 0.38679248, a: 1}
+    m_SelectedColor: {r: 0.7254902, g: 0.227451, b: 0.83921576, a: 1}
+    m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
+    m_ColorMultiplier: 1
+    m_FadeDuration: 0.1
+  m_SpriteState:
+    m_HighlightedSprite: {fileID: 0}
+    m_PressedSprite: {fileID: 0}
+    m_SelectedSprite: {fileID: 0}
+    m_DisabledSprite: {fileID: 0}
+  m_AnimationTriggers:
+    m_NormalTrigger: Normal
+    m_HighlightedTrigger: Highlighted
+    m_PressedTrigger: Pressed
+    m_SelectedTrigger: Selected
+    m_DisabledTrigger: Disabled
+  m_Interactable: 1
+  m_TargetGraphic: {fileID: 607383036412758699}
+  m_OnClick:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 2039792266381594586}
+        m_TargetAssemblyTypeName: BookMenuManager, Assembly-CSharp
+        m_MethodName: WriteCurrentSpellToJSON
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &509400251758047261
 GameObject:
   m_ObjectHideFlags: 0
@@ -28,6 +162,7 @@ RectTransform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0.0000006400887}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 580989195014817293}
   m_RootOrder: 0
@@ -163,6 +298,7 @@ RectTransform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: -0.023716, y: 0.01778209, z: 0.23716}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 2593785489166394811}
   m_RootOrder: 4
@@ -294,6 +430,7 @@ RectTransform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: -1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 8757569527183637385}
   m_RootOrder: 0
@@ -431,6 +568,7 @@ Transform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: -0.125, y: 0, z: 0.013}
   m_LocalScale: {x: 0.25706482, y: 0.37986463, z: 0.020797476}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 3627534347994508081}
   - {fileID: 2593785489166394811}
@@ -456,6 +594,7 @@ MeshRenderer:
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
@@ -526,6 +665,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 9047485267124149104}
   m_Father: {fileID: 0}
@@ -543,7 +683,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0925a9dae44863140967250f43d42082, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  button: {fileID: 8597155949774336733, guid: c348712bda248c246b8c49b3db54643f, type: 3}
+  button: {fileID: 187161793506945269, guid: c348712bda248c246b8c49b3db54643f, type: 3}
   displayedMenu: {fileID: 1934674832681719750}
   _spellManager: {fileID: 0}
   _spellIcon: {fileID: 7491564347210501287}
@@ -552,49 +692,71 @@ MonoBehaviour:
   spellList:
   - spellIcon: {fileID: 21300000, guid: 9da9fb0de8d54574eb8a8c9ec555f670, type: 3}
     spellName: Fly
-    spellGO: {fileID: 5305842503549153314, guid: 3891b23e680c038468119a292a972b97, type: 3}
+    spellCouple:
+      spellMechanics: {fileID: 5305842503549153314, guid: 3891b23e680c038468119a292a972b97, type: 3}
+      spellCircle: {fileID: 776886629064782777, guid: 9300ac926c2d3d348987bd2bcb100dc7, type: 3}
     spellDescription: By pressing the trigger on the controller you can push yourself
       forward. The harder you press, the faster you go.
   - spellIcon: {fileID: 21300000, guid: 9e5abf9cdb5d3c9488575cebfef9b5bf, type: 3}
     spellName: Step of the Wind
-    spellGO: {fileID: 5100481798701309517, guid: 380c38a6092b35545bf919fe21feec2d, type: 3}
+    spellCouple:
+      spellMechanics: {fileID: 5100481798701309517, guid: 380c38a6092b35545bf919fe21feec2d, type: 3}
+      spellCircle: {fileID: 0}
     spellDescription: Holding down the trigger spawns a small targetting indicator
       wherever you point. Upon release, as long as you are pointing to a flat surface,
       you will dash towards the location.
   - spellIcon: {fileID: 21300000, guid: 9406a98d77ad2a24e967025d22647c99, type: 3}
     spellName: Terra Blade
-    spellGO: {fileID: 5324684325716610943, guid: 7f04f108da83bac478d5176a703552de, type: 3}
+    spellCouple:
+      spellMechanics: {fileID: 5324684325716610943, guid: 7f04f108da83bac478d5176a703552de, type: 3}
+      spellCircle: {fileID: 0}
     spellDescription: Holding down the grip button and making a slash gesture spawns
       a blade along the back of your arm. While holding grip, if you press trigger
       you can launch the blade as a projectile.
   - spellIcon: {fileID: 21300000, guid: 3638fcac3952b374f96167d7c8a735ae, type: 3}
     spellName: Catapult
-    spellGO: {fileID: 1199593121343689505, guid: d7aa3db6fa196cc4ab81f19bd343cfb0, type: 3}
+    spellCouple:
+      spellMechanics: {fileID: 1199593121343689505, guid: d7aa3db6fa196cc4ab81f19bd343cfb0, type: 3}
+      spellCircle: {fileID: 0}
     spellDescription: Holding down trigger will allow you to target objects, upon
       release they will begin floating. While an object is floating you can hold
       the grip and flick your hand to launch them in the direction you flick.
   - spellIcon: {fileID: 21300000, guid: cf2855fb18a21fa45ae954e84f9f4a2e, type: 3}
     spellName: Firebolt
-    spellGO: {fileID: 1967907942461160733, guid: a6c5168b6cbe6994a895b4219eaa724d, type: 3}
+    spellCouple:
+      spellMechanics: {fileID: 1967907942461160733, guid: a6c5168b6cbe6994a895b4219eaa724d, type: 3}
+      spellCircle: {fileID: 776886629064782777, guid: 4ece181df3095f245b552d27b3004688, type: 3}
     spellDescription: Holding down trigger and making a throwing gesture while releasing
       will shoot a projectile out. In the wrong direction but isnt it cool.
   - spellIcon: {fileID: 21300000, guid: bb64f701c4c136944bbccede9b89a4dd, type: 3}
     spellName: Gravity Burst
-    spellGO: {fileID: 2859709878002125458, guid: 00c3150633a25e4408b624060b4739d7, type: 3}
+    spellCouple:
+      spellMechanics: {fileID: 2859709878002125458, guid: 00c3150633a25e4408b624060b4739d7, type: 3}
+      spellCircle: {fileID: 0}
     spellDescription: Hold down the trigger to begin charging the blast. Upon release,
       launch all objects in front of you with a force dependent on your charge.
   - spellIcon: {fileID: 21300000, guid: 14637cc31e725de4a85969d80e169c6e, type: 3}
     spellName: Stone's Fury
-    spellGO: {fileID: 6837083231294128902, guid: 77a3c2746a8b3424a8682f34744fc61b, type: 3}
+    spellCouple:
+      spellMechanics: {fileID: 6837083231294128902, guid: 77a3c2746a8b3424a8682f34744fc61b, type: 3}
+      spellCircle: {fileID: 776886629064782777, guid: cd12385a9da17fd4dadff7230f7b0bd9, type: 3}
     spellDescription: Pressing the trigger will allow you to begin targeting where
       you would like to punch. Once you are satisfied, press and hold the grip. Then
       point your palm to the sky, pull up quickly, and watch as your enemies go flying
       away.
   - spellIcon: {fileID: 21300000, guid: 04dd4fcda4762f549a5c78ffde8a8a0a, type: 3}
     spellName: Cinder Blast
-    spellGO: {fileID: 5179050301788854179, guid: b04d9014908bca747bf0b26ef1cec7f9, type: 3}
+    spellCouple:
+      spellMechanics: {fileID: 5179050301788854179, guid: b04d9014908bca747bf0b26ef1cec7f9, type: 3}
+      spellCircle: {fileID: 776886629064782777, guid: 00d0cc5c01193c14fae359ce9a78e381, type: 3}
     spellDescription: Charge up the blast by holding down the trigger. Once you are
       ready to blast something, throw your hand forward and release.
+  - spellIcon: {fileID: 21300000, guid: 04dd4fcda4762f549a5c78ffde8a8a0a, type: 3}
+    spellName: Shield
+    spellCouple:
+      spellMechanics: {fileID: 6834804205108281816, guid: 95ed91ef08526f54ab91cab38731bb5f, type: 3}
+      spellCircle: {fileID: 776886629064782777, guid: 8c527fa7e926332449296b3ae3380429, type: 3}
+    spellDescription: Protect yo self fool
 --- !u!1 &1162796929566289676
 GameObject:
   m_ObjectHideFlags: 0
@@ -623,6 +785,7 @@ RectTransform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1779868114767232066}
   m_RootOrder: 1
@@ -755,6 +918,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0.125, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 4667133326143173636}
   m_Father: {fileID: 9047485267124149104}
@@ -789,6 +953,7 @@ RectTransform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0.023716, y: 0.01778209, z: 0.23716}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 2593785489166394811}
   m_RootOrder: 3
@@ -921,6 +1086,7 @@ RectTransform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: -0.1936648, y: 0.1936648, z: 0.19366479}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 6646332697206839130}
   m_Father: {fileID: 2593785489166394811}
@@ -1054,6 +1220,7 @@ Transform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0.013, z: -0.67315835}
   m_LocalScale: {x: 0.9294545, y: 0.9294544, z: 0.30981812}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 4667133326143173636}
   m_RootOrder: 0
@@ -1077,6 +1244,7 @@ MeshRenderer:
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
@@ -1150,9 +1318,11 @@ RectTransform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: -0.86548936}
   m_LocalScale: {x: 0.038900696, y: 0.026325168, z: 0.4808275}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 6013401070316178837}
   - {fileID: 8644278536420713054}
+  - {fileID: 8685764594601103760}
   m_Father: {fileID: 4667133326143173636}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1269,6 +1439,7 @@ RectTransform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1779868114767232066}
   m_RootOrder: 0
@@ -1405,6 +1576,7 @@ RectTransform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: -0.86548936}
   m_LocalScale: {x: 0.038900696, y: 0.026325168, z: 0.4808275}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 532063568776190886}
   - {fileID: 8757569527183637385}
@@ -1527,6 +1699,7 @@ RectTransform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0.81586, y: 0.81586, z: 0.81586}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 2593785489166394811}
   m_RootOrder: 0
@@ -1600,6 +1773,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0.125, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 3292631179093658302}
   m_Father: {fileID: 9047485267124149104}
@@ -1634,6 +1808,7 @@ Transform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0.013, z: -0.67315835}
   m_LocalScale: {x: 0.9294545, y: 0.9294544, z: 0.30981812}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 3292631179093658302}
   m_RootOrder: 0
@@ -1657,6 +1832,7 @@ MeshRenderer:
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
@@ -1729,6 +1905,7 @@ RectTransform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0.1936648, y: 0.1936648, z: 0.19366479}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 3650018891219107818}
   m_Father: {fileID: 2593785489166394811}
@@ -1833,6 +2010,141 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!1 &8416227235550564468
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1227824863751419692}
+  - component: {fileID: 5008059560980213079}
+  - component: {fileID: 5409724278569307912}
+  m_Layer: 0
+  m_Name: Text (TMP)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &1227824863751419692
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8416227235550564468}
+  m_LocalRotation: {x: -0, y: -0, z: 0.7085881, w: 0.7056224}
+  m_LocalPosition: {x: 0, y: 0, z: -0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 8685764594601103760}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 90.24}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 7.1, y: 27.5}
+  m_SizeDelta: {x: 68.48, y: 64.56}
+  m_Pivot: {x: 1, y: 0}
+--- !u!222 &5008059560980213079
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8416227235550564468}
+  m_CullTransparentMesh: 1
+--- !u!114 &5409724278569307912
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8416227235550564468}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_text: Write to Jason
+  m_isRightToLeft: 0
+  m_fontAsset: {fileID: 11400000, guid: 7ffff151983ae3f4a911b3a799050dd7, type: 2}
+  m_sharedMaterial: {fileID: -2578194143830508431, guid: 7ffff151983ae3f4a911b3a799050dd7, type: 2}
+  m_fontSharedMaterials: []
+  m_fontMaterial: {fileID: 0}
+  m_fontMaterials: []
+  m_fontColor32:
+    serializedVersion: 2
+    rgba: 4282006086
+  m_fontColor: {r: 0.2735849, g: 0.22626676, b: 0.22626676, a: 1}
+  m_enableVertexGradient: 0
+  m_colorMode: 3
+  m_fontColorGradient:
+    topLeft: {r: 1, g: 1, b: 1, a: 1}
+    topRight: {r: 1, g: 1, b: 1, a: 1}
+    bottomLeft: {r: 1, g: 1, b: 1, a: 1}
+    bottomRight: {r: 1, g: 1, b: 1, a: 1}
+  m_fontColorGradientPreset: {fileID: 0}
+  m_spriteAsset: {fileID: 0}
+  m_tintAllSprites: 0
+  m_StyleSheet: {fileID: 0}
+  m_TextStyleHashCode: -1183493901
+  m_overrideHtmlColors: 0
+  m_faceColor:
+    serializedVersion: 2
+    rgba: 4294967295
+  m_fontSize: 7.9
+  m_fontSizeBase: 7.9
+  m_fontWeight: 400
+  m_enableAutoSizing: 0
+  m_fontSizeMin: 18
+  m_fontSizeMax: 72
+  m_fontStyle: 1
+  m_HorizontalAlignment: 2
+  m_VerticalAlignment: 512
+  m_textAlignment: 65535
+  m_characterSpacing: 0
+  m_wordSpacing: 0
+  m_lineSpacing: 0
+  m_lineSpacingMax: 0
+  m_paragraphSpacing: 0
+  m_charWidthMaxAdj: 0
+  m_enableWordWrapping: 1
+  m_wordWrappingRatios: 0.4
+  m_overflowMode: 0
+  m_linkedTextComponent: {fileID: 0}
+  parentLinkedComponent: {fileID: 0}
+  m_enableKerning: 1
+  m_enableExtraPadding: 0
+  checkPaddingRequired: 0
+  m_isRichText: 1
+  m_parseCtrlCharacters: 1
+  m_isOrthographic: 1
+  m_isCullingEnabled: 0
+  m_horizontalMapping: 0
+  m_verticalMapping: 0
+  m_uvLineOffset: 0
+  m_geometrySortingOrder: 0
+  m_IsTextObjectScaleStatic: 0
+  m_VertexBufferAutoSizeReduction: 0
+  m_useMaxVisibleDescender: 1
+  m_pageToDisplay: 1
+  m_margin: {x: 0, y: 0, z: 0, w: 0}
+  m_isUsingLegacyAnimationComponent: 0
+  m_isVolumetricText: 0
+  m_hasFontAssetChanged: 0
+  m_baseMaterial: {fileID: 0}
+  m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
 --- !u!1 &8569102800268155786
 GameObject:
   m_ObjectHideFlags: 0
@@ -1860,6 +2172,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1.5, y: 1.5, z: 1.5}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 2278203243248849919}
   - {fileID: 2224113689866846295}
@@ -1868,7 +2181,7 @@ Transform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!95 &1070866460797957191
 Animator:
-  serializedVersion: 3
+  serializedVersion: 5
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -1881,10 +2194,11 @@ Animator:
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
   m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorControllerStateOnDisable: 0
+  m_KeepAnimatorStateOnDisable: 0
 --- !u!1 &8680689677055236663
 GameObject:
   m_ObjectHideFlags: 0
@@ -1914,6 +2228,7 @@ Transform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0.125, y: 0, z: 0.013}
   m_LocalScale: {x: 0.25706482, y: 0.37986463, z: 0.020797476}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 695328107474039735}
   - {fileID: 1779868114767232066}
@@ -1939,6 +2254,7 @@ MeshRenderer:
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1

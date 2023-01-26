@@ -35,6 +35,10 @@ public class BookMenuManager : MonoBehaviour
         button.action.started += ctx => ToggleMenu();
     }
 
+    public void WriteCurrentSpellToJSON()
+    {
+        TestingScript.SaveToJSON<SpellMenuItem>(spellList[arrayLocation], spellList[arrayLocation].spellName);
+    }
 
     public void ChangeMenu(bool left)
     {
@@ -70,11 +74,11 @@ public class BookMenuManager : MonoBehaviour
     {
         if(left)
         {
-            _spellManager.ChangeLeftSpell(spellList[arrayLocation].spellGO);
+            _spellManager.ChangeLeftSpell(spellList[arrayLocation].spellCouple);
         }
         else
         {
-            _spellManager.ChangeRightSpell(spellList[arrayLocation].spellGO);
+            _spellManager.ChangeRightSpell(spellList[arrayLocation].spellCouple);
         }
     }
     private void LoadMenu()
@@ -103,22 +107,17 @@ public class BookMenuManager : MonoBehaviour
     }
 }
 
-[System.Serializable]
+[Serializable]
 public class SpellMenuItem
 {
     public Sprite spellIcon;
     public string spellName;
-    public GameObject spellGO;
+    public SpellGameObjectCouple spellCouple;
     public string spellDescription;
-
-    public static SpellMenuItem CreateFromJSON(string JsonString)
-    {
-        return JsonUtility.FromJson<SpellMenuItem>(JsonString);
-    }
-
-    public string CreateJSON()
-    {
-        return JsonUtility.ToJson(this);
-    }
-
+}
+[Serializable]
+public class SpellGameObjectCouple
+{
+    public GameObject spellMechanics;
+    public GameObject spellCircle;
 }

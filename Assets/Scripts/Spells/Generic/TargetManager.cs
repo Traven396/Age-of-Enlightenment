@@ -102,7 +102,7 @@ public class TargetManager : MonoBehaviour
         
         if (hand == 0)
         {
-            RaycastHit hit = new RaycastHit();
+            RaycastHit hit;
             if (Physics.Raycast(leftHandPosition.position, leftHandPosition.forward, out hit, maxDistance, ignoreLayers))
             {
                 leftTargetter.transform.position = hit.point;
@@ -116,7 +116,7 @@ public class TargetManager : MonoBehaviour
         }
         else
         {
-            RaycastHit hit = new RaycastHit();
+            RaycastHit hit;
             if(Physics.Raycast(rightHandPosition.position, rightHandPosition.forward, out hit, maxDistance, ignoreLayers))
             {
                 rightTargetter.transform.position = hit.point;
