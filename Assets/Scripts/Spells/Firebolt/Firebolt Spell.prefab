@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: -1821292141482366204}
   - component: {fileID: -5384262138043270586}
   m_Layer: 0
-  m_Name: Firebolt
+  m_Name: Firebolt Spell
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

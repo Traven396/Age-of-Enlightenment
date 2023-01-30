@@ -38,35 +38,44 @@ public class ProjectileBehavior : MonoBehaviour
     }
     private void OnCollisionEnter(Collision collision)
     {
+        UnparentTrails();
         gameObject.SetActive(false);
         if (hitEffects)
             Instantiate(hitEffects, collision.GetContact(0).point, Quaternion.identity);
 
-        if(trails.Count > 0)
+        
+        Destroy(this.gameObject, .05f);
+    }
+
+    private void UnparentTrails()
+    {
+        if (trails.Count > 0)
         {
             foreach (GameObject gameObject in trails)
             {
                 gameObject.transform.parent = null;
                 var ps = gameObject.GetComponent<ParticleSystem>();
-                if(ps != null)
+                if (ps != null)
                 {
                     ps.Stop();
+                    Destroy(gameObject, ps.main.duration + ps.main.startLifetime.constantMax);
                 }
             }
         }
-        Destroy(this.gameObject, .05f);
     }
 
     public void Shoot(Vector3 direction)
     {
         rb.AddForce(direction * speedMultiplier);
-
+        Invoke(nameof(UnparentTrails), lifeTime);
+        Destroy(gameObject, lifeTime);
     }
 }
 
 public enum DamageType{
     Fire,
     Water,
+    Lightning,
     Ice,
     Earth,
     Air,

@@ -709,7 +709,7 @@ MonoBehaviour:
     spellName: Terra Blade
     spellCouple:
       spellMechanics: {fileID: 5324684325716610943, guid: 7f04f108da83bac478d5176a703552de, type: 3}
-      spellCircle: {fileID: 0}
+      spellCircle: {fileID: 776886629064782777, guid: 78a961017297a024aa1fa89f13b3c960, type: 3}
     spellDescription: Holding down the grip button and making a slash gesture spawns
       a blade along the back of your arm. While holding grip, if you press trigger
       you can launch the blade as a projectile.

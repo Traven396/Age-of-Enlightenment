@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 3226501201991941859}
   - component: {fileID: -7922216242493135715}
   - component: {fileID: 8153499114401393444}
-  - component: {fileID: 7530466908944483854}
   - component: {fileID: -733284746492993691}
   m_Layer: 0
   m_Name: Cinder Blast
@@ -30,6 +29,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -48,6 +48,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   whichHand: 0
   playerRb: {fileID: 0}
+  circleHolder: {fileID: 0}
   _palmLocation: {fileID: 0}
   _backOfHandLocation: {fileID: 0}
   _handLocation: {fileID: 0}
@@ -70,19 +71,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxCharge: 3
---- !u!114 &7530466908944483854
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5179050301788854179}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d1edb6f3cdd6713438cbdaf4473a0acc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  GestureOverride: 0
 --- !u!114 &-733284746492993691
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -95,13 +83,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 945e6df227a964c44b56155c2284a633, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  objectToSpawn: {fileID: 3426299689658071910, guid: 414f4fb10a3e18d48a1ae6c79b584e5e, type: 3}
+  objectToSpawn: {fileID: 8452052330996886707, guid: 5c4d9882a88d7314785f0f7cb74d0863, type: 3}
   ParentToTarget: 0
   LockRotation: 0
   LockPosition: 0
   GravityAffected: 0
   InstantiatedObject: {fileID: 0}
   isProjectile: 1
-  spawnAmount: 3
+  spawnAmount: 10
   shootDirection: 0
-  spreadAmount: 0.1
+  spreadAmount: 0.2
