@@ -6,6 +6,7 @@ public class ObjectSpawn : MonoBehaviour
 {
     [SerializeField] private GameObject objectToSpawn;
     [SerializeField] private bool ParentToTarget = false;
+    [SerializeField] private Vector3 rotationOffset;
     [Space(5)]
     [SerializeField] private bool LockRotation = false;
     [Space(5)]
@@ -26,7 +27,7 @@ public class ObjectSpawn : MonoBehaviour
     {
         for (int i = 0; i < spawnAmount; i++)
         {
-            InstantiatedObject = ParentToTarget ? Instantiate(objectToSpawn, target) : Instantiate(objectToSpawn, target.position, target.rotation);
+            InstantiatedObject = ParentToTarget ? Instantiate(objectToSpawn, target.position, (target.rotation * Quaternion.Euler(rotationOffset)), target) : Instantiate(objectToSpawn, target.position, (target.rotation * Quaternion.Euler(rotationOffset)));
             
             #region Setting up Rigidbody
             Rigidbody rb = InstantiatedObject.GetComponent<Rigidbody>();

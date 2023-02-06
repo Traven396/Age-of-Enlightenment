@@ -37,7 +37,7 @@ public class BookMenuManager : MonoBehaviour
 
     public void WriteCurrentSpellToJSON()
     {
-        TestingScript.SaveToJSON<SpellMenuItem>(spellList[arrayLocation], spellList[arrayLocation].spellName);
+        //TestingScript.SaveToJSON<SpellMenuItem>(spellList[arrayLocation], spellList[arrayLocation].spellName);
     }
 
     public void ChangeMenu(bool left)

@@ -732,7 +732,7 @@ MonoBehaviour:
     spellName: Gravity Burst
     spellCouple:
       spellMechanics: {fileID: 2859709878002125458, guid: 00c3150633a25e4408b624060b4739d7, type: 3}
-      spellCircle: {fileID: 0}
+      spellCircle: {fileID: 776886629064782777, guid: 1b3e1f3e082087d47b746097b9af36c8, type: 3}
     spellDescription: Hold down the trigger to begin charging the blast. Upon release,
       launch all objects in front of you with a force dependent on your charge.
   - spellIcon: {fileID: 21300000, guid: 14637cc31e725de4a85969d80e169c6e, type: 3}

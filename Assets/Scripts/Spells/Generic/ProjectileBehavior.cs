@@ -6,9 +6,10 @@ public class ProjectileBehavior : MonoBehaviour
 {
     [Header("Visuals")]
     public GameObject hitEffects;
+    public int hitEffectLifetime;
     public List<GameObject> trails = new List<GameObject>();
     public bool rotateTowardsMotion = false;
-
+  
     [Header("Projectile Stats")]
     public float speedMultiplier = 100f;
     public DamageType damageType;
@@ -22,10 +23,11 @@ public class ProjectileBehavior : MonoBehaviour
     private void Awake()
     {
         rb = GetComponent<Rigidbody>();
-        if (rb == null)
+        if (rb)
         {
             rb = GetComponentInChildren<Rigidbody>();
         }
+     
     }
 
     private void Update()
@@ -33,7 +35,11 @@ public class ProjectileBehavior : MonoBehaviour
         if (rotateTowardsMotion)
         {
             if(rb.velocity != Vector3.zero)
-                transform.rotation = Quaternion.LookRotation(rb.velocity.normalized);
+            {
+                rb.MoveRotation(Quaternion.RotateTowards(transform.rotation, Quaternion.LookRotation(rb.velocity.normalized), 720 * Time.deltaTime));
+                //transform.LookAt(transform.TransformDirection(rb.velocity.normalized));
+            }
+
         }
     }
     private void OnCollisionEnter(Collision collision)
@@ -41,8 +47,10 @@ public class ProjectileBehavior : MonoBehaviour
         UnparentTrails();
         gameObject.SetActive(false);
         if (hitEffects)
-            Instantiate(hitEffects, collision.GetContact(0).point, Quaternion.identity);
-
+        {
+            var instantHit = Instantiate(hitEffects, collision.GetContact(0).point, Quaternion.LookRotation(Vector3.up, collision.GetContact(0).normal));
+            Destroy(instantHit, hitEffectLifetime);
+        }
         
         Destroy(this.gameObject, .05f);
     }
@@ -66,8 +74,9 @@ public class ProjectileBehavior : MonoBehaviour
 
     public void Shoot(Vector3 direction)
     {
+        rb.isKinematic = false;
         rb.AddForce(direction * speedMultiplier);
-        Invoke(nameof(UnparentTrails), lifeTime);
+        Invoke(nameof(UnparentTrails), lifeTime - 0.01f);
         Destroy(gameObject, lifeTime);
     }
 }

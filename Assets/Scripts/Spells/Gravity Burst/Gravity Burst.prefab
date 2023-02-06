@@ -29,6 +29,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -47,6 +48,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   whichHand: 0
   playerRb: {fileID: 0}
+  circleHolder: {fileID: 0}
   _palmLocation: {fileID: 0}
   _backOfHandLocation: {fileID: 0}
   _handLocation: {fileID: 0}
@@ -69,7 +71,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a417b29783aa45f4999650d0fe282d04, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxCharge: 10
+  maxCharge: 6
 --- !u!114 &2147885153890286812
 MonoBehaviour:
   m_ObjectHideFlags: 0
