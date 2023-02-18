@@ -154,13 +154,14 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2851465914124386090}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b9c0c6dc856067a4cb89b3064a1804cd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   hitEffects: {fileID: 5439779027598130539, guid: 3437bc2b8e2ce3c489bc67e3a2e94e6a, type: 3}
   hitEffectLifetime: 2
+  hitSizeScaler: 3
   trails: []
   rotateTowardsMotion: 1
   speedMultiplier: 500

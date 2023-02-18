@@ -65,8 +65,21 @@ public class CustomPlayerController : MonoBehaviour
         capsuleCollider.radius = capsuleRadius;
         capsuleCollider.center = capsuleCenter;
         capsuleCollider.height = capsuleHeight;
+
+        speed = Player.Instance.playerMoveSpeed;
+        
+
+        Player.StatsChanged += SetSpeed;
+    }
+    private void OnDisable()
+    {
+        Player.StatsChanged -= SetSpeed;
     }
 
+    void SetSpeed()
+    {
+        speed = Player.Instance.playerMoveSpeed;
+    }
 
 
     void Update()

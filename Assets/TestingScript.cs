@@ -8,15 +8,12 @@ using System;
 
 public class TestingScript : MonoBehaviour
 {
+    [SerializeField]private GameObject savedNumber;
+    private int CreditCardNumber;
 
-    private void Update()
+
+    IEnumerator OHFUCK()
     {
-        float angle = 0;
-        angle = transform.rotation.eulerAngles.x;
-        if(angle > 180f)
-        {
-            angle -= 360;
-        }
-        Debug.Log(Mathf.RoundToInt(angle));
+        yield return null;
     }
 }

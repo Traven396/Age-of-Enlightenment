@@ -30,7 +30,7 @@ public class TelekinesisTargetable : MonoBehaviour, ITargetable
         rb.isKinematic = false;
         StopCoroutine(CatapultVisuals());
         isFloating = false;
-        rb.AddForce(direction, ForceMode.Impulse);
+        rb.AddForce(direction, ForceMode.VelocityChange);
     }
     IEnumerator CatapultVisuals()
     {

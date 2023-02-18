@@ -222,8 +222,8 @@ ParticleSystem:
     startColor:
       serializedVersion: 2
       minMaxState: 2
-      minColor: {r: 0.20754719, g: 0.20754719, b: 0.20754719, a: 0.5254902}
-      maxColor: {r: 1, g: 1, b: 1, a: 0.043137256}
+      minColor: {r: 0.20754719, g: 0.20754719, b: 0.20754719, a: 0.92941177}
+      maxColor: {r: 1, g: 1, b: 1, a: 0.38431373}
       maxGradient:
         serializedVersion: 2
         key0: {r: 1, g: 1, b: 1, a: 1}
@@ -867,7 +867,7 @@ ParticleSystem:
     rateOverTime:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 287.97
+      scalar: 0
       minScalar: 10
       maxCurve:
         serializedVersion: 2
@@ -920,7 +920,7 @@ ParticleSystem:
     rateOverDistance:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 0
+      scalar: 30
       minScalar: 0
       maxCurve:
         serializedVersion: 2
@@ -1423,7 +1423,7 @@ ParticleSystem:
     startFrame:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 0.42399997
+      scalar: 0.04
       minScalar: 0
       maxCurve:
         serializedVersion: 2
@@ -1478,7 +1478,7 @@ ParticleSystem:
     tilesY: 5
     animationType: 0
     rowIndex: 0
-    cycles: 0.13
+    cycles: 0.99
     uvChannelMask: -1
     rowMode: 1
     sprites:
@@ -5420,7 +5420,7 @@ ParticleSystem:
     gravityModifier:
       serializedVersion: 2
       minMaxState: 0
-      scalar: -0.005
+      scalar: 0
       minScalar: 0
       maxCurve:
         serializedVersion: 2
@@ -5679,7 +5679,7 @@ ParticleSystem:
     rateOverTime:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 10
+      scalar: 0
       minScalar: 10
       maxCurve:
         serializedVersion: 2
@@ -5732,7 +5732,7 @@ ParticleSystem:
     rateOverDistance:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 0
+      scalar: 2
       minScalar: 0
       maxCurve:
         serializedVersion: 2
@@ -8811,7 +8811,7 @@ ParticleSystem:
       serializedVersion: 2
       minMaxState: 0
       minColor: {r: 1, g: 1, b: 1, a: 1}
-      maxColor: {r: 1, g: 0.5625, b: 0, a: 0.8392157}
+      maxColor: {r: 0.990566, g: 0.3304128, b: 0, a: 0.6117647}
       maxGradient:
         serializedVersion: 2
         key0: {r: 1, g: 1, b: 1, a: 1}
@@ -8927,7 +8927,7 @@ ParticleSystem:
       serializedVersion: 2
       minMaxState: 0
       minColor: {r: 1, g: 1, b: 1, a: 1}
-      maxColor: {r: 1, g: 0.6285174, b: 0, a: 0.62352943}
+      maxColor: {r: 1, g: 0.6285174, b: 0, a: 0.35686275}
       maxGradient:
         serializedVersion: 2
         key0: {r: 1, g: 1, b: 1, a: 1}
@@ -10492,7 +10492,7 @@ ParticleSystem:
     rateOverTime:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 85.41
+      scalar: 60
       minScalar: 10
       maxCurve:
         serializedVersion: 2
@@ -14520,6 +14520,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   hitEffects: {fileID: 0}
   hitEffectLifetime: 0
+  hitSizeScaler: 1
   trails:
   - {fileID: 2059924536052619991}
   - {fileID: 6663878664617325535}

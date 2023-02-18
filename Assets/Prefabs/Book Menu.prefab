@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 607383036412758699}
   - component: {fileID: 8277648765760447235}
   m_Layer: 0
-  m_Name: Write Button
+  m_Name: Clear Button
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -37,8 +37,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: -90}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 13.1, y: 4.8}
-  m_SizeDelta: {x: 50, y: 50}
+  m_AnchoredPosition: {x: 12.48, y: 1.94}
+  m_SizeDelta: {x: 20.44, y: 56.37}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &2298041281123189335
 CanvasRenderer:
@@ -68,8 +68,8 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: e78ce04c9b4bc8745a1011576b08a3b7, type: 3}
-  m_Type: 0
+  m_Sprite: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
+  m_Type: 1
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 4
@@ -99,11 +99,11 @@ MonoBehaviour:
     m_SelectOnRight: {fileID: 0}
   m_Transition: 1
   m_Colors:
-    m_NormalColor: {r: 0.7264151, g: 0.669307, b: 0.72061074, a: 1}
-    m_HighlightedColor: {r: 0.7254868, g: 0.22706768, b: 0.8396226, a: 1}
-    m_PressedColor: {r: 0.30831215, g: 0.09365726, b: 0.38679248, a: 1}
-    m_SelectedColor: {r: 0.7254902, g: 0.227451, b: 0.83921576, a: 1}
-    m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
+    m_NormalColor: {r: 0.6792453, g: 0.10509073, b: 0.12825921, a: 1}
+    m_HighlightedColor: {r: 0.8392157, g: 0.24486722, b: 0.22745098, a: 1}
+    m_PressedColor: {r: 0.3018868, g: 0, b: 0.05885387, a: 1}
+    m_SelectedColor: {r: 0.6784314, g: 0.10588236, b: 0.12941177, a: 1}
+    m_DisabledColor: {r: 0.6745098, g: 0.10588236, b: 0.12941177, a: 1}
     m_ColorMultiplier: 1
     m_FadeDuration: 0.1
   m_SpriteState:
@@ -124,7 +124,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 2039792266381594586}
         m_TargetAssemblyTypeName: BookMenuManager, Assembly-CSharp
-        m_MethodName: WriteCurrentSpellToJSON
+        m_MethodName: ClearSpells
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -695,13 +695,17 @@ MonoBehaviour:
     spellCouple:
       spellMechanics: {fileID: 5305842503549153314, guid: 3891b23e680c038468119a292a972b97, type: 3}
       spellCircle: {fileID: 776886629064782777, guid: 9300ac926c2d3d348987bd2bcb100dc7, type: 3}
+      RightAnimationController: {fileID: 0}
+      LeftAnimationController: {fileID: 0}
     spellDescription: By pressing the trigger on the controller you can push yourself
       forward. The harder you press, the faster you go.
   - spellIcon: {fileID: 21300000, guid: 9e5abf9cdb5d3c9488575cebfef9b5bf, type: 3}
     spellName: Step of the Wind
     spellCouple:
       spellMechanics: {fileID: 5100481798701309517, guid: 380c38a6092b35545bf919fe21feec2d, type: 3}
-      spellCircle: {fileID: 0}
+      spellCircle: {fileID: 776886629064782777, guid: 17357bdac2637724fb6b852b7c621658, type: 3}
+      RightAnimationController: {fileID: 0}
+      LeftAnimationController: {fileID: 0}
     spellDescription: Holding down the trigger spawns a small targetting indicator
       wherever you point. Upon release, as long as you are pointing to a flat surface,
       you will dash towards the location.
@@ -710,6 +714,8 @@ MonoBehaviour:
     spellCouple:
       spellMechanics: {fileID: 5324684325716610943, guid: 7f04f108da83bac478d5176a703552de, type: 3}
       spellCircle: {fileID: 776886629064782777, guid: 78a961017297a024aa1fa89f13b3c960, type: 3}
+      RightAnimationController: {fileID: 0}
+      LeftAnimationController: {fileID: 0}
     spellDescription: Holding down the grip button and making a slash gesture spawns
       a blade along the back of your arm. While holding grip, if you press trigger
       you can launch the blade as a projectile.
@@ -717,7 +723,9 @@ MonoBehaviour:
     spellName: Catapult
     spellCouple:
       spellMechanics: {fileID: 1199593121343689505, guid: d7aa3db6fa196cc4ab81f19bd343cfb0, type: 3}
-      spellCircle: {fileID: 0}
+      spellCircle: {fileID: 776886629064782777, guid: 8f6fc34074f88dc4298eda6499a9691e, type: 3}
+      RightAnimationController: {fileID: 0}
+      LeftAnimationController: {fileID: 0}
     spellDescription: Holding down trigger will allow you to target objects, upon
       release they will begin floating. While an object is floating you can hold
       the grip and flick your hand to launch them in the direction you flick.
@@ -726,13 +734,18 @@ MonoBehaviour:
     spellCouple:
       spellMechanics: {fileID: 1967907942461160733, guid: a6c5168b6cbe6994a895b4219eaa724d, type: 3}
       spellCircle: {fileID: 776886629064782777, guid: 4ece181df3095f245b552d27b3004688, type: 3}
-    spellDescription: Holding down trigger and making a throwing gesture while releasing
-      will shoot a projectile out. In the wrong direction but isnt it cool.
+      RightAnimationController: {fileID: 22100000, guid: ed9562a03f610e748b91024be417fcd0, type: 2}
+      LeftAnimationController: {fileID: 22100000, guid: e16dd7d0f4d1edd47b5c569500af58bb, type: 2}
+    spellDescription: FIRE! By holding the trigger you can charge a thrown explosive
+      fireball. But by holding down grip you can launch smaller faster projectiles
+      instead. Either way the enemy dies
   - spellIcon: {fileID: 21300000, guid: bb64f701c4c136944bbccede9b89a4dd, type: 3}
     spellName: Gravity Burst
     spellCouple:
       spellMechanics: {fileID: 2859709878002125458, guid: 00c3150633a25e4408b624060b4739d7, type: 3}
       spellCircle: {fileID: 776886629064782777, guid: 1b3e1f3e082087d47b746097b9af36c8, type: 3}
+      RightAnimationController: {fileID: 0}
+      LeftAnimationController: {fileID: 0}
     spellDescription: Hold down the trigger to begin charging the blast. Upon release,
       launch all objects in front of you with a force dependent on your charge.
   - spellIcon: {fileID: 21300000, guid: 14637cc31e725de4a85969d80e169c6e, type: 3}
@@ -740,6 +753,8 @@ MonoBehaviour:
     spellCouple:
       spellMechanics: {fileID: 6837083231294128902, guid: 77a3c2746a8b3424a8682f34744fc61b, type: 3}
       spellCircle: {fileID: 776886629064782777, guid: cd12385a9da17fd4dadff7230f7b0bd9, type: 3}
+      RightAnimationController: {fileID: 0}
+      LeftAnimationController: {fileID: 0}
     spellDescription: Pressing the trigger will allow you to begin targeting where
       you would like to punch. Once you are satisfied, press and hold the grip. Then
       point your palm to the sky, pull up quickly, and watch as your enemies go flying
@@ -749,6 +764,8 @@ MonoBehaviour:
     spellCouple:
       spellMechanics: {fileID: 5179050301788854179, guid: b04d9014908bca747bf0b26ef1cec7f9, type: 3}
       spellCircle: {fileID: 776886629064782777, guid: 00d0cc5c01193c14fae359ce9a78e381, type: 3}
+      RightAnimationController: {fileID: 0}
+      LeftAnimationController: {fileID: 0}
     spellDescription: Charge up the blast by holding down the trigger. Once you are
       ready to blast something, throw your hand forward and release.
   - spellIcon: {fileID: 21300000, guid: 04dd4fcda4762f549a5c78ffde8a8a0a, type: 3}
@@ -756,6 +773,8 @@ MonoBehaviour:
     spellCouple:
       spellMechanics: {fileID: 6834804205108281816, guid: 95ed91ef08526f54ab91cab38731bb5f, type: 3}
       spellCircle: {fileID: 776886629064782777, guid: 8c527fa7e926332449296b3ae3380429, type: 3}
+      RightAnimationController: {fileID: 0}
+      LeftAnimationController: {fileID: 0}
     spellDescription: Protect yo self fool
 --- !u!1 &1162796929566289676
 GameObject:
@@ -2045,8 +2064,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 90.24}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 7.1, y: 27.5}
-  m_SizeDelta: {x: 68.48, y: 64.56}
+  m_AnchoredPosition: {x: 28.5, y: 32}
+  m_SizeDelta: {x: 61.17, y: 53.56}
   m_Pivot: {x: 1, y: 0}
 --- !u!222 &5008059560980213079
 CanvasRenderer:
@@ -2076,7 +2095,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Write to Jason
+  m_text: Clear Spells
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 7ffff151983ae3f4a911b3a799050dd7, type: 2}
   m_sharedMaterial: {fileID: -2578194143830508431, guid: 7ffff151983ae3f4a911b3a799050dd7, type: 2}
@@ -2085,8 +2104,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4282006086
-  m_fontColor: {r: 0.2735849, g: 0.22626676, b: 0.22626676, a: 1}
+    rgba: 4278190080
+  m_fontColor: {r: 0, g: 0, b: 0, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:

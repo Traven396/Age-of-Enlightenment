@@ -35,9 +35,9 @@ public class BookMenuManager : MonoBehaviour
         button.action.started += ctx => ToggleMenu();
     }
 
-    public void WriteCurrentSpellToJSON()
+    public void ClearSpells()
     {
-        //TestingScript.SaveToJSON<SpellMenuItem>(spellList[arrayLocation], spellList[arrayLocation].spellName);
+        _spellManager.ClearSpells();
     }
 
     public void ChangeMenu(bool left)
@@ -114,10 +114,13 @@ public class SpellMenuItem
     public string spellName;
     public SpellGameObjectCouple spellCouple;
     public string spellDescription;
+    
 }
 [Serializable]
 public class SpellGameObjectCouple
 {
     public GameObject spellMechanics;
     public GameObject spellCircle;
+    public AnimatorOverrideController RightAnimationController;
+    public AnimatorOverrideController LeftAnimationController;
 }
