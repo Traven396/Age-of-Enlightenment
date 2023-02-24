@@ -17,7 +17,6 @@ public class TerraBlade : SpellBlueprint
     private void Start()
     {
         _gesture = GetComponent<IMovement>();
-        spellCircle = circleHolder.transform.GetChild(circleHolder.transform.childCount - 1).gameObject;
 
         if(currentHand == 0)
         {
@@ -28,15 +27,7 @@ public class TerraBlade : SpellBlueprint
     {
         if (!gripPressed)
         {
-            if (Quaternion.Angle(spellCircle.transform.rotation, circleHolder.transform.rotation) > .1)
-            {
-             iTween.RotateUpdate(spellCircle, circleHolder.transform.rotation.eulerAngles, .1f);
-                
-            }
-            if(Vector3.Distance(circleHolder.transform.position, spellCircle.transform.position) > .001f)
-            {
-                iTween.MoveUpdate(spellCircle, circleHolder.transform.position, .1f);
-            }
+            _visualsManager.ReturnCircleToHolder(currentHand);
         }
     }
     public override void GripPress()
@@ -65,7 +56,7 @@ public class TerraBlade : SpellBlueprint
                 bladeSpawned = true;
                 BladeSpawner.Cast(spellCircle.transform);
                 spellCircle.GetComponent<AudioSource>().Play();
-                iTween.ScaleFrom(BladeSpawner.InstantiatedObject, Vector3.zero, .8f);
+                iTween.ScaleFrom(BladeSpawner.instantiatedObject, Vector3.zero, .8f);
             } 
         }
     }
@@ -76,10 +67,10 @@ public class TerraBlade : SpellBlueprint
         if (bladeSpawned && !alreadyShot) { 
             bladeSpawned = false;
 
-            if(BladeSpawner.InstantiatedObject)
-                iTween.ScaleTo(BladeSpawner.InstantiatedObject, Vector3.zero, .5f);
+            if(BladeSpawner.instantiatedObject)
+                iTween.ScaleTo(BladeSpawner.instantiatedObject, Vector3.zero, .5f);
 
-            Destroy(BladeSpawner.InstantiatedObject, .5f);
+            Destroy(BladeSpawner.instantiatedObject, .5f);
         }
         iTween.ScaleTo(spellCircle, Vector3.one, .7f);
 
@@ -93,7 +84,7 @@ public class TerraBlade : SpellBlueprint
         {
             bladeSpawned = false;
             alreadyShot = true;
-
+            BladeSpawner.instantiatedObject.transform.localScale = Vector3.one * .3f;
             BladeSpawner.LaunchProjectile(_handLocation, currentHand);
             //Destroy(BladeSpawner.InstantiatedObject);
 

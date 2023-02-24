@@ -35,7 +35,7 @@ public class BookMenuManager : MonoBehaviour
         button.action.started += ctx => ToggleMenu();
     }
 
-    public void ClearSpells()
+    public void ClearSpells(bool YN)
     {
         _spellManager.ClearSpells();
     }

@@ -150,4 +150,19 @@ public class SpellInputManager : MonoBehaviour
             currentRightSpell.triggerPressedValue = rightTrigger.action.ReadValue<float>();
         }
     }
+
+    private void FixedUpdate()
+    {
+        if (currentLeftSpell)
+        {
+            currentLeftSpell.GripHoldFixed();
+            currentLeftSpell.TriggerHoldFixed(); 
+        }
+
+        if (currentRightSpell)
+        {
+            currentRightSpell.GripHoldFixed();
+            currentRightSpell.TriggerHoldFixed(); 
+        }
+    }
 }

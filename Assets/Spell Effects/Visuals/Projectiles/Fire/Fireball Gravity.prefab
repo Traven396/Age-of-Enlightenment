@@ -87,8 +87,13 @@ MonoBehaviour:
   speedMultiplier: 0
   damageType: 0
   lifeTime: 3
-  Explosive: 0
-  explosionRadius: 0
+  isExplosive: 1
+  explosionDependentOnScale: 0
+  explosionRadius: 1
+  explosionForce: 20
+  ignoredLayers:
+    serializedVersion: 2
+    m_Bits: 513
 --- !u!114 &6356845731216389758
 MonoBehaviour:
   m_ObjectHideFlags: 0

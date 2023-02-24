@@ -16,8 +16,7 @@ public class Firebolt : SpellBlueprint
     private Vector3 centerOfMass;
     private Vector3 objectGrabOffset;
 
-    public float firstOffset, secondOffset, thirdOffset;
-
+    private AudioSource spellCircleAudioSource;
     private void Start()
     {
         _requiredGesture = GetComponent<IMovement>();
@@ -25,6 +24,7 @@ public class Firebolt : SpellBlueprint
 
         spellCircle = circleHolder.transform.GetChild(circleHolder.transform.childCount - 1).gameObject;
 
+        spellCircleAudioSource = spellCircle.GetComponent<AudioSource>();
 
         centerOfMass = _handLocation.transform.position;
         Vector3 relPos = _palmLocation.transform.position - centerOfMass;
@@ -35,25 +35,14 @@ public class Firebolt : SpellBlueprint
     {
         if (!gripPressed)
         {
-            if(Vector3.Distance(spellCircle.transform.position, circleHolder.transform.position) > .001f)
-            {
-                iTween.MoveUpdate(spellCircle, circleHolder.transform.position, .1f);
-            }
-            if (Quaternion.Angle(spellCircle.transform.rotation, circleHolder.transform.rotation) > .1)
-            {
-                iTween.RotateUpdate(spellCircle, circleHolder.transform.rotation.eulerAngles, .1f);
-            }
+            _visualsManager.ReturnCircleToHolder(currentHand);
         }
     }
-
-    
-
-
-
     public override void GripPress()
     {
         base.GripPress();
-        Destroy(_bigFireboltSpawn.InstantiatedObject);
+        if(_bigFireboltSpawn.instantiatedObject && _bigFireboltSpawn.instantiatedObject.transform.parent == _palmLocation)
+            Destroy(_bigFireboltSpawn.instantiatedObject);
         iTween.ScaleTo(spellCircle, Vector3.one * .3f, .1f);
     }
     public override void GripHold()
@@ -82,13 +71,11 @@ public class Firebolt : SpellBlueprint
         if (!gripPressed)
         {
             _bigFireboltSpawn.Cast(_palmLocation);
-
-            
         }
         else
         {
             _smallFireboltSpawn.Cast(spellCircle.transform);
-            AudioSource.PlayClipAtPoint(tinyFireballCastSound, spellCircle.transform.position, .3f);
+            spellCircleAudioSource.PlayOneShot(spellCircleAudioSource.clip);
             _smallFireboltSpawn.LaunchProjectile(_handLocation, currentHand);
         }
     }
@@ -97,11 +84,11 @@ public class Firebolt : SpellBlueprint
         base.TriggerHold();
         if (!gripPressed)
         {
-            if (_bigFireboltSpawn.InstantiatedObject)
+            if (_bigFireboltSpawn.instantiatedObject)
             {
-                if (_bigFireboltSpawn.InstantiatedObject.transform.localScale.x < 2f)
+                if (_bigFireboltSpawn.instantiatedObject.transform.localScale.x < 2f)
                 {
-                    iTween.ScaleAdd(_bigFireboltSpawn.InstantiatedObject, Vector3.one * 0.02f, .05f);
+                    iTween.ScaleAdd(_bigFireboltSpawn.instantiatedObject, Vector3.one * 0.02f, .05f);
                 } 
             }
         }
@@ -112,6 +99,8 @@ public class Firebolt : SpellBlueprint
 
         if (!gripPressed)
         {
+            if (_requiredGesture == null)
+                return;
             if (_requiredGesture.GesturePerformed(_gestureManager, out Vector3 direction))
             {
                 Vector3 controllerVelocityCross = Vector3.Cross(_gestureManager.angularVel, objectGrabOffset - centerOfMass);
@@ -119,11 +108,11 @@ public class Firebolt : SpellBlueprint
                 
                 _bigFireboltSpawn.LaunchProjectile(_palmLocation, currentHand);
                 
-                _applyMotion.ChangeMotion(_bigFireboltSpawn.InstantiatedObject.transform, fullThrow, _gestureManager.angularVel);
+                _applyMotion.ChangeMotion(_bigFireboltSpawn.instantiatedObject.transform, _gestureManager.currVel, _gestureManager.angularVel);
             }
             else
             {
-                Destroy(_bigFireboltSpawn.InstantiatedObject);
+                Destroy(_bigFireboltSpawn.instantiatedObject);
             } 
         }
     }

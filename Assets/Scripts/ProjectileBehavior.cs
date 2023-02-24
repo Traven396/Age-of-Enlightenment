@@ -6,7 +6,7 @@ public class ProjectileBehavior : MonoBehaviour
 {
     [Header("Visuals")]
     public GameObject hitEffects;
-    public int hitEffectLifetime;
+    public float hitEffectLifetime;
     public float hitSizeScaler = 1;
     [Space(10)]
     public List<GameObject> trails = new List<GameObject>();
@@ -17,8 +17,11 @@ public class ProjectileBehavior : MonoBehaviour
     public DamageType damageType;
     public float lifeTime = 3;
     [Space(20)]
-    public bool Explosive = false;
+    public bool isExplosive = false;
+    public bool explosionDependentOnScale = false;
     public float explosionRadius = 0;
+    public float explosionForce = 1;
+    public LayerMask ignoredLayers;
 
     private Rigidbody rb;
 
@@ -54,7 +57,10 @@ public class ProjectileBehavior : MonoBehaviour
             instantHit.transform.localScale = transform.localScale * hitSizeScaler;
             Destroy(instantHit, hitEffectLifetime);
         }
-        
+        if (isExplosive)
+        {
+            HandleExplosion();
+        }
         Destroy(this.gameObject, .05f);
     }
 
@@ -74,7 +80,31 @@ public class ProjectileBehavior : MonoBehaviour
             }
         }
     }
-
+    private void HandleExplosion()
+    {
+        if (explosionDependentOnScale)
+        {
+            Collider[] hits = Physics.OverlapSphere(transform.position, explosionRadius * transform.localScale.magnitude);
+            foreach (Collider hitObject in hits)
+            {
+                if (hitObject.TryGetComponent(out Rigidbody rb))
+                {
+                    rb.AddExplosionForce(explosionForce * transform.localScale.magnitude, transform.position, explosionRadius * transform.localScale.magnitude);
+                }
+            } 
+        }
+        else
+        {
+            Collider[] hits = Physics.OverlapSphere(transform.position, explosionRadius);
+            foreach (Collider hitObject in hits)
+            {
+                if (hitObject.TryGetComponent(out Rigidbody rb))
+                {
+                    rb.AddExplosionForce(explosionForce, transform.position, explosionRadius);
+                }
+            }
+        }
+    }
     public void Shoot(Vector3 direction)
     {
         rb.isKinematic = false;

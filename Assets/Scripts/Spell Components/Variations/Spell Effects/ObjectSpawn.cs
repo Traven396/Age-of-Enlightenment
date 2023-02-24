@@ -14,7 +14,7 @@ public class ObjectSpawn : MonoBehaviour
     [Space(5)]
     [SerializeField] private bool GravityAffected = true;
 
-    [HideInInspector] public GameObject InstantiatedObject;
+    [HideInInspector] public GameObject instantiatedObject;
 
 
     [Header("Projectile Behaviors")]
@@ -29,10 +29,10 @@ public class ObjectSpawn : MonoBehaviour
         spawnedObjects.Clear();
         for (int i = 0; i < spawnAmount; i++)
         {
-            InstantiatedObject = ParentToTarget ? Instantiate(objectToSpawn, target.position, (target.rotation * Quaternion.Euler(rotationOffset)), target) : Instantiate(objectToSpawn, target.position, (target.rotation * Quaternion.Euler(rotationOffset)));
-            spawnedObjects.Add(InstantiatedObject);
+            instantiatedObject = ParentToTarget ? Instantiate(objectToSpawn, target.position, (target.rotation * Quaternion.Euler(rotationOffset)), target) : Instantiate(objectToSpawn, target.position, (target.rotation * Quaternion.Euler(rotationOffset)));
+            spawnedObjects.Add(instantiatedObject);
             #region Setting up Rigidbody
-            Rigidbody rb = InstantiatedObject.GetComponent<Rigidbody>();
+            Rigidbody rb = instantiatedObject.GetComponent<Rigidbody>();
             if (rb == null)
             {
                 return;

@@ -84,10 +84,11 @@ public class CustomPlayerController : MonoBehaviour
 
     void Update()
     {
-
         UpdateMovement();
 
         UpdateJump();
+
+        SafetyNet();
     }
 
     private void UpdateMovement()
@@ -128,6 +129,25 @@ public class CustomPlayerController : MonoBehaviour
         {
             
             buttonPressed = false;
+        }
+    }
+
+    private void SafetyNet()
+    {
+        if(transform.position.y < -100)
+        {
+            transform.position = Vector3.zero;
+            rigidBodyComponent.velocity = Vector3.zero;
+        }
+        if(transform.position.x > 200 || transform.position.x < -200)
+        {
+            transform.position = Vector3.zero;
+            rigidBodyComponent.velocity = Vector3.zero;
+        }
+        if (transform.position.z > 200 || transform.position.z < -200)
+        {
+            transform.position = Vector3.zero;
+            rigidBodyComponent.velocity = Vector3.zero;
         }
     }
 }

@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7340176454797028368}
-  - component: {fileID: -2220570204996482390}
+  - component: {fileID: 9056816007878641503}
   - component: {fileID: -7015571277545688445}
   m_Layer: 0
   m_Name: Ice Knife
@@ -28,11 +28,12 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &-2220570204996482390
+--- !u!114 &9056816007878641503
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -41,10 +42,21 @@ MonoBehaviour:
   m_GameObject: {fileID: 3900314875810967446}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a417b29783aa45f4999650d0fe282d04, type: 3}
+  m_Script: {fileID: 11500000, guid: 8863a1066f3126746a96aaba81277b25, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxCharge: 3
+  currentHand: 0
+  playerRb: {fileID: 0}
+  circleHolder: {fileID: 0}
+  spellCircle: {fileID: 0}
+  _palmLocation: {fileID: 0}
+  _backOfHandLocation: {fileID: 0}
+  _handLocation: {fileID: 0}
+  _playerLocation: {fileID: 0}
+  _targetManager: {fileID: 0}
+  _gestureManager: {fileID: 0}
+  triggerPressedValue: 0
+  gripPressedValue: 0
 --- !u!114 &-7015571277545688445
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -57,13 +69,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 945e6df227a964c44b56155c2284a633, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  objectToSpawn: {fileID: 0}
-  ParentToTarget: 0
-  LockRotation: 0
+  objectToSpawn: {fileID: 4446097827289362928, guid: 831605ea5e9063a4896375072bf24cc4, type: 3}
+  ParentToTarget: 1
+  rotationOffset: {x: -90, y: 0, z: 0}
+  LockRotation: 1
   LockPosition: 0
-  GravityAffected: 1
+  GravityAffected: 0
   InstantiatedObject: {fileID: 0}
-  isProjectile: 0
   spawnAmount: 1
-  shootDirection: 1
+  shootDirection: 4
   spreadAmount: 0

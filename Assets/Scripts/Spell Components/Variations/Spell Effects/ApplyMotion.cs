@@ -6,8 +6,8 @@ public class ApplyMotion : MonoBehaviour
 {
     public ForceMode forceType;
     public float forceMultiplier = 1;
-    public virtual void Cast(Rigidbody target, Vector3 force) {
-        target.AddForce(force * forceMultiplier, forceType);
+    public void Cast(Rigidbody target, Vector3 direction) {
+        target.AddForce(direction * forceMultiplier, forceType);
     }
 
     public void ChangeMotion(Transform target, Vector3 linerVelToBe, Vector3 angularVelToBe)

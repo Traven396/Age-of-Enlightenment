@@ -7,6 +7,7 @@ using UnityEngine.XR;
 [RequireComponent(typeof(TargetManager))]
 [RequireComponent(typeof(SpellParameterSupplier))]
 [RequireComponent(typeof(SpellInputManager))]
+[RequireComponent(typeof(SpellVisualsManager))]
 public class SpellManager : MonoBehaviour
 {
     private TargetManager _targetManager;
@@ -75,6 +76,8 @@ public class SpellManager : MonoBehaviour
                 _spawnedLeftSpell = Instantiate(leftSpell, transform);
                 _spawnedLeftBlueprint = _spawnedLeftSpell.GetComponent<SpellBlueprint>();
                 _spawnedLeftBlueprint._targetManager = _targetManager;
+                _spawnedLeftBlueprint._visualsManager = _visualsManager;
+
                 _parameterSupplier.SetParametersLeft(_spawnedLeftBlueprint);
                 _inputManager.SetLeftSpell(_spawnedLeftBlueprint);
             }
@@ -86,6 +89,7 @@ public class SpellManager : MonoBehaviour
                 _spawnedRightSpell = Instantiate(rightSpell, transform);
                 _spawnedRightBlueprint = _spawnedRightSpell.GetComponent<SpellBlueprint>();
                 _spawnedRightBlueprint._targetManager = _targetManager;
+                _spawnedRightBlueprint._visualsManager = _visualsManager;
 
                 _parameterSupplier.SetParametersRight(_spawnedRightBlueprint);
                 _inputManager.SetRightSpell(_spawnedRightBlueprint);

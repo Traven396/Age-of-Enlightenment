@@ -24,6 +24,7 @@ public abstract class SpellBlueprint : MonoBehaviour
     //Code parameters
     [HideInInspector] public TargetManager _targetManager;
     [HideInInspector] public GestureManager _gestureManager;
+    [HideInInspector] public SpellVisualsManager _visualsManager;
 
     //Button pressed values
     [HideInInspector] public float triggerPressedValue;
@@ -40,7 +41,9 @@ public abstract class SpellBlueprint : MonoBehaviour
         triggerPressed = false;
     }
     public void TriggerHoldSafe() { if (triggerPressed){ TriggerHold(); } }
+    public void TriggerHoldFixedSafe() { if (triggerPressed) { TriggerHoldFixed(); } }
     public virtual void TriggerHold() { }
+    public virtual void TriggerHoldFixed() { }
     public virtual void GripPress()
     {
         gripPressed = true;
@@ -50,7 +53,13 @@ public abstract class SpellBlueprint : MonoBehaviour
         gripPressed = false;
     }
     public void GripHoldSafe() { if (gripPressed) { GripHold(); } }
+    public void GripHoldFixedSafe() { if (gripPressed) { GripHoldFixed(); } }
     public virtual void GripHold() { }
+
+    public virtual void GripHoldFixed()
+    {
+
+    }
     #endregion
 
     private void Start()

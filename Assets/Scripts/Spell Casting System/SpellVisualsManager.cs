@@ -22,7 +22,6 @@ public class SpellVisualsManager : MonoBehaviour
     private GameObject currentLeftCircle;
     private GameObject currentRightCircle;
 
-
     public void ChangeAnimatorController(LeftRight side, AnimatorOverrideController newController)
     {
         if(side == 0)
@@ -41,14 +40,12 @@ public class SpellVisualsManager : MonoBehaviour
         if(circleToBe)
             SpawnNewCircle(circleToBe, LeftRight.Right);
     }
-
     public void ChangeLeftCircle(GameObject circleToBe)
     {
         DespawnCircle(LeftRight.Left);
         if(circleToBe)
             SpawnNewCircle(circleToBe, LeftRight.Left);
     }
-
     public void DespawnCircle(LeftRight side)
     {
         if (side == 0)
@@ -60,7 +57,6 @@ public class SpellVisualsManager : MonoBehaviour
             Destroy(currentRightCircle);
         }
     }
-
     private void SpawnNewCircle(GameObject circleToBe, LeftRight side)
     {
         if (side == 0)
@@ -70,6 +66,34 @@ public class SpellVisualsManager : MonoBehaviour
         else
         {
             currentRightCircle = Instantiate(circleToBe, rightCircleHolder.transform);
+        }
+    }
+
+    public void ReturnCircleToHolder(LeftRight whichHand)
+    {
+        if (whichHand == 0)
+        {
+            if (Quaternion.Angle(currentLeftCircle.transform.rotation, leftCircleHolder.transform.rotation) > .1)
+            {
+                iTween.RotateUpdate(currentLeftCircle, leftCircleHolder.transform.rotation.eulerAngles, .1f);
+
+            }
+            if (Vector3.Distance(leftCircleHolder.transform.position, currentLeftCircle.transform.position) > .001f)
+            {
+                iTween.MoveUpdate(currentLeftCircle, leftCircleHolder.transform.position, .1f);
+            } 
+        }
+        else
+        {
+            if(Quaternion.Angle(currentRightCircle.transform.rotation, rightCircleHolder.transform.rotation) > .1)
+            {
+                iTween.RotateUpdate(currentRightCircle, rightCircleHolder.transform.rotation.eulerAngles, .1f);
+
+            }
+            if (Vector3.Distance(rightCircleHolder.transform.position, currentRightCircle.transform.position) > .001f)
+            {
+                iTween.MoveUpdate(currentRightCircle, rightCircleHolder.transform.position, .1f);
+            }
         }
     }
 }
