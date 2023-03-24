@@ -44,14 +44,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6ddea049e0b1ea3468fbed9e014137da, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  whichHand: 0
+  currentHand: 0
   playerRb: {fileID: 0}
   circleHolder: {fileID: 0}
+  spellCircle: {fileID: 0}
   _palmLocation: {fileID: 0}
   _backOfHandLocation: {fileID: 0}
   _handLocation: {fileID: 0}
   _playerLocation: {fileID: 0}
   _targetManager: {fileID: 0}
   _gestureManager: {fileID: 0}
+  _visualsManager: {fileID: 0}
   triggerPressedValue: 0
   gripPressedValue: 0
+  initialManaCost: 4
+  manaDrain: 2

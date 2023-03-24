@@ -5,11 +5,12 @@ using UnityEngine.InputSystem;
 
 public class GestureManager : MonoBehaviour
 {
-
+    public Rigidbody bodyRb;
     public bool displayInChat = false;
     public bool LeftHand = false;
 
     private Vector3 prevPos;
+    private Vector3 prevBodPos;
     public Vector3 currVel { get; private set; }
     public float dotProdX { get; private set; }
     public float dotProdY { get; private set; }
@@ -54,7 +55,7 @@ public class GestureManager : MonoBehaviour
         #region Regular Velocity
         if (prevPos != null)
         {
-            currVel = (transform.position - prevPos) / Time.deltaTime;
+            currVel = (((transform.position - prevPos) - (bodyRb.transform.position -  prevBodPos)) / Time.deltaTime);
 
             dotProdX = Vector3.Dot(currVel, transform.right);
             dotProdY = Vector3.Dot(currVel, transform.up);
@@ -75,6 +76,7 @@ public class GestureManager : MonoBehaviour
     private void LateUpdate()
     {
         prevPos = transform.position;
+        prevBodPos = bodyRb.transform.position;
     }
 
 

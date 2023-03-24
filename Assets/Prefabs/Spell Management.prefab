@@ -66,10 +66,12 @@ MonoBehaviour:
   leftPalm: {fileID: 0}
   leftBackOfHand: {fileID: 0}
   leftHand: {fileID: 0}
+  leftCircleHolder: {fileID: 0}
   leftGesture: {fileID: 0}
   rightPalm: {fileID: 0}
   rightBackOfHand: {fileID: 0}
   rightHand: {fileID: 0}
+  rightCircleHolder: {fileID: 0}
   rightGesture: {fileID: 0}
 --- !u!114 &435378931629056528
 MonoBehaviour:
@@ -89,6 +91,9 @@ MonoBehaviour:
   rightTrigger: {fileID: 83097790271614945, guid: c348712bda248c246b8c49b3db54643f, type: 3}
   rightGrip: {fileID: 187161793506945269, guid: c348712bda248c246b8c49b3db54643f, type: 3}
   rightAButton: {fileID: 0}
+  UIMASK:
+    serializedVersion: 2
+    m_Bits: 32
 --- !u!114 &35419538201059109
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -120,3 +125,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   leftCircleHolder: {fileID: 0}
   rightCircleHolder: {fileID: 0}
+  defaultLeftController: {fileID: 0}
+  defaultRightController: {fileID: 0}
+  leftHandController: {fileID: 0}
+  rightHandController: {fileID: 0}

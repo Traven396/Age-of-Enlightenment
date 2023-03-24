@@ -154,7 +154,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2851465914124386090}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b9c0c6dc856067a4cb89b3064a1804cd, type: 3}
   m_Name: 
@@ -164,11 +164,17 @@ MonoBehaviour:
   hitSizeScaler: 3
   trails: []
   rotateTowardsMotion: 1
-  speedMultiplier: 500
+  damageAmount: 1
   damageType: 4
   lifeTime: 4
-  Explosive: 0
+  collisionsFromStart: 0
+  isExplosive: 0
+  explosionDependentOnScale: 0
   explosionRadius: 0
+  explosionForce: 1
+  affectedLayers:
+    serializedVersion: 2
+    m_Bits: 0
 --- !u!1 &7723777850169483544
 GameObject:
   m_ObjectHideFlags: 0

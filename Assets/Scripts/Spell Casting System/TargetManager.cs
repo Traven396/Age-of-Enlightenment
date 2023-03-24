@@ -11,6 +11,7 @@ public class TargetManager : MonoBehaviour
 
     [HideInInspector]public Transform rightHandPosition;
 
+    private LayerMask groundLayer;
 
     #region GetClosest
     private TargettableEntity currentClosestLEntity = null;
@@ -29,6 +30,8 @@ public class TargetManager : MonoBehaviour
     {
         leftTargetter = new GameObject("Left Targetter");
         rightTargetter = new GameObject("Right Targetter");
+        ignoreLayers = ~(ignoreLayers);
+        groundLayer = LayerMask.NameToLayer("Ground");
     }
     //public ITargetable GetClosest(LeftRight hand)
     //{
@@ -217,6 +220,37 @@ public class TargetManager : MonoBehaviour
         {
             RaycastHit hit;
             if(Physics.Raycast(rightHandPosition.position, rightHandPosition.forward, out hit, maxDistance, ignoreLayers))
+            {
+                rightTargetter.transform.position = hit.point;
+                return hit;
+            }
+            else
+            {
+                return hit;
+            }
+        }
+    }
+    public RaycastHit RaycastFromHandToGround(LeftRight hand, float maxDistance)
+    {
+
+        if (hand == 0)
+        {
+            RaycastHit hit;
+            if (Physics.Raycast(leftHandPosition.position, leftHandPosition.forward, out hit, maxDistance, groundLayer))
+            {
+                leftTargetter.transform.position = hit.point;
+
+                return hit;
+            }
+            else
+            {
+                return hit;
+            }
+        }
+        else
+        {
+            RaycastHit hit;
+            if (Physics.Raycast(rightHandPosition.position, rightHandPosition.forward, out hit, maxDistance, groundLayer))
             {
                 rightTargetter.transform.position = hit.point;
                 return hit;

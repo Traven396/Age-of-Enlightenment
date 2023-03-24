@@ -46,18 +46,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9957e22730f32bf46be8b93a08771f63, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  whichHand: 0
+  currentHand: 0
   playerRb: {fileID: 0}
   circleHolder: {fileID: 0}
+  spellCircle: {fileID: 0}
   _palmLocation: {fileID: 0}
   _backOfHandLocation: {fileID: 0}
   _handLocation: {fileID: 0}
   _playerLocation: {fileID: 0}
   _targetManager: {fileID: 0}
   _gestureManager: {fileID: 0}
+  _visualsManager: {fileID: 0}
   triggerPressedValue: 0
   gripPressedValue: 0
   requiredCharge: 1.5
+  launchSpeed: 8
 --- !u!114 &8153499114401393444
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -85,11 +88,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   objectToSpawn: {fileID: 8452052330996886707, guid: 5c4d9882a88d7314785f0f7cb74d0863, type: 3}
   ParentToTarget: 0
+  rotationOffset: {x: 0, y: 0, z: 0}
   LockRotation: 0
   LockPosition: 0
   GravityAffected: 0
-  InstantiatedObject: {fileID: 0}
-  isProjectile: 1
+  instantiatedObject: {fileID: 0}
   spawnAmount: 10
   shootDirection: 0
   spreadAmount: 0.2

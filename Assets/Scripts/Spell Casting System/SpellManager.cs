@@ -103,6 +103,7 @@ public class SpellManager : MonoBehaviour
         {
             if (_spawnedLeftSpell)
             {
+                _spawnedLeftBlueprint.OnDeselect();
                 Destroy(_spawnedLeftSpell);
                 _spawnedLeftBlueprint = null;
             }
@@ -111,6 +112,8 @@ public class SpellManager : MonoBehaviour
         {
             if (_spawnedRightSpell)
             {
+                _spawnedRightBlueprint.OnDeselect();
+
                 Destroy(_spawnedRightSpell);
 
                 _spawnedRightBlueprint = null;

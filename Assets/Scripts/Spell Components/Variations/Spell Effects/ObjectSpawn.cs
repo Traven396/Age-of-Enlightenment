@@ -53,7 +53,38 @@ public class ObjectSpawn : MonoBehaviour
             #endregion  
         }
     }
-    public void LaunchProjectile(Transform directionIndicator, LeftRight whichHand)
+
+    public void Cast(Vector3 target)
+    {
+        spawnedObjects.Clear();
+        for (int i = 0; i < spawnAmount; i++)
+        {
+            instantiatedObject = ParentToTarget ? Instantiate(objectToSpawn, target, (Quaternion.identity * Quaternion.Euler(rotationOffset))) : Instantiate(objectToSpawn, target, (Quaternion.identity * Quaternion.Euler(rotationOffset)));
+            spawnedObjects.Add(instantiatedObject);
+            #region Setting up Rigidbody
+            Rigidbody rb = instantiatedObject.GetComponent<Rigidbody>();
+            if (rb == null)
+            {
+                return;
+            }
+            if (LockPosition && !LockRotation)
+            {
+                rb.constraints = RigidbodyConstraints.FreezePosition;
+            }
+            else if (LockRotation && !LockPosition)
+            {
+                rb.constraints = RigidbodyConstraints.FreezeRotation;
+            }
+            else if (LockPosition && LockRotation)
+            {
+                rb.constraints = RigidbodyConstraints.FreezeAll;
+            }
+            rb.useGravity = GravityAffected;
+            #endregion  
+        }
+    }
+
+    public void LaunchProjectile(Transform directionIndicator, LeftRight whichHand, float launchModifier)
     {
         foreach (GameObject currentSpawnedProjectile in spawnedObjects)
         {
@@ -98,7 +129,7 @@ public class ObjectSpawn : MonoBehaviour
             if (currentSpawnedProjectile.TryGetComponent(out pb))
             {
                 pb.enabled = true;
-                pb.Shoot(shootDirectionTransform.normalized);
+                pb.Shoot(shootDirectionTransform * launchModifier);
             }
             else
             {

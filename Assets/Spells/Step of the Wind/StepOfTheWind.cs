@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class StepOfTheWind : SpellBlueprint
 {
+    [Header("Mana Cost")]
+    public int maxManaCost = 20;
     public float increaseAmount = 4;
 
     private bool wasActuallyPressed = false;
@@ -31,12 +33,14 @@ public class StepOfTheWind : SpellBlueprint
             if (Player.Instance.stepOfWindOn)
             {
                 Player.Instance.SubtractPlayerMoveSpeed(increaseAmount);
+                Player.Instance.AddMaximumMana(maxManaCost);
                 Player.Instance.stepOfWindOn = false;
                 iTween.ScaleTo(spellCircle, Vector3.one, .2f);
             }
             else
             {
                 Player.Instance.AddPlayerMoveSpeed(increaseAmount);
+                Player.Instance.SubtractMaximumMana(maxManaCost);
                 Player.Instance.stepOfWindOn = true;
                 iTween.ScaleTo(spellCircle, Vector3.one * 1.5f, .2f);
             }

@@ -4,12 +4,16 @@ using UnityEngine;
 
 public class CinderBlast : SpellBlueprint
 {
-    private Chargeable _charge;
-    private ObjectSpawn _objectSpawn; 
-
+    [Header("Mana")]
+    public int manaCost = 12;
+    [Header("Spell Parameters")]
     public float requiredCharge = 1f;
+    public float launchSpeed = 250f;
 
     private AudioSource spellSoundSource;
+
+    private Chargeable _charge;
+    private ObjectSpawn _objectSpawn;
 
     private void Start()
     {
@@ -24,25 +28,23 @@ public class CinderBlast : SpellBlueprint
         base.TriggerPress();
         _charge.ResetCharge();
         _charge.StartCharging();
-        
-    }
-    public override void TriggerHold()
-    {
-        if(_charge.GetCurrentCharge() < requiredCharge)
-        {
-            iTween.ScaleUpdate(spellCircle, Vector3.one * 1.4f, 1);
-        }
+        iTween.ScaleTo(spellCircle, Vector3.one * 1.4f, 1.5f);
     }
     public override void TriggerRelease()
     {
         base.TriggerRelease();
         if(_charge.GetCurrentCharge() >= requiredCharge)
         {
-            _objectSpawn.Cast(_palmLocation);
-            _objectSpawn.LaunchProjectile(_palmLocation, currentHand);
+            if (Player.Instance.currentMana >= manaCost)
+            {
+                _objectSpawn.Cast(_palmLocation);
+                _objectSpawn.LaunchProjectile(_palmLocation, currentHand, launchSpeed);
 
-            spellSoundSource.pitch = Random.Range(0.85f, .95f);
-            spellSoundSource.Play();
+                spellSoundSource.pitch = Random.Range(0.85f, .95f);
+                spellSoundSource.Play();
+
+                Player.Instance.SubtractCurrentMana(manaCost);
+            }
         }
         _charge.StopCharging();
         

@@ -56,10 +56,11 @@ MonoBehaviour:
   _playerLocation: {fileID: 0}
   _targetManager: {fileID: 0}
   _gestureManager: {fileID: 0}
+  _visualsManager: {fileID: 0}
   triggerPressedValue: 0
   gripPressedValue: 0
-  BladeSpawner: {fileID: -8638852660177270469}
-  overrideBtn: {fileID: 4909824300061149311, guid: c348712bda248c246b8c49b3db54643f, type: 3}
+  manaCost: 15
+  launchSpeed: 6
 --- !u!114 &9127179507855980703
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -91,7 +92,7 @@ MonoBehaviour:
   LockRotation: 1
   LockPosition: 0
   GravityAffected: 1
-  InstantiatedObject: {fileID: 0}
+  instantiatedObject: {fileID: 0}
   spawnAmount: 1
   shootDirection: 4
   spreadAmount: 0

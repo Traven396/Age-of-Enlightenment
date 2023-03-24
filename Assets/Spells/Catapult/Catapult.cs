@@ -4,12 +4,17 @@ using UnityEngine;
 
 public class Catapult : SpellBlueprint
 {
-    private ApplyMotion castEffect;
-    private IMovement gesture;
+    [Header("Mana Cost")]
+    public int manaCost = 8;
+    [Header("Range")]
     public float raycastDistance = 3;
     public float sphereRadius = .5f;
-    [Space(20)]
+    
+    [Header("Audio")]
     public AudioClip launchSound;
+
+    private ApplyMotion castEffect;
+    private IMovement gesture;
 
     private TargettableEntity currentTargettedEntity;
     private List<TargettableEntity> selectedObjects = new List<TargettableEntity>();
@@ -68,7 +73,6 @@ public class Catapult : SpellBlueprint
     
     public override void TriggerHold()
     {
-        base.TriggerHold();
         currentTargettedEntity = _targetManager.GetClosestTeleTarget(currentHand, raycastDistance, sphereRadius);
     }
     public override void TriggerRelease()
@@ -78,9 +82,12 @@ public class Catapult : SpellBlueprint
         {
             if (!selectedObjects.Contains(currentTargettedEntity))
             {
-                selectedObjects.Add(currentTargettedEntity);
-                StartCoroutine(FloatingSelection(currentTargettedEntity));
-                
+                if (Player.Instance.currentMana >= manaCost)
+                {
+                    selectedObjects.Add(currentTargettedEntity);
+                    StartCoroutine(FloatingSelection(currentTargettedEntity));
+                    Player.Instance.SubtractCurrentMana(manaCost);
+                }
             }
         }
         currentTargettedEntity = null;
@@ -88,7 +95,6 @@ public class Catapult : SpellBlueprint
 
     public override void GripHold()
     {
-        base.GripHold();
         if (selectedObjects.Count != 0 && gesture.GesturePerformed(_gestureManager, out Vector3 direction))
         {
             foreach (TargettableEntity targetable in selectedObjects)

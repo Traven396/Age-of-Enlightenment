@@ -223,7 +223,7 @@ ParticleSystem:
       serializedVersion: 2
       minMaxState: 2
       minColor: {r: 0.20754719, g: 0.20754719, b: 0.20754719, a: 0.92941177}
-      maxColor: {r: 1, g: 1, b: 1, a: 0.38431373}
+      maxColor: {r: 0, g: 0, b: 0, a: 0.5058824}
       maxGradient:
         serializedVersion: 2
         key0: {r: 1, g: 1, b: 1, a: 1}
@@ -1363,7 +1363,7 @@ ParticleSystem:
         m_NumAlphaKeys: 2
   UVModule:
     serializedVersion: 2
-    enabled: 1
+    enabled: 0
     mode: 0
     timeMode: 0
     fps: 30
@@ -4761,7 +4761,7 @@ ParticleSystemRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 708a54329cfdb5e4080351e83999bc7e, type: 2}
+  - {fileID: 2100000, guid: 75d80ac9eb4fd6741939528c5a137e53, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -8739,7 +8739,7 @@ ParticleSystem:
         m_RotationOrder: 4
     maxLights: 20
   TrailModule:
-    enabled: 1
+    enabled: 0
     mode: 0
     ratio: 1
     lifetime:
@@ -9574,7 +9574,6 @@ ParticleSystemRenderer:
   m_RendererPriority: 0
   m_Materials:
   - {fileID: 2100000, guid: cca0053a37ddf9341a5dc74e7ca06bf9, type: 2}
-  - {fileID: 10301, guid: 0000000000000000f000000000000000, type: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -14528,8 +14527,13 @@ MonoBehaviour:
   speedMultiplier: 250
   damageType: 0
   lifeTime: 0.15
-  Explosive: 0
+  isExplosive: 0
+  explosionDependentOnScale: 0
   explosionRadius: 0
+  explosionForce: 1
+  ignoredLayers:
+    serializedVersion: 2
+    m_Bits: 0
 --- !u!54 &7529255553250271314
 Rigidbody:
   m_ObjectHideFlags: 0

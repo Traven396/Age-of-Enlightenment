@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 3650018891219107818}
   - component: {fileID: 4830692295663651304}
   - component: {fileID: 8635413934642658567}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Text (TMP)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -147,7 +147,7 @@ GameObject:
   - component: {fileID: 7689694953636318533}
   - component: {fileID: 7259013829399494237}
   - component: {fileID: 6998604183440294248}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Right Arrow
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -279,7 +279,7 @@ GameObject:
   - component: {fileID: 6646332697206839130}
   - component: {fileID: 3879710184975725415}
   - component: {fileID: 3951627863697176605}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Text (TMP)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -563,8 +563,11 @@ MonoBehaviour:
       spellCircle: {fileID: 776886629064782777, guid: 9300ac926c2d3d348987bd2bcb100dc7, type: 3}
       RightAnimationController: {fileID: 22100000, guid: 645cbc11ddd5d2a45b7c009c0a200f1a, type: 2}
       LeftAnimationController: {fileID: 22100000, guid: 39eb2c994df5d7642bc3fc36dca08cc5, type: 2}
-    spellDescription: By pressing the trigger on the controller you can push yourself
-      forward. The harder you press, the faster you go.
+    spellDescription: 'While holding the trigger you expel a constant stream of air
+      from your palm. Use it to propel youself
+
+      While holding grip you can
+      slow down the force of motion on yourself, allowing you to float in the air'
   - spellIcon: {fileID: 21300000, guid: 9e5abf9cdb5d3c9488575cebfef9b5bf, type: 3}
     spellName: Step of the Wind
     spellCouple:
@@ -572,9 +575,9 @@ MonoBehaviour:
       spellCircle: {fileID: 776886629064782777, guid: 17357bdac2637724fb6b852b7c621658, type: 3}
       RightAnimationController: {fileID: 0}
       LeftAnimationController: {fileID: 0}
-    spellDescription: Holding down the trigger spawns a small targetting indicator
-      wherever you point. Upon release, as long as you are pointing to a flat surface,
-      you will dash towards the location.
+    spellDescription: By pressing and releasing trigger you can increase your passive
+      movement speed. This spell will stay active even if you select a different
+      one. It will decrease your Max Mana as a cist though
   - spellIcon: {fileID: 21300000, guid: 9406a98d77ad2a24e967025d22647c99, type: 3}
     spellName: Terra Blade
     spellCouple:
@@ -583,8 +586,8 @@ MonoBehaviour:
       RightAnimationController: {fileID: 0}
       LeftAnimationController: {fileID: 0}
     spellDescription: Holding down the grip button and making a slash gesture spawns
-      a blade along the back of your arm. While holding grip, if you press trigger
-      you can launch the blade as a projectile.
+      a blade along the back of your arm. Also, if you press trigger you can launch
+      the blade as a projectile.
   - spellIcon: {fileID: 21300000, guid: 3638fcac3952b374f96167d7c8a735ae, type: 3}
     spellName: Catapult
     spellCouple:
@@ -633,7 +636,8 @@ MonoBehaviour:
       RightAnimationController: {fileID: 0}
       LeftAnimationController: {fileID: 0}
     spellDescription: Charge up the blast by holding down the trigger. Once you are
-      ready to blast something, throw your hand forward and release.
+      ready to blast something release the button to launch out a shotgun blast of
+      ashes
   - spellIcon: {fileID: 21300000, guid: 23b57d7324b896840b8586a6d17cd7ad, type: 3}
     spellName: Shield
     spellCouple:
@@ -643,7 +647,8 @@ MonoBehaviour:
       LeftAnimationController: {fileID: 0}
     spellDescription: Protect yo self fool. By holding grip the shield will enlarge
       and become physical. There is nothing to defend yourself from yet technically,
-      but its still fun. Try catching one of the small boxes on it using catapult
+      but its still fun. Try catching one of the small boxes on it using catapult,
+      or don't. I'm just a menu
   - spellIcon: {fileID: 21300000, guid: f5ab3f534c1138f4786f23cd74103223, type: 3}
     spellName: Ice Knife
     spellCouple:
@@ -651,8 +656,12 @@ MonoBehaviour:
       spellCircle: {fileID: 776886629064782777, guid: 64023b342b7887645a1347d15aec6b5d, type: 3}
       RightAnimationController: {fileID: 0}
       LeftAnimationController: {fileID: 0}
-    spellDescription: Hold grip to start aiming the spell, then by holding trigger
-      you can charge a projectile
+    spellDescription: 'To start aiming the spell hold down the grip button, then
+      by holding trigger you can charge the spike on the back of your hand. The longer
+      you charge, the larger it will become.
+
+
+      Release the trigger to launch'
 --- !u!1 &1162796929566289676
 GameObject:
   m_ObjectHideFlags: 0
@@ -664,7 +673,7 @@ GameObject:
   - component: {fileID: 8644278536420713054}
   - component: {fileID: 496873815365796101}
   - component: {fileID: 9046044991640235264}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Spell Description
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -967,7 +976,7 @@ GameObject:
   - component: {fileID: 215603621631623219}
   - component: {fileID: 271212750798643766}
   - component: {fileID: 4047317559300644686}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Left Arrow
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1100,7 +1109,7 @@ GameObject:
   - component: {fileID: 8163559811835784552}
   - component: {fileID: 5728992220025032408}
   - component: {fileID: 3760355252391905261}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: L Button
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1332,7 +1341,8 @@ GameObject:
   - component: {fileID: 731983024421758725}
   - component: {fileID: 1904486475724285553}
   - component: {fileID: 3427911818126626259}
-  m_Layer: 0
+  - component: {fileID: 2053690266646711550}
+  m_Layer: 5
   m_Name: Right Page
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1441,6 +1451,19 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 4294967295
   m_RaycastTriggerInteraction: 1
+--- !u!65 &2053690266646711550
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5916938781697416071}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 23.728073, y: 36.3361, z: 0.64031863}
+  m_Center: {x: -0.057018794, y: -0.5181074, z: 0.6761113}
 --- !u!1 &6282738703213529285
 GameObject:
   m_ObjectHideFlags: 0
@@ -1563,17 +1586,17 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 2039792266381594586}
         m_TargetAssemblyTypeName: BookMenuManager, Assembly-CSharp
         m_MethodName: ClearSpells
-        m_Mode: 6
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
-          m_BoolArgument: 1
+          m_BoolArgument: 0
         m_CallState: 2
 --- !u!1 &6685611360042993078
 GameObject:
@@ -1586,7 +1609,7 @@ GameObject:
   - component: {fileID: 6013401070316178837}
   - component: {fileID: 6697676717503353632}
   - component: {fileID: 5993706179439970582}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Spell Title
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1723,7 +1746,8 @@ GameObject:
   - component: {fileID: 2894609380802523622}
   - component: {fileID: 3568812825742939219}
   - component: {fileID: 4153751114223509554}
-  m_Layer: 0
+  - component: {fileID: 2485185989688548025}
+  m_Layer: 5
   m_Name: Left Page
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1836,6 +1860,19 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 4294967295
   m_RaycastTriggerInteraction: 1
+--- !u!65 &2485185989688548025
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6744316367110598035}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 23.728073, y: 36.3361, z: 0.64031863}
+  m_Center: {x: -0.057018794, y: -0.5181074, z: 0.6761113}
 --- !u!1 &7753107496693587477
 GameObject:
   m_ObjectHideFlags: 0
@@ -1847,7 +1884,7 @@ GameObject:
   - component: {fileID: 532063568776190886}
   - component: {fileID: 140391547843089667}
   - component: {fileID: 7491564347210501287}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Spell Icon
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2053,7 +2090,7 @@ GameObject:
   - component: {fileID: 6708822506081372051}
   - component: {fileID: 5191592474373752955}
   - component: {fileID: 7783377940470481459}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: R Button
   m_TagString: Untagged
   m_Icon: {fileID: 0}

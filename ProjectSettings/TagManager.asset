@@ -16,10 +16,10 @@ TagManager:
   - UI
   - Puzzle
   - Puzzle 2
-  - 
+  - Enemy
   - Ground
-  - 
-  - 
+  - EnemyProjectile
+  - PlayerProjectile
   - 
   - 
   - 

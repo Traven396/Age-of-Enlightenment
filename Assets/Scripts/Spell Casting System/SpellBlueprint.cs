@@ -52,16 +52,19 @@ public abstract class SpellBlueprint : MonoBehaviour
     {
         gripPressed = false;
     }
-    public void GripHoldSafe() { if (gripPressed) { GripHold(); } }
-    public void GripHoldFixedSafe() { if (gripPressed) { GripHoldFixed(); } }
+    public  void GripHoldSafe() { if (gripPressed) { GripHold(); } }
+    public  void GripHoldFixedSafe() { if (gripPressed) { GripHoldFixed(); } }
     public virtual void GripHold() { }
 
     public virtual void GripHoldFixed()
     {
-
     }
     #endregion
 
+    public virtual void OnDeselect()
+    {
+
+    }
     private void Start()
     {
         spellCircle = circleHolder.transform.GetChild(circleHolder.transform.childCount - 1).gameObject;

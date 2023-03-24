@@ -46,19 +46,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a1d972e76ccf63144bd42f2fdeb0d751, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  whichHand: 0
+  currentHand: 0
   playerRb: {fileID: 0}
   circleHolder: {fileID: 0}
+  spellCircle: {fileID: 0}
   _palmLocation: {fileID: 0}
   _backOfHandLocation: {fileID: 0}
   _handLocation: {fileID: 0}
   _playerLocation: {fileID: 0}
   _targetManager: {fileID: 0}
   _gestureManager: {fileID: 0}
+  _visualsManager: {fileID: 0}
   triggerPressedValue: 0
   gripPressedValue: 0
-  sphereRadius: 0.6
+  baseManaCost: 7
+  DamageModifier: 0.2
+  sphereRadius: 1
   castDistance: 5
+  minimumCharge: 1
 --- !u!114 &-8670642437641335948
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -86,3 +91,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   forceType: 1
   forceMultiplier: 10
+  canReflect: 1

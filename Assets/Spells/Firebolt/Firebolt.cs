@@ -5,18 +5,33 @@ using UnityEngine;
 
 public class Firebolt : SpellBlueprint
 {
+    [Header("MANA")]
+    public int bigFireballManaCost = 5;
+    public int tinyFireballManaCost = 1;
+
+    [Header("Prefab Stuff")]
     public ObjectSpawn _smallFireboltSpawn;
     public ObjectSpawn _bigFireboltSpawn;
     private IMovement _requiredGesture;
     private ApplyMotion _applyMotion;
 
+    [Header("Haptics")]
     public AudioClip tinyFireballCastSound;
+    public float tinyLaunchSpeed = 300f;
+    public float bigLaunchSpeed = 0f;
+
 
     //Better throw stuff
     private Vector3 centerOfMass;
     private Vector3 objectGrabOffset;
+    private Vector3[] velocityFrames = new Vector3[5];
+    private Vector3[] angularVelocityFrames = new Vector3[5];
+    private int currentVelocityFrameStep = 0;
 
     private AudioSource spellCircleAudioSource;
+
+    private bool doneScaling = false;
+
     private void Start()
     {
         _requiredGesture = GetComponent<IMovement>();
@@ -27,9 +42,6 @@ public class Firebolt : SpellBlueprint
         spellCircleAudioSource = spellCircle.GetComponent<AudioSource>();
 
         centerOfMass = _handLocation.transform.position;
-        Vector3 relPos = _palmLocation.transform.position - centerOfMass;
-        relPos = Quaternion.Inverse(_handLocation.rotation) * relPos;
-        objectGrabOffset = relPos;
     }
     private void Update()
     {
@@ -47,7 +59,6 @@ public class Firebolt : SpellBlueprint
     }
     public override void GripHold()
     {
-        base.GripHold();
         if (currentHand == 0)
         {
             iTween.RotateUpdate(spellCircle, (circleHolder.transform.rotation * Quaternion.Euler(-90, 0, 0)).eulerAngles, .4f);
@@ -68,25 +79,38 @@ public class Firebolt : SpellBlueprint
     public override void TriggerPress()
     {
         base.TriggerPress();
+        doneScaling = false;
         if (!gripPressed)
         {
-            _bigFireboltSpawn.Cast(_palmLocation);
+            if (Player.Instance.currentMana >= bigFireballManaCost)
+            {
+                _bigFireboltSpawn.Cast(_palmLocation);
+                iTween.ScaleFrom(_bigFireboltSpawn.instantiatedObject, iTween.Hash("scale", Vector3.zero, 
+                                                                                    "time", .2f, 
+                                                                                    "oncompletetarget", gameObject, 
+                                                                                    "oncomplete", "DoneScaling"));
+                Player.Instance.SubtractCurrentMana(bigFireballManaCost);
+            }
         }
         else
         {
-            _smallFireboltSpawn.Cast(spellCircle.transform);
-            spellCircleAudioSource.PlayOneShot(spellCircleAudioSource.clip);
-            _smallFireboltSpawn.LaunchProjectile(_handLocation, currentHand);
+            if (Player.Instance.currentMana >= tinyFireballManaCost)
+            {
+                _smallFireboltSpawn.Cast(spellCircle.transform);
+                spellCircleAudioSource.PlayOneShot(spellCircleAudioSource.clip);
+
+                _smallFireboltSpawn.LaunchProjectile(_handLocation, currentHand, tinyLaunchSpeed);
+                Player.Instance.SubtractCurrentMana(tinyFireballManaCost); 
+            }
         }
     }
     public override void TriggerHold()
     {
-        base.TriggerHold();
         if (!gripPressed)
         {
             if (_bigFireboltSpawn.instantiatedObject)
             {
-                if (_bigFireboltSpawn.instantiatedObject.transform.localScale.x < 2f)
+                if (_bigFireboltSpawn.instantiatedObject.transform.localScale.x < 2f && doneScaling)
                 {
                     iTween.ScaleAdd(_bigFireboltSpawn.instantiatedObject, Vector3.one * 0.02f, .05f);
                 } 
@@ -100,20 +124,90 @@ public class Firebolt : SpellBlueprint
         if (!gripPressed)
         {
             if (_requiredGesture == null)
+            {
                 return;
+            }
             if (_requiredGesture.GesturePerformed(_gestureManager, out Vector3 direction))
             {
+                CalculateOffset();
+
                 Vector3 controllerVelocityCross = Vector3.Cross(_gestureManager.angularVel, objectGrabOffset - centerOfMass);
                 Vector3 fullThrow = _gestureManager.currVel + controllerVelocityCross;
                 
-                _bigFireboltSpawn.LaunchProjectile(_palmLocation, currentHand);
+                _bigFireboltSpawn.LaunchProjectile(_palmLocation, currentHand, bigLaunchSpeed);
                 
-                _applyMotion.ChangeMotion(_bigFireboltSpawn.instantiatedObject.transform, _gestureManager.currVel, _gestureManager.angularVel);
+                _applyMotion.ChangeMotion(_bigFireboltSpawn.instantiatedObject.transform, fullThrow, _gestureManager.angularVel);
+
+                AddVelocity();
+                ResetVelocity();
             }
             else
             {
-                Destroy(_bigFireboltSpawn.instantiatedObject);
+                if (_bigFireboltSpawn.instantiatedObject)
+                {
+                    iTween.ScaleTo(_bigFireboltSpawn.instantiatedObject, Vector3.zero, .2f);
+                    Destroy(_bigFireboltSpawn.instantiatedObject, .2f); 
+                }
             } 
         }
     }
+    public override void OnDeselect()
+    {
+        base.OnDeselect();
+        Destroy(_bigFireboltSpawn.instantiatedObject);
+    }
+
+    void DoneScaling()
+    {
+        doneScaling = true;
+    }
+    #region Velocity Things
+    void CalculateOffset()
+    {
+        Vector3 relPos = _palmLocation.position - transform.position;
+        relPos = Quaternion.Inverse(transform.rotation) * relPos;
+        objectGrabOffset = relPos;
+    }
+    private void FixedUpdate()
+    {
+        VelocityUpdate();
+    }
+    private void VelocityUpdate()
+    {
+        if (velocityFrames != null)
+        {
+            currentVelocityFrameStep++;
+
+            if (currentVelocityFrameStep >= velocityFrames.Length)
+            {
+                currentVelocityFrameStep = 0;
+            }
+            velocityFrames[currentVelocityFrameStep] = _gestureManager.currVel;
+            angularVelocityFrames[currentVelocityFrameStep] = _gestureManager.angularVel;
+
+        }
+    }
+    private void AddVelocity()
+    {
+        if (velocityFrames != null)
+        {
+            Vector3 velocityAverage = HelpfulScript.GetVectorAverage(velocityFrames);
+            Vector3 angularVelocityAverage = HelpfulScript.GetVectorAverage(angularVelocityFrames);
+            if (velocityAverage != null && angularVelocityAverage != null)
+            {
+                _applyMotion.ChangeMotion(_bigFireboltSpawn.instantiatedObject.transform, velocityAverage, angularVelocityAverage);
+            }
+        }
+    }
+    private void ResetVelocity()
+    {
+        currentVelocityFrameStep = 0;
+        if (velocityFrames != null && velocityFrames.Length > 0)
+        {
+            velocityFrames = new Vector3[5];
+            angularVelocityFrames = new Vector3[5];
+        }
+    } 
+    #endregion
+
 }

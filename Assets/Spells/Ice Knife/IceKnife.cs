@@ -6,6 +6,10 @@ public class IceKnife : SpellBlueprint
 {
     private ObjectSpawn _objectSpawn;
 
+    [Header("Spell Stats")]
+    public int manaCost = 6;
+    public float launchSpeed;
+
     private void Start()
     {
         _objectSpawn = GetComponent<ObjectSpawn>();
@@ -54,7 +58,7 @@ public class IceKnife : SpellBlueprint
     {
         base.GripRelease();
         iTween.ScaleTo(spellCircle, Vector3.one, .1f);
-        if (_objectSpawn.instantiatedObject)
+        if (_objectSpawn.instantiatedObject && _objectSpawn.instantiatedObject.transform.parent != null)
         {
             Destroy(_objectSpawn.instantiatedObject);
         }
@@ -65,13 +69,16 @@ public class IceKnife : SpellBlueprint
 
         if (gripPressed)
         {
-            _objectSpawn.Cast(spellCircle.transform);
-            iTween.ScaleFrom(_objectSpawn.instantiatedObject, Vector3.zero, .15f);
+            if (Player.Instance.currentMana >= manaCost)
+            {
+                _objectSpawn.Cast(spellCircle.transform);
+                iTween.ScaleFrom(_objectSpawn.instantiatedObject, Vector3.zero, .15f);
+                Player.Instance.SubtractCurrentMana(manaCost);
+            }
         }
     }
     public override void TriggerHold()
     {
-        base.TriggerHold(); 
         if (gripPressed && _objectSpawn.instantiatedObject)
         {
             iTween.MoveUpdate(spellCircle, circleHolder.transform.position + circleHolder.transform.TransformDirection(new Vector3(0, .05f, -.04f)), 6);
@@ -84,7 +91,8 @@ public class IceKnife : SpellBlueprint
         base.TriggerRelease(); 
         if (gripPressed && _objectSpawn.instantiatedObject)
         {
-            _objectSpawn.LaunchProjectile(circleHolder.transform, currentHand);
+            _objectSpawn.instantiatedObject.GetComponent<ProjectileBehavior>().damageAmount *= _objectSpawn.instantiatedObject.transform.localScale.magnitude;
+            _objectSpawn.LaunchProjectile(circleHolder.transform, currentHand, launchSpeed);
         }
     }
 }
