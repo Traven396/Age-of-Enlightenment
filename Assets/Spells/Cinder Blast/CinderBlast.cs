@@ -28,7 +28,7 @@ public class CinderBlast : SpellBlueprint
         base.TriggerPress();
         _charge.ResetCharge();
         _charge.StartCharging();
-        iTween.ScaleTo(spellCircle, Vector3.one * 1.4f, 1.5f);
+        iTween.ScaleTo(spellCircle, Vector3.one * 1.4f, 4.5f);
     }
     public override void TriggerRelease()
     {

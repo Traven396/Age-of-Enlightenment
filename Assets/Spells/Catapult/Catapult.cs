@@ -132,4 +132,13 @@ public class Catapult : SpellBlueprint
         target.isSelected = false;
     }
     #endregion
+
+    public override void OnDeselect()
+    {
+        base.OnDeselect();
+        foreach (TargettableEntity targetable in selectedObjects)
+        {
+            UnfloatSomeMayCallItFalling(targetable);
+        }
+    }
 }

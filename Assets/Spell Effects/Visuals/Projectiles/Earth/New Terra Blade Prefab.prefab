@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 4552100829553990024}
   - component: {fileID: 1785880524284456258}
   - component: {fileID: 2996494337383775748}
-  m_Layer: 3
+  m_Layer: 11
   m_Name: CALL IT METH
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -108,7 +108,8 @@ GameObject:
   - component: {fileID: 4140531685021762607}
   - component: {fileID: -3115278932048236230}
   - component: {fileID: 5237206169445489345}
-  m_Layer: 3
+  - component: {fileID: 8182378804266636885}
+  m_Layer: 11
   m_Name: New Terra Blade Prefab
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -143,7 +144,7 @@ Rigidbody:
   m_Drag: 0
   m_AngularDrag: 0.05
   m_UseGravity: 0
-  m_IsKinematic: 1
+  m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
@@ -172,9 +173,27 @@ MonoBehaviour:
   explosionDependentOnScale: 0
   explosionRadius: 0
   explosionForce: 1
-  affectedLayers:
+  explosionLayers:
     serializedVersion: 2
     m_Bits: 0
+  nonCollidableLayers:
+    serializedVersion: 2
+    m_Bits: 2056
+--- !u!114 &8182378804266636885
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2851465914124386090}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 630733b98afff804ca661e979d90dad7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  damageMultiplier: 2
+  minimumVelocity: 0.4
+  attackCooldown: 1
 --- !u!1 &7723777850169483544
 GameObject:
   m_ObjectHideFlags: 0
@@ -184,7 +203,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6380883401075791203}
-  m_Layer: 3
+  m_Layer: 11
   m_Name: Pivot
   m_TagString: Untagged
   m_Icon: {fileID: 0}

@@ -59,6 +59,7 @@ MonoBehaviour:
   _visualsManager: {fileID: 0}
   triggerPressedValue: 0
   gripPressedValue: 0
+  manaCost: 15
   requiredCharge: 1.5
   launchSpeed: 8
 --- !u!114 &8153499114401393444
@@ -93,6 +94,8 @@ MonoBehaviour:
   LockPosition: 0
   GravityAffected: 0
   instantiatedObject: {fileID: 0}
+  instantiatedRB: {fileID: 0}
   spawnAmount: 10
   shootDirection: 0
+  projectileGravity: 0
   spreadAmount: 0.2

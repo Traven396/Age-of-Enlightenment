@@ -61,11 +61,10 @@ MonoBehaviour:
   _visualsManager: {fileID: 0}
   triggerPressedValue: 0
   gripPressedValue: 0
-  bigFireballManaCost: 6
-  tinyFireballManaCost: 2
+  bigFireballManaCost: 9
+  tinyFireballManaCost: 5
   _smallFireboltSpawn: {fileID: -1821292141482366204}
   _bigFireboltSpawn: {fileID: 3594768407673679522}
-  tinyFireballCastSound: {fileID: 8300000, guid: d6bc634665c6af44c88f68ccf8cc7da2, type: 3}
   tinyLaunchSpeed: 10
   bigLaunchSpeed: 0
 --- !u!114 &5496231019906291124
@@ -81,7 +80,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   GestureOverride: 0
-  requiredSpeed: 1
+  requiredSpeed: 0.5
 --- !u!114 &-1787303785842989847
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -96,6 +95,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   forceType: 0
   forceMultiplier: 1
+  canReflect: 0
 --- !u!114 &-1821292141482366204
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -115,8 +115,10 @@ MonoBehaviour:
   LockPosition: 0
   GravityAffected: 0
   instantiatedObject: {fileID: 0}
+  instantiatedRB: {fileID: 0}
   spawnAmount: 1
-  shootDirection: 4
+  shootDirection: 2
+  projectileGravity: 0
   spreadAmount: 0
 --- !u!114 &3594768407673679522
 MonoBehaviour:
@@ -137,6 +139,8 @@ MonoBehaviour:
   LockPosition: 0
   GravityAffected: 1
   instantiatedObject: {fileID: 0}
+  instantiatedRB: {fileID: 0}
   spawnAmount: 1
   shootDirection: 0
+  projectileGravity: 1
   spreadAmount: 0

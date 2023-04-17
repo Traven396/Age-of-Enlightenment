@@ -2,14 +2,17 @@
 using System.Collections;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.UI;
 
 public class EnemyAi : MonoBehaviour, IEntity, IDamageable
 {
     public LayerMask whatIsGround, whatIsPlayer;
+    public Slider healthSlider;
 
     private Rigidbody rb;
     private NavMeshAgent agent;
     private Transform player;
+    private AudioSource source;
 
     //Patroling
     [Header("Patrol Stats")]
@@ -30,8 +33,15 @@ public class EnemyAi : MonoBehaviour, IEntity, IDamageable
     [Header("Stats")]
     public float sightRange, attackRange;
     private bool playerInSightRange, playerInAttackRange, isFalling = false, isDead = false, alreadyHitRecently = false;
-    public float Health = 10;
+    public float MaxHealth = 10;
+    private float Health;
     public float minimumVelocityThreshold = .3f;
+    public int chanceOfSound = 3;
+    public float maxTimeBetweenAmbientSounds = 24f;
+    public float minTimeBetweenAmbientSounds = 8f;
+
+    private float currentTime;
+    private float timer = 0;
 
     [Header("Helpful Toggle")]
     public bool Freeze = false;
@@ -43,6 +53,19 @@ public class EnemyAi : MonoBehaviour, IEntity, IDamageable
         agent = GetComponent<NavMeshAgent>();
         rb = GetComponent<Rigidbody>();
         enemyLayer = LayerMask.NameToLayer("EnemyProjectile");
+        source = GetComponentInChildren<AudioSource>();
+
+        Health = MaxHealth;
+
+        UpdateSlider();
+
+        currentTime = Random.Range(minTimeBetweenAmbientSounds, maxTimeBetweenAmbientSounds);
+    }
+
+    private void UpdateSlider()
+    {
+        healthSlider.value = Health / MaxHealth;
+        
     }
 
     private void Update()
@@ -51,12 +74,14 @@ public class EnemyAi : MonoBehaviour, IEntity, IDamageable
         {
             if (!isDead)
             {
+                HandleAmbientSound();
                 if (!isFalling)
                 {
                     //Check for sight and attack range
                     playerInSightRange = Physics.CheckSphere(transform.position, sightRange, whatIsPlayer);
                     playerInAttackRange = Physics.CheckSphere(transform.position, attackRange, whatIsPlayer);
 
+                    healthSlider.transform.LookAt(player);
 
                     if (!playerInSightRange && !playerInAttackRange) Patroling();
                     if (playerInSightRange && !playerInAttackRange) ChasePlayer();
@@ -64,6 +89,21 @@ public class EnemyAi : MonoBehaviour, IEntity, IDamageable
 
                 }
             } 
+        }
+    }
+
+    private void HandleAmbientSound()
+    {
+        timer += Time.deltaTime;
+        if(timer >= currentTime)
+        {
+            if (!source.isPlaying)
+            {
+                source.clip = EnemyManager.Instance.GetRandomSoundEffect();
+                source.Play();
+            }
+            timer = 0;
+            currentTime = Random.Range(minTimeBetweenAmbientSounds, maxTimeBetweenAmbientSounds);
         }
     }
 
@@ -116,7 +156,9 @@ public class EnemyAi : MonoBehaviour, IEntity, IDamageable
                 child.gameObject.layer = enemyLayer;
             }
             
-            pb.affectedLayers = affectedLayers;
+            pb.explosionLayers = affectedLayers;
+
+            pb.nonCollidableLayers = affectedLayers;
 
             pb.damageAmount = damage;
 
@@ -197,10 +239,28 @@ public class EnemyAi : MonoBehaviour, IEntity, IDamageable
         if (!isDead)
         {
             Health -= damage;
+
+            PlayHurtSound();
+
+            UpdateSlider();
+
             if (Health <= 0)
             {
                 Die();
             }   
+        }
+    }
+
+    private void PlayHurtSound()
+    {
+        if (!source.isPlaying)
+        {
+            var roll = Random.Range(1, chanceOfSound);
+            if(roll == 1)
+            {
+                source.clip = EnemyManager.Instance.GetRandomHurtSound();
+                source.Play();
+            }
         }
     }
 

@@ -30,8 +30,7 @@ public class SpellVisualsManager : MonoBehaviour
         }
         else
         {
-            rightHandController.runtimeAnimatorController = newController != null ? 
-                newController : defaultRightController;
+            rightHandController.runtimeAnimatorController = newController != null ? newController : defaultRightController;
         }
     }
     public void ChangeRightCircle(GameObject circleToBe)

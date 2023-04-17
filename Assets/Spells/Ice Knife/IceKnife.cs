@@ -36,7 +36,8 @@ public class IceKnife : SpellBlueprint
     public override void GripPress()
     {
         base.GripPress();
-        iTween.ScaleTo(spellCircle, Vector3.one * .5f, .7f);
+        if(!triggerPressed)
+            iTween.ScaleTo(spellCircle, Vector3.one * .5f, .7f);
     }
     public override void GripHold()
     {

@@ -16,7 +16,7 @@ public class TerraBlade : SpellBlueprint
     private ObjectSpawn BladeSpawner;
     private IMovement _gesture;
 
-
+    public InputActionReference overrideButton;
     private void Start()
     {
         _gesture = GetComponent<IMovement>();
@@ -51,7 +51,7 @@ public class TerraBlade : SpellBlueprint
         }
         iTween.MoveUpdate(spellCircle, circleHolder.transform.position + circleHolder.transform.TransformDirection(new Vector3(0, .05f, .1f)), .1f);
         
-        if (_gesture.GesturePerformed(_gestureManager, out var direction))
+        if (_gesture.GesturePerformed(_gestureManager, out var direction) || overrideButton.action.WasPressedThisFrame())
         {
             if (!bladeSpawned && !alreadyShot)
             {
@@ -65,9 +65,17 @@ public class TerraBlade : SpellBlueprint
 
                     spellCircle.GetComponent<AudioSource>().Play();
 
+                    BladeSpawner.instantiatedObject.transform.localScale = Vector3.one * .25f;
                     iTween.ScaleFrom(BladeSpawner.instantiatedObject, Vector3.zero, .8f); 
                 }
             } 
+        }
+        if (bladeSpawned)
+        {
+            BladeSpawner.instantiatedObject.transform.rotation = spellCircle.transform.rotation * Quaternion.Euler(BladeSpawner.GetRotationOffset());
+
+            var distance = Vector3.Distance(BladeSpawner.instantiatedObject.transform.position, spellCircle.transform.position);
+            BladeSpawner.instantiatedRB.velocity = (spellCircle.transform.position - BladeSpawner.instantiatedObject.transform.position).normalized * 35f * distance;
         }
     }
 
@@ -94,11 +102,15 @@ public class TerraBlade : SpellBlueprint
         {
             bladeSpawned = false;
             alreadyShot = true;
-            BladeSpawner.instantiatedObject.transform.localScale = Vector3.one * .3f;
-            BladeSpawner.LaunchProjectile(_handLocation, currentHand, launchSpeed);
-            //Destroy(BladeSpawner.InstantiatedObject);
+            BladeSpawner.LaunchProjectile(spellCircle.transform, currentHand, launchSpeed);
 
             iTween.PunchPosition(spellCircle, new Vector3(0, .1f, 0f), .3f);
         }
+    }
+    public override void OnDeselect()
+    {
+        base.OnDeselect();
+        if(BladeSpawner.instantiatedObject)
+            Destroy(BladeSpawner.instantiatedObject);
     }
 }

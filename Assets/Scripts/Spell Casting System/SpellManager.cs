@@ -14,6 +14,7 @@ public class SpellManager : MonoBehaviour
     private SpellParameterSupplier _parameterSupplier;
     private SpellInputManager _inputManager;
     private SpellVisualsManager _visualsManager;
+    public SpellHotbarManager _hotbarManager { get; private set; }
 
     //All left hand stuff
     [SerializeField] private GameObject leftSpell;
@@ -32,6 +33,7 @@ public class SpellManager : MonoBehaviour
         _visualsManager = GetComponent<SpellVisualsManager>();
         _parameterSupplier = GetComponent<SpellParameterSupplier>();
         _inputManager = GetComponent<SpellInputManager>();
+        _hotbarManager = GetComponent<SpellHotbarManager>();
         
 
         _parameterSupplier.SetupTargetManger(_targetManager);
@@ -122,14 +124,17 @@ public class SpellManager : MonoBehaviour
         _visualsManager.DespawnCircle(side);
     }
 
-    public void ClearSpells()
+    public void ClearRightSpell()
     {
-        DespawnSpell(LeftRight.Left);
         DespawnSpell(LeftRight.Right);
-        leftSpell = null;
         rightSpell = null;
-        _spawnedLeftBlueprint = null;
         _spawnedRightBlueprint = null;
     }
-    
+    public void ClearLeftSpell()
+    {
+        DespawnSpell(LeftRight.Left);
+        leftSpell = null;
+        _spawnedLeftBlueprint = null;
+    }
+
 }

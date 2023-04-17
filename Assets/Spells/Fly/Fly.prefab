@@ -59,6 +59,8 @@ MonoBehaviour:
   _visualsManager: {fileID: 0}
   triggerPressedValue: 0
   gripPressedValue: 0
+  flyManaDrain: 2
+  brakeManaDrain: 2
 --- !u!114 &3322788562805002375
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -73,6 +75,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   forceType: 5
   forceMultiplier: 12
+  canReflect: 0
 --- !u!114 &9109217722728276835
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -92,6 +95,8 @@ MonoBehaviour:
   LockPosition: 1
   GravityAffected: 0
   instantiatedObject: {fileID: 0}
+  instantiatedRB: {fileID: 0}
   spawnAmount: 1
   shootDirection: 0
+  projectileGravity: 0
   spreadAmount: 0

@@ -61,6 +61,7 @@ MonoBehaviour:
   gripPressedValue: 0
   manaCost: 15
   launchSpeed: 6
+  overrideButton: {fileID: 8597155949774336733, guid: c348712bda248c246b8c49b3db54643f, type: 3}
 --- !u!114 &9127179507855980703
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -87,12 +88,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   objectToSpawn: {fileID: 2851465914124386090, guid: 87f4a2eb0ad07c143b0a86caeda86b49, type: 3}
-  ParentToTarget: 1
+  ParentToTarget: 0
   rotationOffset: {x: -91, y: 0, z: 0}
   LockRotation: 1
   LockPosition: 0
-  GravityAffected: 1
+  GravityAffected: 0
   instantiatedObject: {fileID: 0}
+  instantiatedRB: {fileID: 0}
   spawnAmount: 1
-  shootDirection: 4
+  shootDirection: 2
+  projectileGravity: 1
   spreadAmount: 0

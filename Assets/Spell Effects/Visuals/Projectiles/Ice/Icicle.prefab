@@ -110,9 +110,12 @@ MonoBehaviour:
   explosionDependentOnScale: 0
   explosionRadius: 0
   explosionForce: 1
-  affectedLayers:
+  explosionLayers:
     serializedVersion: 2
     m_Bits: 0
+  nonCollidableLayers:
+    serializedVersion: 2
+    m_Bits: 2056
 --- !u!54 &-7250421303252649800
 Rigidbody:
   m_ObjectHideFlags: 0

@@ -23,6 +23,9 @@ public class SpellInputManager : MonoBehaviour
     private SpellBlueprint currentLeftSpell;
     private SpellBlueprint currentRightSpell;
 
+    private bool leftHandNotPointingAtUI = true;
+    private bool rightHandNotPointingAtUI = true;
+
     #region Changing Current Spells
     public void ClearLeftSpell()
     {
@@ -122,65 +125,72 @@ public class SpellInputManager : MonoBehaviour
     {
         if (currentLeftSpell)
         {
-            if (RaycastCheck(LeftRight.Left))
+            //Checking for inputs to fire events
+            if (leftTrigger.action.WasPressedThisFrame())
             {
-                //Checking for inputs to fire events
-                if (leftTrigger.action.WasPressedThisFrame())
-                {
+                leftHandNotPointingAtUI = RaycastCheck(LeftRight.Left);
+
+                if(leftHandNotPointingAtUI)
                     currentLeftSpell.TriggerPress();
-                }
-                if (leftTrigger.action.WasReleasedThisFrame())
-                {
-                    currentLeftSpell.TriggerRelease();
-                }
-                if (leftGrip.action.WasPressedThisFrame())
-                {
-                    currentLeftSpell.GripPress();
-                }
-                if (leftGrip.action.WasReleasedThisFrame())
-                {
-                    currentLeftSpell.GripRelease();
-                }
-
-                //Hold events
-                currentLeftSpell.TriggerHoldSafe();
-                currentLeftSpell.GripHoldSafe();
-
-                //Button pressed values
-                currentLeftSpell.gripPressedValue = leftGrip.action.ReadValue<float>();
-                currentLeftSpell.triggerPressedValue = leftTrigger.action.ReadValue<float>(); 
             }
+            if (leftTrigger.action.WasReleasedThisFrame() && leftHandNotPointingAtUI)
+            {
+                currentLeftSpell.TriggerRelease();
+                leftHandNotPointingAtUI = false;
+            }
+            if (leftGrip.action.WasPressedThisFrame())
+            {
+                currentLeftSpell.GripPress();
+            }
+            if (leftGrip.action.WasReleasedThisFrame())
+            {
+                currentLeftSpell.GripRelease();
+            }
+
+            //Hold events
+            if(leftHandNotPointingAtUI)
+                currentLeftSpell.TriggerHoldSafe();
+
+            currentLeftSpell.GripHoldSafe();
+
+            //Button pressed values
+            currentLeftSpell.gripPressedValue = leftGrip.action.ReadValue<float>();
+            currentLeftSpell.triggerPressedValue = leftTrigger.action.ReadValue<float>(); 
+            
         }
         if (currentRightSpell)
-        {
-            if (RaycastCheck(LeftRight.Right))
+        {   
+            //Checking for inputs to fire events
+            if (rightTrigger.action.WasPressedThisFrame())
             {
-                //Checking for inputs to fire events
-                if (rightTrigger.action.WasPressedThisFrame())
-                {
+                rightHandNotPointingAtUI = RaycastCheck(LeftRight.Right);
+
+                if(rightHandNotPointingAtUI)
                     currentRightSpell.TriggerPress();
-                }
-                if (rightTrigger.action.WasReleasedThisFrame())
-                {
-                    currentRightSpell.TriggerRelease();
-                }
-                if (rightGrip.action.WasPressedThisFrame())
-                {
-                    currentRightSpell.GripPress();
-                }
-                if (rightGrip.action.WasReleasedThisFrame())
-                {
-                    currentRightSpell.GripRelease();
-                }
-
-                //Hold events
-                currentRightSpell.TriggerHoldSafe();
-                currentRightSpell.GripHoldSafe();
-
-                //Button pressed values
-                currentRightSpell.gripPressedValue = rightGrip.action.ReadValue<float>();
-                currentRightSpell.triggerPressedValue = rightTrigger.action.ReadValue<float>(); 
             }
+            if (rightTrigger.action.WasReleasedThisFrame() && rightHandNotPointingAtUI)
+            {
+                currentRightSpell.TriggerRelease();
+                rightHandNotPointingAtUI = false;
+            }
+            if (rightGrip.action.WasPressedThisFrame())
+            {
+                currentRightSpell.GripPress();
+            }
+            if (rightGrip.action.WasReleasedThisFrame())
+            {
+                currentRightSpell.GripRelease();
+            }
+
+            //Hold events
+            if(rightHandNotPointingAtUI)
+                currentRightSpell.TriggerHoldSafe();
+            currentRightSpell.GripHoldSafe();
+
+            //Button pressed values
+            currentRightSpell.gripPressedValue = rightGrip.action.ReadValue<float>();
+            currentRightSpell.triggerPressedValue = rightTrigger.action.ReadValue<float>(); 
+          
         }
     }
 
@@ -188,11 +198,10 @@ public class SpellInputManager : MonoBehaviour
     {
         if (currentLeftSpell)
         {
-            if (RaycastCheck(LeftRight.Left))
-            {
-                currentLeftSpell.GripHoldFixed();
-                currentLeftSpell.TriggerHoldFixed();  
-            }
+            currentLeftSpell.GripHoldFixed();
+
+            if(leftHandNotPointingAtUI)    
+                currentLeftSpell.TriggerHoldFixed();     
         }
 
         if (currentRightSpell)
@@ -200,7 +209,9 @@ public class SpellInputManager : MonoBehaviour
             if (RaycastCheck(LeftRight.Right))
             {
                 currentRightSpell.GripHoldFixed();
-                currentRightSpell.TriggerHoldFixed();  
+
+                if(rightHandNotPointingAtUI)
+                    currentRightSpell.TriggerHoldFixed();  
             }
         }
     }

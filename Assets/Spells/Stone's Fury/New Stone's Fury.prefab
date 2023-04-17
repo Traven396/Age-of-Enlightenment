@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 9187973507596970000}
   - component: {fileID: -6795518303274544574}
   - component: {fileID: 2739368753723079441}
+  - component: {fileID: 5955179415823049870}
   m_Layer: 0
   m_Name: New Stone's Fury
   m_TagString: Untagged
@@ -60,6 +61,7 @@ MonoBehaviour:
   triggerPressedValue: 0
   gripPressedValue: 0
   maxDistance: 8
+  manaCost: 0
 --- !u!114 &-6795518303274544574
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -79,8 +81,10 @@ MonoBehaviour:
   LockPosition: 1
   GravityAffected: 0
   instantiatedObject: {fileID: 0}
+  instantiatedRB: {fileID: 0}
   spawnAmount: 1
   shootDirection: 0
+  projectileGravity: 0
   spreadAmount: 0
 --- !u!114 &2739368753723079441
 MonoBehaviour:
@@ -94,5 +98,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5316199c3791eb44a80eb2503a01fc4b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  yVelThreshold: 1
-  xDotThreshold: 1
+  yVelThreshold: 1.5
+  xDotThreshold: 1.5
+--- !u!114 &5955179415823049870
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8833616790026167706}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9519fbf27df037144a82f5ce8b3b8422, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  requiresNormal: 1
+  normalVector: {x: 0, y: 1, z: 0}
+  readyToCast: 1

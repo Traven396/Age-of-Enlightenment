@@ -2,25 +2,23 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
-using System.Linq;
-using System.IO;
-using System;
-using PathCreation;
+using UnityEngine.UI;
+using UnityEngine.XR.OpenXR;
 
 public class TestingScript : MonoBehaviour
 {
-    [SerializeField]private GameObject savedNumber;
-    private int CreditCardNumber;
-    public Vector3[] points;
-
+    private Image gridImage;
+    public Color invalidColor, validColor;
     private void Start()
     {
-        BezierPath bezPath = new BezierPath(points, false, PathSpace.xyz);
-        VertexPath bruh = new VertexPath(bezPath, transform, .1f);
-        GetComponent<PathCreator>().bezierPath = bezPath;
+        gridImage = GetComponentInChildren<Image>();
     }
-    IEnumerator OHFUCK()
+    public void SetInvalid()
     {
-        yield return null;
+        gridImage.color = invalidColor;
+    }
+    public void SetValid()
+    {
+        gridImage.color = validColor;
     }
 }

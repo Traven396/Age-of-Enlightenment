@@ -16,7 +16,6 @@ public class Firebolt : SpellBlueprint
     private ApplyMotion _applyMotion;
 
     [Header("Haptics")]
-    public AudioClip tinyFireballCastSound;
     public float tinyLaunchSpeed = 300f;
     public float bigLaunchSpeed = 0f;
 
@@ -99,7 +98,7 @@ public class Firebolt : SpellBlueprint
                 _smallFireboltSpawn.Cast(spellCircle.transform);
                 spellCircleAudioSource.PlayOneShot(spellCircleAudioSource.clip);
 
-                _smallFireboltSpawn.LaunchProjectile(_handLocation, currentHand, tinyLaunchSpeed);
+                _smallFireboltSpawn.LaunchProjectile(spellCircle.transform, currentHand, tinyLaunchSpeed);
                 Player.Instance.SubtractCurrentMana(tinyFireballManaCost); 
             }
         }
@@ -191,7 +190,7 @@ public class Firebolt : SpellBlueprint
     {
         if (velocityFrames != null)
         {
-            Vector3 velocityAverage = HelpfulScript.GetVectorAverage(velocityFrames);
+            Vector3 velocityAverage = HelpfulScript.GetVectorAverage(velocityFrames) * 1.6f;
             Vector3 angularVelocityAverage = HelpfulScript.GetVectorAverage(angularVelocityFrames);
             if (velocityAverage != null && angularVelocityAverage != null)
             {

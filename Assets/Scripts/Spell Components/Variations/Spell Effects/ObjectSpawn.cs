@@ -15,15 +15,23 @@ public class ObjectSpawn : MonoBehaviour
     [SerializeField] private bool GravityAffected = true;
 
     [HideInInspector] public GameObject instantiatedObject;
+    [HideInInspector] public Rigidbody instantiatedRB;
 
 
     [Header("Projectile Behaviors")]
     [SerializeField] private int spawnAmount = 1;
     [SerializeField] private Direction shootDirection;
+    //This is mainly just for terra blade now. I need more comments I realize lmao
+    [SerializeField] private bool projectileGravity = false;
     [Min(0)]
     [SerializeField] private float spreadAmount = 0;
+    private LayerMask playerProjectileLayer;
 
     private List<GameObject> spawnedObjects = new List<GameObject>();
+    private void Start()
+    {
+        playerProjectileLayer = LayerMask.NameToLayer("PlayerProjectile");
+    }
     public void Cast(Transform target)
     {
         spawnedObjects.Clear();
@@ -32,24 +40,24 @@ public class ObjectSpawn : MonoBehaviour
             instantiatedObject = ParentToTarget ? Instantiate(objectToSpawn, target.position, (target.rotation * Quaternion.Euler(rotationOffset)), target) : Instantiate(objectToSpawn, target.position, (target.rotation * Quaternion.Euler(rotationOffset)));
             spawnedObjects.Add(instantiatedObject);
             #region Setting up Rigidbody
-            Rigidbody rb = instantiatedObject.GetComponent<Rigidbody>();
-            if (rb == null)
+            instantiatedRB = instantiatedObject.GetComponent<Rigidbody>();
+            if (instantiatedRB == null)
             {
                 return;
             }
             if (LockPosition && !LockRotation)
             {
-                rb.constraints = RigidbodyConstraints.FreezePosition;
+                instantiatedRB.constraints = RigidbodyConstraints.FreezePosition;
             }
             else if (LockRotation && !LockPosition)
             {
-                rb.constraints = RigidbodyConstraints.FreezeRotation;
+                instantiatedRB.constraints = RigidbodyConstraints.FreezeRotation;
             }
             else if (LockPosition && LockRotation)
             {
-                rb.constraints = RigidbodyConstraints.FreezeAll;
+                instantiatedRB.constraints = RigidbodyConstraints.FreezeAll;
             }
-            rb.useGravity = GravityAffected;
+            instantiatedRB.useGravity = GravityAffected;
             #endregion  
         }
     }
@@ -59,7 +67,7 @@ public class ObjectSpawn : MonoBehaviour
         spawnedObjects.Clear();
         for (int i = 0; i < spawnAmount; i++)
         {
-            instantiatedObject = ParentToTarget ? Instantiate(objectToSpawn, target, (Quaternion.identity * Quaternion.Euler(rotationOffset))) : Instantiate(objectToSpawn, target, (Quaternion.identity * Quaternion.Euler(rotationOffset)));
+            instantiatedObject = ParentToTarget ? Instantiate(objectToSpawn, target, Quaternion.identity * Quaternion.Euler(rotationOffset)) : Instantiate(objectToSpawn, target, (Quaternion.identity * Quaternion.Euler(rotationOffset)));
             spawnedObjects.Add(instantiatedObject);
             #region Setting up Rigidbody
             Rigidbody rb = instantiatedObject.GetComponent<Rigidbody>();
@@ -89,7 +97,9 @@ public class ObjectSpawn : MonoBehaviour
         foreach (GameObject currentSpawnedProjectile in spawnedObjects)
         {
             currentSpawnedProjectile.transform.parent = null;
+            currentSpawnedProjectile.layer = playerProjectileLayer;
             //currentSpawnedProjectile.GetComponent<Rigidbody>().isKinematic = false;
+            instantiatedRB.useGravity = projectileGravity;
 
             Vector3 shootDirectionTransform = new Vector3();
             switch (shootDirection)
@@ -107,7 +117,10 @@ public class ObjectSpawn : MonoBehaviour
                         shootDirectionTransform = directionIndicator.right;
                     break;
                 case Direction.Up:
-                    shootDirectionTransform = directionIndicator.up;
+                    if (whichHand == 0)
+                        shootDirectionTransform = -directionIndicator.up;
+                    else
+                        shootDirectionTransform = directionIndicator.up;
                     break;
                 case Direction.Down:
                     shootDirectionTransform = -directionIndicator.up;
@@ -125,8 +138,7 @@ public class ObjectSpawn : MonoBehaviour
                 shootDirectionTransform += new Vector3(Random.Range(-spreadAmount, spreadAmount), Random.Range(-spreadAmount, spreadAmount), Random.Range(-spreadAmount, spreadAmount));
             }
 
-            ProjectileBehavior pb;
-            if (currentSpawnedProjectile.TryGetComponent(out pb))
+            if (currentSpawnedProjectile.TryGetComponent(out ProjectileBehavior pb))
             {
                 pb.enabled = true;
                 pb.Shoot(shootDirectionTransform * launchModifier);
@@ -144,6 +156,10 @@ public class ObjectSpawn : MonoBehaviour
     public void SetRotationOffset(Vector3 newOffset)
     {
         rotationOffset = newOffset;
+    }
+    public Vector3 GetRotationOffset()
+    {
+        return rotationOffset;
     }
     public void SetGravity(bool YN)
     {

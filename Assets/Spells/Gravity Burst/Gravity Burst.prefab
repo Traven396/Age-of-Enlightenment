@@ -90,5 +90,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   forceType: 1
-  forceMultiplier: 10
+  forceMultiplier: 5
   canReflect: 1

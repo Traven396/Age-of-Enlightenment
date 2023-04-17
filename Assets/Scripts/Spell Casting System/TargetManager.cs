@@ -21,17 +21,13 @@ public class TargetManager : MonoBehaviour
     private TargettableEntity previousClosestREntity = null;
 
     #endregion
-    #region RaycastFromHand
-    private GameObject leftTargetter;
-    private GameObject rightTargetter;
-    #endregion
+
 
     private void Start()
     {
-        leftTargetter = new GameObject("Left Targetter");
-        rightTargetter = new GameObject("Right Targetter");
+
         ignoreLayers = ~(ignoreLayers);
-        groundLayer = LayerMask.NameToLayer("Ground");
+        groundLayer = ~LayerMask.NameToLayer("Ground");
     }
     //public ITargetable GetClosest(LeftRight hand)
     //{
@@ -205,29 +201,14 @@ public class TargetManager : MonoBehaviour
         if (hand == 0)
         {
             RaycastHit hit;
-            if (Physics.Raycast(leftHandPosition.position, leftHandPosition.forward, out hit, maxDistance, ignoreLayers))
-            {
-                leftTargetter.transform.position = hit.point;
-                
-                return hit;
-            }
-            else
-            {
-                return hit;
-            }
+            Physics.Raycast(leftHandPosition.position, leftHandPosition.forward, out hit, maxDistance, ignoreLayers);
+            return hit;
         }
         else
         {
             RaycastHit hit;
-            if(Physics.Raycast(rightHandPosition.position, rightHandPosition.forward, out hit, maxDistance, ignoreLayers))
-            {
-                rightTargetter.transform.position = hit.point;
-                return hit;
-            }
-            else
-            {
-                return hit;
-            }
+            Physics.Raycast(rightHandPosition.position, rightHandPosition.forward, out hit, maxDistance, ignoreLayers);
+            return hit;
         }
     }
     public RaycastHit RaycastFromHandToGround(LeftRight hand, float maxDistance)
@@ -236,29 +217,14 @@ public class TargetManager : MonoBehaviour
         if (hand == 0)
         {
             RaycastHit hit;
-            if (Physics.Raycast(leftHandPosition.position, leftHandPosition.forward, out hit, maxDistance, groundLayer))
-            {
-                leftTargetter.transform.position = hit.point;
-
-                return hit;
-            }
-            else
-            {
-                return hit;
-            }
+            Physics.Raycast(leftHandPosition.position, leftHandPosition.forward, out hit, maxDistance, groundLayer);
+            return hit;
         }
         else
         {
             RaycastHit hit;
-            if (Physics.Raycast(rightHandPosition.position, rightHandPosition.forward, out hit, maxDistance, groundLayer))
-            {
-                rightTargetter.transform.position = hit.point;
-                return hit;
-            }
-            else
-            {
-                return hit;
-            }
+            Physics.Raycast(rightHandPosition.position, rightHandPosition.forward, out hit, maxDistance, groundLayer);
+            return hit;
         }
     }
 

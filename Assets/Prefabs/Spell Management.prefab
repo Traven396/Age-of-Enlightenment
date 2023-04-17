@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 435378931629056528}
   - component: {fileID: 35419538201059109}
   - component: {fileID: 5564505102573603787}
+  - component: {fileID: 3307897553642516171}
   m_Layer: 0
   m_Name: Spell Management
   m_TagString: Untagged
@@ -48,8 +49,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aa41cd0351325154882d9fabde695e07, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  leftSpell: {fileID: 1199593121343689505, guid: d7aa3db6fa196cc4ab81f19bd343cfb0, type: 3}
-  rightSpell: {fileID: 1967907942461160733, guid: a6c5168b6cbe6994a895b4219eaa724d, type: 3}
+  leftSpell: {fileID: 0}
+  rightSpell: {fileID: 0}
 --- !u!114 &2546794762288433274
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -108,7 +109,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ignoreLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 232
   leftHandPosition: {fileID: 0}
   rightHandPosition: {fileID: 0}
 --- !u!114 &5564505102573603787
@@ -125,7 +126,29 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   leftCircleHolder: {fileID: 0}
   rightCircleHolder: {fileID: 0}
-  defaultLeftController: {fileID: 0}
-  defaultRightController: {fileID: 0}
+  defaultLeftController: {fileID: 9100000, guid: 0284ecac7be7e2d409126f62358d744b, type: 2}
+  defaultRightController: {fileID: 9100000, guid: 011fededf8deb2f479afbcb453d11410, type: 2}
   leftHandController: {fileID: 0}
   rightHandController: {fileID: 0}
+--- !u!114 &3307897553642516171
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2546794762288433279}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9cb3e50e4939a9148bd42c1cb252b4bd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rightMenuSections:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  leftMenuSections:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}

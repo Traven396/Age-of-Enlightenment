@@ -57,5 +57,5 @@ MonoBehaviour:
   _visualsManager: {fileID: 0}
   triggerPressedValue: 0
   gripPressedValue: 0
-  initialManaCost: 4
-  manaDrain: 2
+  initialManaCost: 8
+  manaDrain: 3

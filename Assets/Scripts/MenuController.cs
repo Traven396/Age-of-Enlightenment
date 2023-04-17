@@ -14,6 +14,7 @@ public class MenuController : MonoBehaviour
    
     public Slider difficultySlider;
     public TMP_Text difficultyLabel;
+    public GameObject helpMenu;
     [Space(10f)]
     public Transform spawnPoint;
     public GameObject starPrefab;
@@ -139,13 +140,10 @@ public class MenuController : MonoBehaviour
             puzzleHeadBrain = null;
         }
     }
-
-
-
-
-    public void LoadSpell(BaseSpell spellToLoad)
+    
+    public void HelpMenu(bool showOrHide)
     {
-
+        helpMenu.SetActive(showOrHide);
     }
 }
 

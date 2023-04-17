@@ -143,6 +143,7 @@ public class Fly : SpellBlueprint
         if (gripPressed)
         {
             Player.Instance.AddManaRegen(brakeManaDrain);
+            playerRb.useGravity = true;
         }
         if (triggerPressed)
         {

@@ -20,10 +20,14 @@ public class BookMenuManager : MonoBehaviour
     [SerializeField] private Image _spellIcon;
     [SerializeField] private TMP_Text _spellName;
     [SerializeField] private TMP_Text _spellDescription;
+    [Space(20)]
+    [SerializeField] private GameObject hotbarMenu;
 
     public List<SpellMenuItem> spellList;
 
     private int arrayLocation = 0;
+
+    private LeftRight hotbarHand;
 
     // Start is called before the first frame update
     void Start()
@@ -35,9 +39,12 @@ public class BookMenuManager : MonoBehaviour
         button.action.started += ctx => ToggleMenu();
     }
 
-    public void ClearSpells()
+    public void ClearSpells(bool left)
     {
-        _spellManager.ClearSpells();
+        if (left)
+            _spellManager._hotbarManager.ClearLeftHotbar();
+        else
+            _spellManager._hotbarManager.ClearRightHotbar();
     }
 
     public void ChangeMenu(bool left)
@@ -70,17 +77,18 @@ public class BookMenuManager : MonoBehaviour
         }
     }
 
-    public void SpellHandButton(bool left)
-    {
-        if(left)
-        {
-            _spellManager.ChangeLeftSpell(spellList[arrayLocation].spellCouple);
-        }
-        else
-        {
-            _spellManager.ChangeRightSpell(spellList[arrayLocation].spellCouple);
-        }
-    }
+    //public void SpellHandButton(bool left)
+    //{
+    //    if(left)
+    //    {
+    //        _spellManager.ChangeLeftSpell(spellList[arrayLocation].spellCouple);
+    //    }
+    //    else
+    //    {
+    //        _spellManager._hotbarManager.ChangeRightHotbar(1, spellList[arrayLocation].spellCouple);
+    //        //_spellManager.ChangeRightSpell(spellList[arrayLocation].spellCouple);
+    //    }
+    //}
     private void LoadMenu()
     {
         if (spellList.Count != 0)
@@ -105,6 +113,29 @@ public class BookMenuManager : MonoBehaviour
             menuShowing = true;
         }
     }
+
+
+    public void ActiveHotbarMenu(bool left)
+    {
+        hotbarMenu.SetActive(true);
+        if (left)
+            hotbarHand = LeftRight.Left;
+        else
+            hotbarHand = LeftRight.Right;
+    }
+
+    public void HotbarButton(int index)
+    {
+        if(hotbarHand == 0)
+        {
+            _spellManager._hotbarManager.ChangeLeftHotbar(index, spellList[arrayLocation].spellCouple);
+        }
+        else
+        {
+            _spellManager._hotbarManager.ChangeRightHotbar(index, spellList[arrayLocation].spellCouple);
+        }
+        hotbarMenu.SetActive(false);
+    }
 }
 
 [Serializable]
@@ -113,7 +144,7 @@ public class SpellMenuItem
     public Sprite spellIcon;
     public string spellName;
     public SpellGameObjectCouple spellCouple;
-    [TextArea]
+    [TextArea(5, 10)]
     public string spellDescription;
     
 }

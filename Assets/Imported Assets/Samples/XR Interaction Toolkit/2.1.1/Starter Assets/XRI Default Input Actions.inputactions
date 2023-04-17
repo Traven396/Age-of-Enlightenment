@@ -441,10 +441,54 @@
                 {
                     "name": "",
                     "id": "811f0c56-e1bc-4dbe-8d63-f2a1576f11c6",
+                    "path": "<XRController>{LeftHand}/menuButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Generic XR Controller",
+                    "action": "Menu",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "39ef9f46-6a7f-4252-9731-f6c086e418fa",
+                    "path": "<XRController>{LeftHand}/menu",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Generic XR Controller",
+                    "action": "Menu",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "e84243a4-bc49-4766-9726-1017853dcb36",
                     "path": "<XRController>{LeftHand}/home",
                     "interactions": "",
                     "processors": "",
                     "groups": "Generic XR Controller",
+                    "action": "Menu",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "eedbea1b-856e-4538-afe4-716ca95e3053",
+                    "path": "<XRController>{LeftHand}/app",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Generic XR Controller",
+                    "action": "Menu",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "07a50f7b-8ae1-4e46-a0a9-819da2293803",
+                    "path": "<XRController>{LeftHand}/menuButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
                     "action": "Menu",
                     "isComposite": false,
                     "isPartOfComposite": false
@@ -698,7 +742,7 @@
             "id": "461bce25-7762-40c5-b639-f190649be6d6",
             "actions": [
                 {
-                    "name": "Select",
+                    "name": "Grip",
                     "type": "Button",
                     "id": "ac96c10b-c955-4a46-8e67-bf16bc069b53",
                     "expectedControlType": "Button",
@@ -707,7 +751,7 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "Select Value",
+                    "name": "Grip Value",
                     "type": "Value",
                     "id": "39bbf1ac-21a3-413d-90f6-6dbf6efeaabe",
                     "expectedControlType": "Axis",
@@ -716,7 +760,7 @@
                     "initialStateCheck": true
                 },
                 {
-                    "name": "Activate",
+                    "name": "Trigger",
                     "type": "Button",
                     "id": "41976d89-60de-4deb-bff9-16b4af96b290",
                     "expectedControlType": "Button",
@@ -725,7 +769,7 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "Activate Value",
+                    "name": "Trigger Value",
                     "type": "Value",
                     "id": "c3ca6ed7-3d25-44a2-b1d8-5be4eb699370",
                     "expectedControlType": "Axis",
@@ -796,7 +840,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "Generic XR Controller",
-                    "action": "Select",
+                    "action": "Grip",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -807,7 +851,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "Generic XR Controller",
-                    "action": "Select Value",
+                    "action": "Grip Value",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -818,7 +862,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "Generic XR Controller",
-                    "action": "Activate",
+                    "action": "Trigger",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -829,7 +873,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "Generic XR Controller",
-                    "action": "Activate Value",
+                    "action": "Trigger Value",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },

@@ -14524,16 +14524,20 @@ MonoBehaviour:
   - {fileID: 2059924536052619991}
   - {fileID: 6663878664617325535}
   rotateTowardsMotion: 0
-  speedMultiplier: 250
+  damageAmount: 3
   damageType: 0
-  lifeTime: 0.15
+  lifeTime: 0.3
+  collisionsFromStart: 0
   isExplosive: 0
   explosionDependentOnScale: 0
   explosionRadius: 0
   explosionForce: 1
-  ignoredLayers:
+  explosionLayers:
     serializedVersion: 2
     m_Bits: 0
+  nonCollidableLayers:
+    serializedVersion: 2
+    m_Bits: 2056
 --- !u!54 &7529255553250271314
 Rigidbody:
   m_ObjectHideFlags: 0

@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.XR.CoreUtils;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.XR;
@@ -32,8 +33,14 @@ public class CustomPlayerController : MonoBehaviour
     [SerializeField]
     private float capsuleRadius = 0.3f;
 
+    [Header("Height Stuff")]
+    //[SerializeField]
+    //private float capsuleHeight = 1.6f;
     [SerializeField]
-    private float capsuleHeight = 1.6f;
+    private float minHeight = 0;
+    [SerializeField]
+    private float maxHeight = 2f;
+
 
     [SerializeField]
     private CapsuleDirection capsuleDirection = CapsuleDirection.YAxis;
@@ -47,6 +54,8 @@ public class CustomPlayerController : MonoBehaviour
 
     private CapsuleCollider capsuleCollider;
 
+    private XROrigin xrOrigin;
+
 
     public enum CapsuleDirection
     {
@@ -59,12 +68,14 @@ public class CustomPlayerController : MonoBehaviour
     {
         rigidBodyComponent = GetComponent<Rigidbody>();
         capsuleCollider = GetComponent<CapsuleCollider>();
+        xrOrigin = GetComponent<XROrigin>();
 
         rigidBodyComponent.constraints = RigidbodyConstraints.FreezeRotation;
         capsuleCollider.direction = (int)capsuleDirection;
+
         capsuleCollider.radius = capsuleRadius;
         capsuleCollider.center = capsuleCenter;
-        capsuleCollider.height = capsuleHeight;
+        //capsuleCollider.height = capsuleHeight;
 
         speed = Player.Instance.playerMoveSpeed;
         
@@ -84,6 +95,8 @@ public class CustomPlayerController : MonoBehaviour
 
     void Update()
     {
+        UpdateCollider();
+
         UpdateMovement();
 
         UpdateJump();
@@ -113,8 +126,7 @@ public class CustomPlayerController : MonoBehaviour
 
     private void UpdateJump()
     {
-        isGrounded = (Physics.Raycast((new Vector2(transform.position.x, transform.position.y + 2.0f)), Vector3.down, 5.0f, ignoreLayers));
-
+        isGrounded = (Physics.Raycast(transform.TransformPoint(capsuleCollider.center), Vector3.down, capsuleCollider.height + .04f, ignoreLayers));
         if (!isGrounded && checkForGroundOnJump)
             return;
 
@@ -131,6 +143,18 @@ public class CustomPlayerController : MonoBehaviour
             
             buttonPressed = false;
         }
+    }
+
+    private void UpdateCollider()
+    {
+
+        var height = Mathf.Clamp(xrOrigin.CameraInOriginSpaceHeight, minHeight, maxHeight);
+
+        Vector3 center = xrOrigin.CameraInOriginSpacePos;
+        center.y = height / 2f + (capsuleCollider.radius *.1f);
+
+        capsuleCollider.height = height;
+        capsuleCollider.center = center;
     }
 
     private void SafetyNet()

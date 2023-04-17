@@ -1192,7 +1192,43 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 
+  m_text: 'Here is a quick rundown of the buttons for ya.
+
+    The B button on each
+    controller is for opening the spell hotbar. Hold it down and drag your hand towards
+    the spell you want to equip, it will grow larger and then you can release to
+    select it.
+
+    To dequip any spell release your hand in the center of the menu.
+
+
+    Click
+    A on the left controller to open the spellbook and equip spells to your hotbar.
+    The book always appears next to the fireplace. I will be changing this soon
+
+
+    On
+    each of your wrists is the health and mana menu. No health = You die. No mana
+    = no magic
+
+
+    Planned Features:
+
+    - More spells obvi
+
+    - A variety of
+    puzzles
+
+    - Better enemies, things that ARENT amogus
+
+    - Some hopefully
+    pretty awesome stuff
+
+
+    Thank you so much for playing :)
+
+    Please leave
+    feedback wherever you can'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -1219,8 +1255,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 15
-  m_fontSizeBase: 15
+  m_fontSize: 10.5
+  m_fontSizeBase: 10.5
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -1255,7 +1291,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: -44.30519, y: -60.26718, z: -42.487816, w: 0}
+  m_margin: {x: 0.069686875, y: 0.23152165, z: -1.1822281, w: 0.26185608}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0

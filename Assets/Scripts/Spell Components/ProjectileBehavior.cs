@@ -22,11 +22,20 @@ public class ProjectileBehavior : MonoBehaviour
     public bool explosionDependentOnScale = false;
     public float explosionRadius = 0;
     public float explosionForce = 1;
-    public LayerMask affectedLayers;
+    public LayerMask explosionLayers;
 
     private Rigidbody rb;
 
     private bool enableCollisions = false;
+
+
+    [Header("Helpful Things")]
+    public LayerMask nonCollidableLayers;
+    private float minimumExtent;
+    private float partialExtent;
+    private float sqrMinimumExtent;
+    private Vector3 previousPosition;
+    private Collider selfCollider;
 
     private void Awake()
     {
@@ -36,10 +45,21 @@ public class ProjectileBehavior : MonoBehaviour
         {
             rb = GetComponentInChildren<Rigidbody>();
         }
-     
+        selfCollider = GetComponent<Collider>();
+        if (!selfCollider)
+        {
+            selfCollider = GetComponentInChildren<Collider>();
+        }
+
+        previousPosition = rb.position;
+        minimumExtent = Mathf.Min(Mathf.Min(selfCollider.bounds.extents.x, selfCollider.bounds.extents.y), selfCollider.bounds.extents.z);
+        partialExtent = minimumExtent * (1.0f - .1f);
+        sqrMinimumExtent = minimumExtent * minimumExtent;
+
+        nonCollidableLayers = ~nonCollidableLayers;
     }
 
-    private void Update()
+    private void FixedUpdate()
     {
         if (rotateTowardsMotion)
         {
@@ -50,6 +70,20 @@ public class ProjectileBehavior : MonoBehaviour
             }
 
         }
+        Vector3 movementThisStep = rb.position - previousPosition;
+        float movementSqrMagnitude = movementThisStep.sqrMagnitude;
+
+        if (movementSqrMagnitude > sqrMinimumExtent)
+        {
+            float movementMagnitude = Mathf.Sqrt(movementSqrMagnitude);
+            RaycastHit hitInfo;
+
+            //check for obstructions we might have missed 
+            if (Physics.Raycast(previousPosition, movementThisStep, out hitInfo, movementMagnitude, nonCollidableLayers))
+                rb.position = hitInfo.point - (movementThisStep / movementMagnitude) * partialExtent;
+        }
+
+        previousPosition = rb.position;
     }
     private void OnCollisionEnter(Collision collision)
     {
@@ -79,18 +113,22 @@ public class ProjectileBehavior : MonoBehaviour
         }
     }
 
+
     private void UnparentTrails()
     {
         if (trails.Count > 0)
         {
             foreach (GameObject gameObject in trails)
             {
-                gameObject.transform.parent = null;
-                var ps = gameObject.GetComponent<ParticleSystem>();
-                if (ps != null)
+                if (gameObject)
                 {
-                    ps.Stop();
-                    Destroy(gameObject, ps.main.duration + ps.main.startLifetime.constantMax);
+                    gameObject.transform.parent = null;
+                    var ps = gameObject.GetComponent<ParticleSystem>();
+                    if (ps != null)
+                    {
+                        ps.Stop();
+                        Destroy(gameObject, ps.main.duration + ps.main.startLifetime.constantMax);
+                    }
                 }
             }
         }
@@ -99,7 +137,7 @@ public class ProjectileBehavior : MonoBehaviour
     {
         if (explosionDependentOnScale)
         {
-            Collider[] hits = Physics.OverlapSphere(transform.position, explosionRadius * transform.localScale.magnitude, affectedLayers);
+            Collider[] hits = Physics.OverlapSphere(transform.position, explosionRadius * transform.localScale.magnitude, explosionLayers);
             foreach (Collider hitObject in hits)
             {
                 if (hitObject.TryGetComponent(out Rigidbody rb))
@@ -114,7 +152,7 @@ public class ProjectileBehavior : MonoBehaviour
         }
         else
         {
-            Collider[] hits = Physics.OverlapSphere(transform.position, explosionRadius, affectedLayers);
+            Collider[] hits = Physics.OverlapSphere(transform.position, explosionRadius, explosionLayers);
             foreach (Collider hitObject in hits)
             {
                 if (hitObject.TryGetComponent(out Rigidbody rb))
@@ -146,5 +184,6 @@ public enum DamageType{
     Ice,
     Earth,
     Air,
-    Force
+    Force,
+    Physical
 }

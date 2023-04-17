@@ -58,6 +58,7 @@ MonoBehaviour:
   _visualsManager: {fileID: 0}
   triggerPressedValue: 0
   gripPressedValue: 0
+  manaCost: 6
   launchSpeed: 12
 --- !u!114 &-7015571277545688445
 MonoBehaviour:
@@ -78,6 +79,8 @@ MonoBehaviour:
   LockPosition: 0
   GravityAffected: 0
   instantiatedObject: {fileID: 0}
+  instantiatedRB: {fileID: 0}
   spawnAmount: 1
   shootDirection: 4
+  projectileGravity: 0
   spreadAmount: 0

@@ -5,19 +5,24 @@ using UnityEngine;
 public class StoneFury : SpellBlueprint
 {
     private ObjectSpawn _objectSpawn;
-    //private PositionTargetIndicator _targetter;
+    private TargettingIndicator _targetter;
     private IMovement _requiredGesture;
 
     [SerializeField]
     private float maxDistance;
+    [SerializeField]
+    private int manaCost = 10;
 
-    private bool performed = false, validCast = true;
+    private bool performed = false;
     RaycastHit hit = new RaycastHit();
 
     private void Start()
     {
         _objectSpawn = GetComponent<ObjectSpawn>();
-        //_targetter = GetComponent<PositionTargetIndicator>();
+
+        _targetter = GetComponent<TargettingIndicator>();
+        _targetter.SetupReferences(this);
+
         _requiredGesture = GetComponent<IMovement>();
     }
     private void Update()
@@ -31,70 +36,58 @@ public class StoneFury : SpellBlueprint
     {
         base.TriggerPress();
         if (gripPressed)
-            validCast = false;
+        {
+            _targetter.readyToCast = false;
+        }
     }
     public override void TriggerHold()
     {
         base.TriggerHold();
-        if (!gripPressed && validCast)
-        {
-            hit = _targetManager.RaycastFromHand(currentHand, maxDistance);
-            if (hit.normal == Vector3.up)
-            {
-                if (spellCircle.transform.parent != null)
-                    spellCircle.transform.parent = null;
-                iTween.MoveUpdate(spellCircle, hit.point + new Vector3(0, 0.05f, 0), .5f);
-                iTween.RotateUpdate(spellCircle, Vector3.zero, .5f);
-            }
-            else
-            {
-                spellCircle.transform.parent = circleHolder.transform;
 
-                _visualsManager.ReturnCircleToHolder(currentHand);
-            }
-        }
+        hit = _targetManager.RaycastFromHandToGround(currentHand, maxDistance);
+
+        _targetter.TargetMove(hit);
     }
     public override void TriggerRelease()
     {
         base.TriggerRelease();
-        spellCircle.transform.parent = circleHolder.transform;
 
-        iTween.ScaleTo(spellCircle, Vector3.one, .6f);
+        _targetter.TargetReturn();
     }
     public override void GripPress()
     {
         base.GripPress();
         if (triggerPressed)
         {
-            iTween.ScaleTo(spellCircle, Vector3.one * 3, 1f);
+            _targetter.ConfirmButtonMove(hit);
+
+            _targetter.ConfirmLocation();
         }
     }
     public override void GripHold()
     {
         base.GripHold();
-        if (triggerPressed && validCast)
+        if (triggerPressed)
         {
-            if (hit.normal == Vector3.up && !performed)
+            if (!performed)
             {
-                if (_requiredGesture.GesturePerformed(_gestureManager, out Vector3 direction))
+                if (_requiredGesture.GesturePerformed(_gestureManager, out Vector3 direction) && _targetter.readyToCast)
                 {
-                    _objectSpawn.Cast(hit.point);
+                    _objectSpawn.Cast(spellCircle.transform);
+
+                    Player.Instance.SubtractCurrentMana(manaCost);
+                    
                     performed = true;
                 }
             }
-            if (Vector3.Distance(spellCircle.transform.position, hit.point) > .01f)
-            {
-                iTween.MoveUpdate(spellCircle, hit.point + new Vector3(0, 0.05f, 0), .5f);
-            } 
         }
     }
     public override void GripRelease()
     {
         base.GripRelease();
 
-        iTween.ScaleTo(spellCircle, Vector3.one, 1f);
+        _targetter.UnconfirmLocation();
 
         performed = false;
-        validCast = true;
     }
 }

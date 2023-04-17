@@ -57,8 +57,4 @@ public class ShieldSpell : SpellBlueprint
         base.OnDeselect();
         DeactivateShield();
     }
-    void ManaDrain()
-    {
-        Player.Instance.SubtractCurrentMana(manaDrain);
-    }
 }
