@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: -5946475112185857334}
   - component: {fileID: -2917733999944763249}
   - component: {fileID: 3413955877899434263}
+  - component: {fileID: 26448139744661724}
   m_Layer: 0
   m_Name: Smite Spell
   m_TagString: Untagged
@@ -88,7 +89,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 945e6df227a964c44b56155c2284a633, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  objectToSpawn: {fileID: 0}
+  objectToSpawn: {fileID: 4829293921007703807, guid: 010d68a51d231774c9c1c33c2f6ba17a, type: 3}
   ParentToTarget: 0
   rotationOffset: {x: 0, y: 0, z: 0}
   LockRotation: 0
@@ -112,4 +113,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 33f6457ee1946694ca677938ebad4aac, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  yVelThreshold: 2
+  yVelThreshold: 3
+--- !u!114 &26448139744661724
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 209610345538036072}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b8402f17c3ed5e943895606dcf88fe5b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  yVelThreshold: 3

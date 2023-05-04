@@ -67,18 +67,16 @@ public class StoneFury : SpellBlueprint
     public override void GripHold()
     {
         base.GripHold();
-        if (triggerPressed)
+        
+        if (!performed)
         {
-            if (!performed)
+            if (_requiredGesture.GesturePerformed(_gestureManager, out Vector3 direction) && _targetter.readyToCast)
             {
-                if (_requiredGesture.GesturePerformed(_gestureManager, out Vector3 direction) && _targetter.readyToCast)
-                {
-                    _objectSpawn.Cast(spellCircle.transform);
+                _objectSpawn.Cast(spellCircle.transform);
 
-                    Player.Instance.SubtractCurrentMana(manaCost);
+                Player.Instance.SubtractCurrentMana(manaCost);
                     
-                    performed = true;
-                }
+                performed = true;
             }
         }
     }

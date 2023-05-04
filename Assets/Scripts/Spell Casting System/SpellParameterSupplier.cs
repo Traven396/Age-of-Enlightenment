@@ -23,34 +23,39 @@ public class SpellParameterSupplier : MonoBehaviour
     [Space(10)]
     public GestureManager rightGesture;
 
-    public void SetParametersLeft(SpellBlueprint spell)
-    {
-        spell._palmLocation = leftPalm;
-        spell._backOfHandLocation = leftBackOfHand;
-        spell._handLocation = leftHand;
-        spell.circleHolder = leftCircleHolder;
-        if(leftCircleHolder.transform.childCount != 0)
-            spell.spellCircle = leftCircleHolder.transform.GetChild(leftCircleHolder.transform.childCount - 1).gameObject;
 
-        spell._gestureManager = leftGesture;
-        spell.playerRb = playerRb;
+    public void NewParametersRight(SpellSwapCallbackContext ctx)
+    {
+        if (ctx.spawnedScript != null)
+        {
+            var spell = ctx.spawnedScript;
+
+            spell._palmLocation = rightPalm;
+            spell._backOfHandLocation = rightBackOfHand;
+            spell._handLocation = rightHand;
+            spell.circleHolder = rightCircleHolder;
+            if (rightCircleHolder.transform.childCount != 0)
+                spell.spellCircle = rightCircleHolder.transform.GetChild(rightCircleHolder.transform.childCount - 1).gameObject;
+
+            spell._gestureManager = rightGesture;
+            spell.playerRb = playerRb; 
+        }
     }
-    public void SetParametersRight(SpellBlueprint spell)
+    public void NewParametersLeft(SpellSwapCallbackContext ctx)
     {
-        spell._palmLocation = rightPalm;
-        spell._backOfHandLocation = rightBackOfHand;
-        spell._handLocation = rightHand;
-        spell.circleHolder = rightCircleHolder;
-        if(rightCircleHolder.transform.childCount != 0)
-            spell.spellCircle = rightCircleHolder.transform.GetChild(rightCircleHolder.transform.childCount - 1).gameObject;
+        if (ctx.spawnedScript != null)
+        {
+            var spell = ctx.spawnedScript;
 
-        spell._gestureManager = rightGesture;
-        spell.playerRb = playerRb;
-    }
+            spell._palmLocation = leftPalm;
+            spell._backOfHandLocation = leftBackOfHand;
+            spell._handLocation = leftHand;
+            spell.circleHolder = leftCircleHolder;
+            if (leftCircleHolder.transform.childCount != 0)
+                spell.spellCircle = leftCircleHolder.transform.GetChild(leftCircleHolder.transform.childCount - 1).gameObject;
 
-    public void SetupTargetManger(TargetManager manager)
-    {
-        manager.leftHandPosition = leftHand;
-        manager.rightHandPosition = rightHand;
+            spell._gestureManager = leftGesture;
+            spell.playerRb = playerRb; 
+        }
     }
 }

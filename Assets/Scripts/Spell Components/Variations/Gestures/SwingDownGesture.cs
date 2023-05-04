@@ -8,7 +8,7 @@ public class SwingDownGesture : MonoBehaviour, IMovement
     public bool GesturePerformed(GestureManager _gestureManager, out Vector3 direction)
     {
         direction = Vector3.zero;
-        if (_gestureManager.currVel.y < yVelThreshold)
+        if (_gestureManager.dotProdWorldY < -yVelThreshold)
         {
             return true;
         }

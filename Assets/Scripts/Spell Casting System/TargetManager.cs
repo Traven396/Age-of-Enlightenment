@@ -7,9 +7,9 @@ public class TargetManager : MonoBehaviour
 {
     public LayerMask ignoreLayers;
 
-    [HideInInspector]public Transform leftHandPosition;
+    public Transform leftHandPosition;
 
-    [HideInInspector]public Transform rightHandPosition;
+    public Transform rightHandPosition;
 
     private LayerMask groundLayer;
 
@@ -22,6 +22,13 @@ public class TargetManager : MonoBehaviour
 
     #endregion
 
+    public void NewSpell(SpellSwapCallbackContext ctx)
+    {
+        if (ctx.spawnedScript != null)
+        {
+            ctx.spawnedScript._targetManager = this; 
+        }
+    }
 
     private void Start()
     {
@@ -29,73 +36,7 @@ public class TargetManager : MonoBehaviour
         ignoreLayers = ~(ignoreLayers);
         groundLayer = ~LayerMask.NameToLayer("Ground");
     }
-    //public ITargetable GetClosest(LeftRight hand)
-    //{
-    //    if (hand == 0)
-    //    {
-    //        RaycastHit hit;
-    //        if (Physics.SphereCast(leftHandPosition.position, .1f, leftHandPosition.forward, out hit, 3f, ignoreLayers))
-    //        {
-    //            if (hit.collider.gameObject.TryGetComponent(out ITargetable target))
-    //            {
-    //                currentClosestL = target;
-    //                currentClosestL.OnSelect();
 
-    //                if (previousClosestL != currentClosestL)
-    //                {
-    //                    if (previousClosestL != null)
-    //                        previousClosestL.OnDeselect();
-    //                }
-    //            }
-    //            else
-    //            {
-    //                if (previousClosestL != null)
-    //                    previousClosestL.OnDeselect();
-    //                currentClosestL = null;
-    //            }
-    //        }
-    //        else
-    //        {
-    //            if (previousClosestL != null)
-    //                previousClosestL.OnDeselect();
-    //            currentClosestL = null;
-    //        }
-    //        previousClosestL = currentClosestL;
-    //        return currentClosestL;
-    //    }
-    //    else
-    //    {
-    //        RaycastHit hit;
-    //        if (Physics.SphereCast(rightHandPosition.position, .1f, rightHandPosition.forward, out hit, 3f, ignoreLayers))
-    //        {
-    //            if (hit.collider.gameObject.TryGetComponent(out ITargetable target))
-    //            {
-    //                currentClosestR = target;
-    //                currentClosestR.OnSelect();
-
-    //                if (previousClosestR != currentClosestR)
-    //                {
-    //                    if (previousClosestR != null)
-    //                        previousClosestR.OnDeselect();
-    //                }
-    //            }
-    //            else
-    //            {
-    //                if (previousClosestR != null)
-    //                    previousClosestR.OnDeselect();
-    //                currentClosestR = null;
-    //            }
-    //        }
-    //        else
-    //        {
-    //            if (previousClosestR != null)
-    //                previousClosestR.OnDeselect();
-    //            currentClosestR = null;
-    //        }
-    //        previousClosestR = currentClosestR;
-    //        return currentClosestR;
-    //    }
-    //}
     public TargettableEntity GetClosestTeleTarget(LeftRight hand, float maxDistance, float radius)
     {
         if(hand == 0)

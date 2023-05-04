@@ -1,18 +1,15 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.InputSystem;
 using UnityEngine.XR;
 
-[RequireComponent(typeof(TargetManager))]
-[RequireComponent(typeof(SpellParameterSupplier))]
-[RequireComponent(typeof(SpellInputManager))]
 [RequireComponent(typeof(SpellVisualsManager))]
+
 public class SpellManager : MonoBehaviour
 {
-    private TargetManager _targetManager;
-    private SpellParameterSupplier _parameterSupplier;
-    private SpellInputManager _inputManager;
+
     private SpellVisualsManager _visualsManager;
     public SpellHotbarManager _hotbarManager { get; private set; }
 
@@ -26,47 +23,42 @@ public class SpellManager : MonoBehaviour
     private GameObject _spawnedRightSpell;
     private SpellBlueprint _spawnedRightBlueprint;
 
+    public UnityEvent<SpellSwapCallbackContext> RightSpellSwap, LeftSpellSwap;
 
     private void Start()
     {
-        _targetManager = GetComponent<TargetManager>();
-        _visualsManager = GetComponent<SpellVisualsManager>();
-        _parameterSupplier = GetComponent<SpellParameterSupplier>();
-        _inputManager = GetComponent<SpellInputManager>();
         _hotbarManager = GetComponent<SpellHotbarManager>();
-        
-
-        _parameterSupplier.SetupTargetManger(_targetManager);
-        //_visualsManager.SetupAnimationControllers(_parameterSupplier);
-
-
-
-        SpawnSpell(LeftRight.Left);
-        SpawnSpell(LeftRight.Right);
     }
 
-    public void ChangeRightSpell(SpellGameObjectCouple spellToBe)
+
+
+    public void NewSpellSwap(CoreSpellComponents spellToBe, LeftRight whichHand)
+    {
+        if (whichHand == 0)
+            ChangeLeftSpell(spellToBe);
+        else
+            ChangeRightSpell(spellToBe);
+    }
+    public void ChangeRightSpell(CoreSpellComponents spellToBe)
     {
         DespawnSpell(LeftRight.Right);
+
         rightSpell = spellToBe.spellMechanics;
 
-        _visualsManager.ChangeRightCircle(spellToBe.spellCircle);
-        _visualsManager.ChangeAnimatorController(LeftRight.Right, spellToBe.RightAnimationController);
-
         SpawnSpell(LeftRight.Right);
-        
+
+        RightSpellSwap.Invoke(new SpellSwapCallbackContext(_spawnedRightSpell, _spawnedRightBlueprint, spellToBe.RightAnimationController, spellToBe.spellCircle));
     }
 
-    public void ChangeLeftSpell(SpellGameObjectCouple spellToBe)
+    public void ChangeLeftSpell(CoreSpellComponents spellToBe)
     {
         DespawnSpell(LeftRight.Left);
+
         leftSpell = spellToBe.spellMechanics;
 
-        _visualsManager.ChangeLeftCircle(spellToBe.spellCircle);
-        _visualsManager.ChangeAnimatorController(LeftRight.Left, spellToBe.LeftAnimationController);
-
         SpawnSpell(LeftRight.Left);
-        
+
+        LeftSpellSwap.Invoke(new SpellSwapCallbackContext(_spawnedLeftSpell, _spawnedLeftBlueprint, spellToBe.LeftAnimationController, spellToBe.spellCircle));
     }
 
     private void SpawnSpell(LeftRight side)
@@ -77,11 +69,6 @@ public class SpellManager : MonoBehaviour
             {
                 _spawnedLeftSpell = Instantiate(leftSpell, transform);
                 _spawnedLeftBlueprint = _spawnedLeftSpell.GetComponent<SpellBlueprint>();
-                _spawnedLeftBlueprint._targetManager = _targetManager;
-                _spawnedLeftBlueprint._visualsManager = _visualsManager;
-
-                _parameterSupplier.SetParametersLeft(_spawnedLeftBlueprint);
-                _inputManager.SetLeftSpell(_spawnedLeftBlueprint);
             }
         }
         else
@@ -90,11 +77,6 @@ public class SpellManager : MonoBehaviour
             {
                 _spawnedRightSpell = Instantiate(rightSpell, transform);
                 _spawnedRightBlueprint = _spawnedRightSpell.GetComponent<SpellBlueprint>();
-                _spawnedRightBlueprint._targetManager = _targetManager;
-                _spawnedRightBlueprint._visualsManager = _visualsManager;
-
-                _parameterSupplier.SetParametersRight(_spawnedRightBlueprint);
-                _inputManager.SetRightSpell(_spawnedRightBlueprint);
             }
         }
     }
@@ -106,8 +88,13 @@ public class SpellManager : MonoBehaviour
             if (_spawnedLeftSpell)
             {
                 _spawnedLeftBlueprint.OnDeselect();
+
                 Destroy(_spawnedLeftSpell);
+
                 _spawnedLeftBlueprint = null;
+
+                LeftSpellSwap.Invoke(new SpellSwapCallbackContext());
+
             }
         }
         else
@@ -119,9 +106,10 @@ public class SpellManager : MonoBehaviour
                 Destroy(_spawnedRightSpell);
 
                 _spawnedRightBlueprint = null;
+
+                RightSpellSwap.Invoke(new SpellSwapCallbackContext());
             }
         }
-        _visualsManager.DespawnCircle(side);
     }
 
     public void ClearRightSpell()
@@ -137,4 +125,30 @@ public class SpellManager : MonoBehaviour
         _spawnedLeftBlueprint = null;
     }
 
+}
+public enum LeftRight
+{
+    Left,
+    Right
+}
+public class SpellSwapCallbackContext{
+    public GameObject spawnedSelf;
+    public SpellBlueprint spawnedScript;
+    public AnimatorOverrideController newAnimator;
+    public GameObject circle;
+
+    public SpellSwapCallbackContext(GameObject newSelf, SpellBlueprint newScript, AnimatorOverrideController newerAnimator, GameObject theCircle)
+    {
+        spawnedSelf = newSelf;
+        spawnedScript = newScript;
+        newAnimator = newerAnimator;
+        circle = theCircle;
+    }
+    public SpellSwapCallbackContext()
+    {
+        spawnedScript = null;
+        spawnedSelf = null;
+        newAnimator = null;
+        circle = null;
+    }
 }

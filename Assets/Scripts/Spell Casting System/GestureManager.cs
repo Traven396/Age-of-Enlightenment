@@ -25,6 +25,8 @@ public class GestureManager : MonoBehaviour
     public float angularDotY { get; private set; }
     public float angularDotZ { get; private set; }
 
+    public float dotProdWorldY { get; private set; }
+
     private void Update()
     {
         if (displayInChat)
@@ -60,6 +62,8 @@ public class GestureManager : MonoBehaviour
             dotProdX = Vector3.Dot(currVel, transform.right);
             dotProdY = Vector3.Dot(currVel, transform.up);
             dotProdZ = Vector3.Dot(currVel, transform.forward);
+
+            dotProdWorldY = Vector3.Dot(currVel, Vector3.up);
 
             angX = Vector3.Angle(currVel, transform.right);
             angY = Vector3.Angle(currVel, transform.up);

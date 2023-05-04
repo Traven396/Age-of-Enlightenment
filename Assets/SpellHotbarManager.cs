@@ -1,36 +1,37 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class SpellHotbarManager : MonoBehaviour
 {
     private SpellManager _spellManager;
 
-    private SpellGameObjectCouple[] rightHandHotbar = new SpellGameObjectCouple[4];
+    private CoreSpellComponents[] rightHandHotbar = new CoreSpellComponents[4];
     public GameObject[] rightMenuSections = new GameObject[4];
     private GameObject[] spawnedRightCircles = new GameObject[4];
 
-    private SpellGameObjectCouple[] leftHandHotbar = new SpellGameObjectCouple[4];
+    private CoreSpellComponents[] leftHandHotbar = new CoreSpellComponents[4];
     public GameObject[] leftMenuSections = new GameObject[4];
     private GameObject[] spawnedLeftCircles = new GameObject[4];
 
-
+    public UnityEvent<CoreSpellComponents, LeftRight> spellSwap;
 
     private void Start()
     {
         _spellManager = GetComponent<SpellManager>();
     }
 
-
     public void ChangeRightSpell(int index)
     {
         if (rightHandHotbar[index] != null)
         {
-            _spellManager.ChangeRightSpell(rightHandHotbar[index]);
+            spellSwap.Invoke(rightHandHotbar[index], LeftRight.Right);
+            //_spellManager.ChangeRightSpell(rightHandHotbar[index]);
         }
     }
 
-    public void ChangeRightHotbar(int index, SpellGameObjectCouple spellToBe)
+    public void ChangeRightHotbar(int index, CoreSpellComponents spellToBe)
     {
         
         if (spawnedRightCircles[index])
@@ -46,11 +47,12 @@ public class SpellHotbarManager : MonoBehaviour
     {
         if (leftHandHotbar[index] != null)
         {
+            spellSwap.Invoke(leftHandHotbar[index], LeftRight.Left);
             _spellManager.ChangeLeftSpell(leftHandHotbar[index]);
         }
     }
 
-    public void ChangeLeftHotbar(int index, SpellGameObjectCouple spellToBe)
+    public void ChangeLeftHotbar(int index, CoreSpellComponents spellToBe)
     {
         leftHandHotbar[index] = spellToBe;
         if (spawnedLeftCircles[index])
@@ -67,7 +69,7 @@ public class SpellHotbarManager : MonoBehaviour
             if(circle)
                 Destroy(circle);
         }
-        leftHandHotbar = new SpellGameObjectCouple[4];
+        leftHandHotbar = new CoreSpellComponents[4];
     }
     public void ClearRightHotbar()
     {
@@ -76,6 +78,6 @@ public class SpellHotbarManager : MonoBehaviour
             if (circle)
                 Destroy(circle);
         }
-        rightHandHotbar = new SpellGameObjectCouple[4];
+        rightHandHotbar = new CoreSpellComponents[4];
     }
 }

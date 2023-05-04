@@ -21,6 +21,9 @@ public class Player : MonoBehaviour, IDamageable
         }
     }
     private static Player instance;
+
+    [HideInInspector]
+    public PlayerSpellbook _SpellBook;
     #endregion
 
     public GameObject deathMenu;
@@ -46,6 +49,8 @@ public class Player : MonoBehaviour, IDamageable
 
     private void Awake()
     {
+        _SpellBook = GetComponent<PlayerSpellbook>();
+
         currentMana = maximumMana;
         currentHealth = maximumHealth;
 

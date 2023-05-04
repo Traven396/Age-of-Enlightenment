@@ -611,16 +611,6 @@ MonoBehaviour:
 
       Try
       it on the crates outside'
-  - spellIcon: {fileID: 21300000, guid: cf2855fb18a21fa45ae954e84f9f4a2e, type: 3}
-    spellName: Firebolt
-    spellCouple:
-      spellMechanics: {fileID: 1967907942461160733, guid: a6c5168b6cbe6994a895b4219eaa724d, type: 3}
-      spellCircle: {fileID: 776886629064782777, guid: 4ece181df3095f245b552d27b3004688, type: 3}
-      RightAnimationController: {fileID: 22100000, guid: ed9562a03f610e748b91024be417fcd0, type: 2}
-      LeftAnimationController: {fileID: 22100000, guid: e16dd7d0f4d1edd47b5c569500af58bb, type: 2}
-    spellDescription: FIRE! By holding the trigger you can charge a thrown explosive
-      projectile. But by holding down grip you can launch smaller faster fire bursts
-      instead. Either way the enemy dies
   - spellIcon: {fileID: 21300000, guid: bb64f701c4c136944bbccede9b89a4dd, type: 3}
     spellName: Gravity Burst
     spellCouple:
@@ -654,20 +644,6 @@ MonoBehaviour:
       LeftAnimationController: {fileID: 0}
     spellDescription: Charge up the blast by holding down the trigger. Once the spell
       circle stops growing release the button to launch out a shotgun blast of ashes
-  - spellIcon: {fileID: 21300000, guid: 23b57d7324b896840b8586a6d17cd7ad, type: 3}
-    spellName: Shield
-    spellCouple:
-      spellMechanics: {fileID: 6834804205108281816, guid: 95ed91ef08526f54ab91cab38731bb5f, type: 3}
-      spellCircle: {fileID: 776886629064782777, guid: 8c527fa7e926332449296b3ae3380429, type: 3}
-      RightAnimationController: {fileID: 0}
-      LeftAnimationController: {fileID: 0}
-    spellDescription: 'Protect yo self fool. By holding grip the shield will enlarge
-      and become physical. Holding it too close to your body will sometimes allow
-      projectiles to hit you still.
-
-
-      Try catching one of the small boxes on
-      it using catapult, or don''t. I''m just a book'
   - spellIcon: {fileID: 21300000, guid: f5ab3f534c1138f4786f23cd74103223, type: 3}
     spellName: Ice Knife
     spellCouple:
@@ -682,14 +658,6 @@ MonoBehaviour:
 
       Release the trigger to launch
       it '
-  - spellIcon: {fileID: 21300000, guid: 2456dd2824f5ec540830760922f5bac6, type: 3}
-    spellName: Smite
-    spellCouple:
-      spellMechanics: {fileID: 209610345538036072, guid: 52b307628d1dd2540ab466186f0103d1, type: 3}
-      spellCircle: {fileID: 776886629064782777, guid: d7e711dcb34d7fd4a822520dc5111751, type: 3}
-      RightAnimationController: {fileID: 0}
-      LeftAnimationController: {fileID: 0}
-    spellDescription: Baba booey
 --- !u!1 &1088885455970342325
 GameObject:
   m_ObjectHideFlags: 0
@@ -1130,10 +1098,10 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 2039792266381594586}
-        m_TargetAssemblyTypeName: BookMenuManager, Assembly-CSharp
-        m_MethodName: ClearSpells
-        m_Mode: 6
+      - m_Target: {fileID: 0}
+        m_TargetAssemblyTypeName: SpellHotbarManager, Assembly-CSharp
+        m_MethodName: ClearRightHotbar
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -2449,10 +2417,10 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 2039792266381594586}
-        m_TargetAssemblyTypeName: BookMenuManager, Assembly-CSharp
-        m_MethodName: ClearSpells
-        m_Mode: 6
+      - m_Target: {fileID: 0}
+        m_TargetAssemblyTypeName: SpellHotbarManager, Assembly-CSharp
+        m_MethodName: ClearLeftHotbar
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine

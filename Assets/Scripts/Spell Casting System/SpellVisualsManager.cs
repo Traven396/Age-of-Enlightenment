@@ -22,30 +22,32 @@ public class SpellVisualsManager : MonoBehaviour
     private GameObject currentLeftCircle;
     private GameObject currentRightCircle;
 
-    public void ChangeAnimatorController(LeftRight side, AnimatorOverrideController newController)
-    {
-        if(side == 0)
-        {
-            leftHandController.runtimeAnimatorController = newController != null ? newController : defaultLeftController;
-        }
-        else
-        {
-            rightHandController.runtimeAnimatorController = newController != null ? newController : defaultRightController;
-        }
-    }
-    public void ChangeRightCircle(GameObject circleToBe)
+    public void NewRightSpell(SpellSwapCallbackContext ctx)
     {
         DespawnCircle(LeftRight.Right);
-        if(circleToBe)
-            SpawnNewCircle(circleToBe, LeftRight.Right);
+        if (ctx.circle)
+            SpawnNewCircle(ctx.circle, LeftRight.Right);
+
+        rightHandController.runtimeAnimatorController = ctx.newAnimator != null ? ctx.newAnimator : defaultRightController;
+
+        if (ctx.spawnedScript != null)
+        {
+            ctx.spawnedScript._visualsManager = this; 
+        }
     }
-    public void ChangeLeftCircle(GameObject circleToBe)
+    public void NewLeftSpell(SpellSwapCallbackContext ctx)
     {
         DespawnCircle(LeftRight.Left);
-        if(circleToBe)
-            SpawnNewCircle(circleToBe, LeftRight.Left);
+        if (ctx.circle)
+            SpawnNewCircle(ctx.circle, LeftRight.Left);
+
+        leftHandController.runtimeAnimatorController = ctx.newAnimator != null ? ctx.newAnimator : defaultLeftController;
+
+        if (ctx.spawnedScript != null)
+            ctx.spawnedScript._visualsManager = this;
     }
-    public void DespawnCircle(LeftRight side)
+
+    private void DespawnCircle(LeftRight side)
     {
         if (side == 0)
         {
@@ -95,4 +97,7 @@ public class SpellVisualsManager : MonoBehaviour
             }
         }
     }
+
+    //Add more methods here to easily allow the moving of the spell circle to a variety of offsets
+    //make a persistent offsetAmount and then every frame be trying to move the circle there?
 }

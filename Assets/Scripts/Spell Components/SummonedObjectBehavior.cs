@@ -13,15 +13,34 @@ public class SummonedObjectBehavior : MonoBehaviour
     private void Start()
     {
         selfAnimation = GetComponent<Animation>();
+        if (!destroyAnimation)
+        {
+            Debug.Log("No death animation. Just killing");
+            Destroy(gameObject, lifeExpectancy + postMortemTime);
+        }
+        if(selfAnimation.clip == null)
+        {
+            Debug.Log("No opening clip. Killing after life");
+            StartDeathCountdown();
+        }
     }
-    public void DeathThroes()
+    public void StartDeathCountdown()
     {
         Invoke(nameof(PlayDeathAnimation), lifeExpectancy);
-        Destroy(this.gameObject, lifeExpectancy + destroyAnimation.length + postMortemTime);
+
+        if (destroyAnimation)
+        {
+            Destroy(this.gameObject, lifeExpectancy + destroyAnimation.length + postMortemTime);
+            Debug.Log("Killing after " + (lifeExpectancy + destroyAnimation.length + postMortemTime) + " seconds");
+        }
+
     }
     private void PlayDeathAnimation()
     {
-        selfAnimation.clip = destroyAnimation;
-        selfAnimation.Play();
+        if (selfAnimation != null)
+        {
+            selfAnimation.clip = destroyAnimation;
+            selfAnimation.Play(); 
+        }
     }
 }

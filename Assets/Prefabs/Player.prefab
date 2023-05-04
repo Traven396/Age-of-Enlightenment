@@ -3932,6 +3932,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6257067208314467266}
   - component: {fileID: 6991127156718891416}
+  - component: {fileID: 3446055824457348446}
   - component: {fileID: 6257067208314467267}
   - component: {fileID: 4276345774591366071}
   - component: {fileID: 5139849700653340151}
@@ -3973,8 +3974,36 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 31ee89f767f07234f84bf625724b2e26, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _SpellBook: {fileID: 0}
   deathMenu: {fileID: 3249740518056446960, guid: 1fd9b00d5b855db46b6fc50b04681473, type: 3}
   stepOfWindOn: 0
+--- !u!114 &3446055824457348446
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6257067208314467324}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b1f4b97c7ba3ae04cad17c990fb8382e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  newSpellLearned:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 0}
+        m_TargetAssemblyTypeName: BookMenuManager, Assembly-CSharp
+        m_MethodName: UpdateList
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &6257067208314467267
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4969,6 +4998,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 6257067208314467266}
     m_Modifications:
+    - target: {fileID: 35419538201059109, guid: b669697bb18c3a54a887fb97898859fb, type: 3}
+      propertyPath: leftHandPosition
+      value: 
+      objectReference: {fileID: 6257067208181845039}
+    - target: {fileID: 35419538201059109, guid: b669697bb18c3a54a887fb97898859fb, type: 3}
+      propertyPath: rightHandPosition
+      value: 
+      objectReference: {fileID: 6257067207464898669}
     - target: {fileID: 2546794762288433274, guid: b669697bb18c3a54a887fb97898859fb, type: 3}
       propertyPath: leftHand
       value: 

@@ -27,6 +27,23 @@ public class SpellInputManager : MonoBehaviour
     private bool rightHandNotPointingAtUI = true;
 
     #region Changing Current Spells
+
+    public void NewRightSpell(SpellSwapCallbackContext ctx)
+    {
+        if (ctx.spawnedScript != null)
+        {
+            ctx.spawnedScript.currentHand = LeftRight.Right;
+            currentRightSpell = ctx.spawnedScript; 
+        }
+    }
+    public void NewLeftSpell(SpellSwapCallbackContext ctx)
+    {
+        if (ctx.spawnedScript != null)
+        {
+            ctx.spawnedScript.currentHand = LeftRight.Left;
+            currentLeftSpell = ctx.spawnedScript; 
+        }
+    }
     public void ClearLeftSpell()
     {
         currentLeftSpell = null;
@@ -35,16 +52,6 @@ public class SpellInputManager : MonoBehaviour
     {
         currentRightSpell = null;
     }
-    public void SetLeftSpell(SpellBlueprint spell)
-    {
-        spell.currentHand = LeftRight.Left;
-        currentLeftSpell = spell;
-    }
-    public void SetRightSpell(SpellBlueprint spell)
-    {
-        spell.currentHand = LeftRight.Right;
-        currentRightSpell = spell;
-    } 
     #endregion
     //public void SetControlsLeft(SpellBlueprint spell)
     //{

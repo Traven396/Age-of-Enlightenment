@@ -1,40 +1,61 @@
 using System;
 using UnityEngine;
 using UnityEngine.Events;
+using System.Linq;
+using System.Collections;
 
 public class ConstellationPuzzleHead : MonoBehaviour
 {
-    private ConstellationStarBehavior[] childStars;
-    public bool PuzzleSolved = false;
+    public ConstellationStarBehavior[] childStars;
+    public bool currentPuzzleSolved = false;
 
-    public UnityEvent puzzleSolved, puzzleUnsolved;
-    // Start is called before the first frame update
-    void Awake()
+    private PuzzleCard currentPuzzleCard;
+    private GameObject currentPuzzle;
+
+    public UnityEvent<FullSpellObject> puzzleSolved;
+    public void CheckPuzzleSolve()
     {
-        childStars = GetComponentsInChildren<ConstellationStarBehavior>();
+        currentPuzzleSolved = childStars.All(star => star.CheckValid());
+        if (currentPuzzleSolved)
+        {
+            Debug.Log("Solved");
+            puzzleSolved?.Invoke(currentPuzzleCard.GetSpell());
+        }
+    }
+    public void PuzzleLoad(PuzzleCard Puzzle)
+    {
+        currentPuzzleCard = Puzzle;
+        currentPuzzle = Instantiate(Puzzle.GetPuzzle(), transform);
+
+        childStars = currentPuzzle.GetComponentsInChildren<ConstellationStarBehavior>();
         foreach (ConstellationStarBehavior star in childStars)
         {
             star.SetPuzzleHead(this);
+            star.gameObject.SetActive(false);
         }
+        StartCoroutine(nameof(CoolShowcase));
     }
-    public void CheckPuzzleSolve()
+    public void PuzzleUnload(PuzzleCard NotNeccessaryLmao)
     {
-        foreach (ConstellationStarBehavior star in childStars)
+        if (currentPuzzle)
         {
-            if (star.partOfPuzzle)
-            {
-                if (!star.CheckValid())
-                {
-                    PuzzleSolved = false;
-                    puzzleUnsolved?.Invoke();
-                    break;
-                }
-                else
-                {
-                    puzzleSolved?.Invoke();
-                    PuzzleSolved = true;
-                } 
-            }
+            Destroy(currentPuzzle);
+            StopCoroutine(nameof(CoolShowcase));
         }
+
+        currentPuzzleCard = null;
+
+        Array.Clear(childStars, 0 , childStars.Length);
+        currentPuzzleSolved = false;
+    }
+
+    IEnumerator CoolShowcase()
+    {
+        foreach(ConstellationStarBehavior star in childStars)
+        {
+            star.gameObject.SetActive(true);
+            yield return new WaitForSeconds(.1f);
+        }
+        yield return null;
     }
 }

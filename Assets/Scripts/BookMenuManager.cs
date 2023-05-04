@@ -1,4 +1,4 @@
-using System.Collections;
+using System.Linq;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -23,7 +23,7 @@ public class BookMenuManager : MonoBehaviour
     [Space(20)]
     [SerializeField] private GameObject hotbarMenu;
 
-    public List<SpellMenuItem> spellList;
+    public List<FullSpellObject> spellList;
 
     private int arrayLocation = 0;
 
@@ -37,14 +37,6 @@ public class BookMenuManager : MonoBehaviour
 
         LoadMenu();
         button.action.started += ctx => ToggleMenu();
-    }
-
-    public void ClearSpells(bool left)
-    {
-        if (left)
-            _spellManager._hotbarManager.ClearLeftHotbar();
-        else
-            _spellManager._hotbarManager.ClearRightHotbar();
     }
 
     public void ChangeMenu(bool left)
@@ -93,7 +85,7 @@ public class BookMenuManager : MonoBehaviour
     {
         if (spellList.Count != 0)
         {
-            SpellMenuItem currentSpell = spellList[arrayLocation];
+            FullSpellObject currentSpell = spellList[arrayLocation];
             _spellName.text = currentSpell.spellName;
             _spellIcon.sprite = currentSpell.spellIcon;
             _spellDescription.text = currentSpell.spellDescription; 
@@ -136,23 +128,59 @@ public class BookMenuManager : MonoBehaviour
         }
         hotbarMenu.SetActive(false);
     }
+
+
+    public void UpdateList()
+    {
+        spellList.AddRange(Player.Instance._SpellBook.GetSpellList().Except(spellList, new SpellEqualityComparer()));
+    }
+
+    private class SpellEqualityComparer : IEqualityComparer<FullSpellObject>
+    {
+        public bool Equals(FullSpellObject s1, FullSpellObject s2)
+        {
+            if (s2 == null && s1 == null)
+                return true;
+            else if (s1 == null || s2 == null)
+                return false;
+            else if (s1.spellName == s2.spellName && s1.spellCouple.spellMechanics == s2.spellCouple.spellMechanics)
+                return true;
+            else
+                return false;
+        }
+
+        public int GetHashCode(FullSpellObject obj)
+        {
+            return obj.spellName.GetHashCode();
+        }
+    }
 }
 
 [Serializable]
-public class SpellMenuItem
+public class FullSpellObject
 {
     public Sprite spellIcon;
     public string spellName;
-    public SpellGameObjectCouple spellCouple;
+    public CoreSpellComponents spellCouple;
     [TextArea(5, 10)]
     public string spellDescription;
     
 }
 [Serializable]
-public class SpellGameObjectCouple
+public class CoreSpellComponents
 {
     public GameObject spellMechanics;
     public GameObject spellCircle;
+
     public AnimatorOverrideController RightAnimationController;
     public AnimatorOverrideController LeftAnimationController;
+
+    public CoreSpellComponents(GameObject newMechanics, GameObject newCircle, AnimatorOverrideController newRight, AnimatorOverrideController newLeft)
+    {
+        spellCircle = newCircle;
+        spellMechanics = newMechanics;
+        RightAnimationController = newRight;
+        LeftAnimationController = newLeft;
+        
+    }
 }
