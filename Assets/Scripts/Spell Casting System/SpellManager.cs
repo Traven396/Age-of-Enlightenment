@@ -29,9 +29,6 @@ public class SpellManager : MonoBehaviour
     {
         _hotbarManager = GetComponent<SpellHotbarManager>();
     }
-
-
-
     public void NewSpellSwap(CoreSpellComponents spellToBe, LeftRight whichHand)
     {
         if (whichHand == 0)

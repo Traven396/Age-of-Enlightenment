@@ -16,6 +16,8 @@ public class ConstellationStarBehavior : MonoBehaviour
     private ConstellationPuzzleHead puzzleHead;
     private ConstellationSocketCoords currentSocket;
 
+    private AudioSource source;
+
     private List<ConstellationStarBehavior> siblings = new List<ConstellationStarBehavior>();
     private int currentPuzzleConfig = -69;
 
@@ -24,6 +26,8 @@ public class ConstellationStarBehavior : MonoBehaviour
 
     private void Start()
     {
+        source = GetComponentInChildren<AudioSource>();
+
         SetupSiblings();
         if (!partOfPuzzle)
             isValid = true;
@@ -76,8 +80,9 @@ public class ConstellationStarBehavior : MonoBehaviour
             }
         }
         puzzleHead.CheckPuzzleSolve();
+
+        PlayRandomPitchSound();
     }
-    
     private void CheckPosition()
     {
         if (currentPuzzleConfig == -69)
@@ -112,7 +117,6 @@ public class ConstellationStarBehavior : MonoBehaviour
     {
         puzzleHead = cph;
     }
-
     public bool CheckValid()
     {
         return isValid;
@@ -120,5 +124,11 @@ public class ConstellationStarBehavior : MonoBehaviour
     public void SetCurrentConfig(int newConfig)
     {
         currentPuzzleConfig = newConfig;
+    }
+
+    void PlayRandomPitchSound()
+    {
+        source.pitch = UnityEngine.Random.Range(.9f, 1.3f);
+        source.Play();
     }
 }

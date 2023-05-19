@@ -1,186 +1,115 @@
-using System.Linq;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using UnityEngine.UI;
-using TMPro;
+using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
 using System;
+using UnityEngine.Events;
 
 public class BookMenuManager : MonoBehaviour
 {
-    public InputActionReference button;
-    public GameObject displayedMenu;
+    [Header("Input Things")]
+    public InputActionReference activateButton;
+    [Header("Needed Locations")]
+    public Transform handPoint, bookPoint;
+    [Header("Animation Parameters")]
+    public GameObject leftCover;
+    public GameObject rightCover;
+    [Header("Multiple Tab Manager")]
+    public List<GameObject> tabs = new();
+    public UnityEvent TabChanged;
+    private List<ITab> tabScripts = new();
 
-    private Animator _animation;
-    private bool menuShowing;
+    private bool menuCurrentlyActive;
 
-    [Space(10f)]
-    public SpellManager _spellManager;
-
-    [SerializeField] private Image _spellIcon;
-    [SerializeField] private TMP_Text _spellName;
-    [SerializeField] private TMP_Text _spellDescription;
-    [Space(20)]
-    [SerializeField] private GameObject hotbarMenu;
-
-    public List<FullSpellObject> spellList;
-
-    private int arrayLocation = 0;
-
-    private LeftRight hotbarHand;
-
-    // Start is called before the first frame update
     void Start()
     {
-        _animation = GetComponentInChildren<Animator>();
-        menuShowing = displayedMenu.activeInHierarchy;
+        menuCurrentlyActive = rightCover.activeInHierarchy;
+        activateButton.action.started += ctx => BookAnimation();
 
-        LoadMenu();
-        button.action.started += ctx => ToggleMenu();
+        tabScripts.AddRange(GetComponentsInChildren<ITab>());
+
+        tabScripts.ForEach(t => t.Overhead = this);
     }
 
-    public void ChangeMenu(bool left)
+    public void ActivateTab(GameObject tabParameter)
     {
-        if (left)
+        tabs.Where(t => t != tabParameter).ToList().ForEach(ta => ta.SetActive(false));
+
+        tabParameter.SetActive(true);
+
+        TabChanged?.Invoke();
+    }
+    public void ActivateTab(int index)
+    {
+        var newTab = tabs[index];
+
+        tabs.Where(t => t != newTab).ToList().ForEach(ta => ta.SetActive(false));
+
+        newTab.SetActive(true);
+
+        TabChanged?.Invoke();
+    }
+
+    #region Animation Stuff
+    private void Update()
+    {
+        if (menuCurrentlyActive)
         {
-            if(arrayLocation == 0)
-            {
-                arrayLocation = spellList.Count - 1;
-                LoadMenu();
-            }
-            else
-            {
-                arrayLocation--;
-                LoadMenu();
-            }
+            iTween.MoveUpdate(gameObject, handPoint.position, .6f);
+            transform.rotation = handPoint.rotation;
+        }
+    }
+    private void BookAnimation()
+    {
+        if (menuCurrentlyActive)
+        {
+            //Closing animation
+            StartCoroutine(nameof(BookClose));
         }
         else
         {
-            if(arrayLocation == spellList.Count - 1)
-            {
-                arrayLocation = 0;
-                LoadMenu();
-            }
-            else
-            {
-                arrayLocation++;
-                LoadMenu();
-            }
+            iTween.Stop(leftCover);
+            iTween.Stop(rightCover);
+
+            //Opening Animation
+            StopCoroutine(nameof(BookClose));
+
+            iTween.MoveTo(gameObject, handPoint.position, 1.2f);
+
+            menuCurrentlyActive = true;
+
+            gameObject.transform.position = bookPoint.position;
+
+            rightCover.SetActive(true);
+            leftCover.SetActive(true);
+
+            iTween.RotateTo(leftCover, iTween.Hash("y", -5, "easetype", iTween.EaseType.linear, "islocal", true));
+            iTween.RotateTo(rightCover, iTween.Hash("y", 5, "easetype", iTween.EaseType.linear, "islocal", true));
         }
     }
-
-    //public void SpellHandButton(bool left)
-    //{
-    //    if(left)
-    //    {
-    //        _spellManager.ChangeLeftSpell(spellList[arrayLocation].spellCouple);
-    //    }
-    //    else
-    //    {
-    //        _spellManager._hotbarManager.ChangeRightHotbar(1, spellList[arrayLocation].spellCouple);
-    //        //_spellManager.ChangeRightSpell(spellList[arrayLocation].spellCouple);
-    //    }
-    //}
-    private void LoadMenu()
+    IEnumerator BookClose()
     {
-        if (spellList.Count != 0)
-        {
-            FullSpellObject currentSpell = spellList[arrayLocation];
-            _spellName.text = currentSpell.spellName;
-            _spellIcon.sprite = currentSpell.spellIcon;
-            _spellDescription.text = currentSpell.spellDescription; 
-        }
-    }
-
-    private void ToggleMenu()
-    {
-        if (menuShowing)
-        {
-            _animation.Play("Book Closing");
-            menuShowing = false;
-        }
-        else
-        {
-            _animation.Play("Book Opening");
-            menuShowing = true;
-        }
-    }
-
-
-    public void ActiveHotbarMenu(bool left)
-    {
-        hotbarMenu.SetActive(true);
-        if (left)
-            hotbarHand = LeftRight.Left;
-        else
-            hotbarHand = LeftRight.Right;
-    }
-
-    public void HotbarButton(int index)
-    {
-        if(hotbarHand == 0)
-        {
-            _spellManager._hotbarManager.ChangeLeftHotbar(index, spellList[arrayLocation].spellCouple);
-        }
-        else
-        {
-            _spellManager._hotbarManager.ChangeRightHotbar(index, spellList[arrayLocation].spellCouple);
-        }
-        hotbarMenu.SetActive(false);
-    }
-
-
-    public void UpdateList()
-    {
-        spellList.AddRange(Player.Instance._SpellBook.GetSpellList().Except(spellList, new SpellEqualityComparer()));
-    }
-
-    private class SpellEqualityComparer : IEqualityComparer<FullSpellObject>
-    {
-        public bool Equals(FullSpellObject s1, FullSpellObject s2)
-        {
-            if (s2 == null && s1 == null)
-                return true;
-            else if (s1 == null || s2 == null)
-                return false;
-            else if (s1.spellName == s2.spellName && s1.spellCouple.spellMechanics == s2.spellCouple.spellMechanics)
-                return true;
-            else
-                return false;
-        }
-
-        public int GetHashCode(FullSpellObject obj)
-        {
-            return obj.spellName.GetHashCode();
-        }
-    }
-}
-
-[Serializable]
-public class FullSpellObject
-{
-    public Sprite spellIcon;
-    public string spellName;
-    public CoreSpellComponents spellCouple;
-    [TextArea(5, 10)]
-    public string spellDescription;
-    
-}
-[Serializable]
-public class CoreSpellComponents
-{
-    public GameObject spellMechanics;
-    public GameObject spellCircle;
-
-    public AnimatorOverrideController RightAnimationController;
-    public AnimatorOverrideController LeftAnimationController;
-
-    public CoreSpellComponents(GameObject newMechanics, GameObject newCircle, AnimatorOverrideController newRight, AnimatorOverrideController newLeft)
-    {
-        spellCircle = newCircle;
-        spellMechanics = newMechanics;
-        RightAnimationController = newRight;
-        LeftAnimationController = newLeft;
+        menuCurrentlyActive = false;
         
+        iTween.Stop(leftCover);
+        iTween.Stop(rightCover);
+
+        iTween.RotateTo(leftCover, iTween.Hash("y", -90, "easetype", iTween.EaseType.linear, "islocal", true));
+        iTween.RotateTo(rightCover, iTween.Hash("y", 90, "easetype", iTween.EaseType.linear, "islocal", true));
+        iTween.MoveTo(gameObject, bookPoint.position, 2f);
+
+        yield return new WaitForSeconds(1f);
+
+        rightCover.SetActive(false);
+        leftCover.SetActive(false);
+        yield return null;
     }
+    #endregion
+
+}
+
+public interface ITab
+{
+    BookMenuManager Overhead { get; set; }
 }

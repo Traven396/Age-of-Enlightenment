@@ -106,7 +106,7 @@ public class SpellInputManager : MonoBehaviour
     {
         if (whichHand == 0)
         {
-            if (Physics.Raycast(currentLeftSpell._handLocation.position, currentLeftSpell._handLocation.forward, 6, UIMASK))
+            if (Physics.Raycast(currentLeftSpell._handLocation.position, currentLeftSpell._handLocation.forward, 6, UIMASK, QueryTriggerInteraction.Collide))
             {
                 return false;
             }
@@ -117,7 +117,7 @@ public class SpellInputManager : MonoBehaviour
         }
         else
         {
-            if (Physics.Raycast(currentRightSpell._handLocation.position, currentRightSpell._handLocation.forward, 6, UIMASK))
+            if (Physics.Raycast(currentRightSpell._handLocation.position, currentRightSpell._handLocation.forward, 6, UIMASK, QueryTriggerInteraction.Collide))
             {
                 return false;
             }
@@ -128,70 +128,107 @@ public class SpellInputManager : MonoBehaviour
         }
     }
 
+    private void Start()
+    {
+        leftTrigger.action.started += LeftTriggerPress;
+        leftTrigger.action.canceled += LeftTriggerRelease;
+
+        leftGrip.action.started += LeftGripPress;
+        leftGrip.action.canceled += LeftGripRelease;
+
+        rightTrigger.action.started += RightTriggerPress;
+        rightTrigger.action.canceled += RightTriggerRelease;
+
+        rightGrip.action.started += RightGripPress;
+        rightGrip.action.canceled += RightGripRelease;
+    }
+
+    private void RightGripRelease(InputAction.CallbackContext obj)
+    {
+        if(currentRightSpell != null)
+        {
+            currentRightSpell.GripRelease();
+        }
+    }
+    private void RightGripPress(InputAction.CallbackContext obj)
+    {
+        if(currentRightSpell != null)
+        {
+            currentRightSpell.GripPress();
+        }
+    }
+    private void RightTriggerRelease(InputAction.CallbackContext obj)
+    {
+        if(currentRightSpell != null && rightHandNotPointingAtUI)
+        {
+            currentRightSpell.TriggerRelease();
+            rightHandNotPointingAtUI = false;
+        }
+    }
+    private void RightTriggerPress(InputAction.CallbackContext obj)
+    {
+        if (currentRightSpell != null)
+        {
+            rightHandNotPointingAtUI = RaycastCheck(LeftRight.Right);
+
+            if (rightHandNotPointingAtUI)
+                currentRightSpell.TriggerPress(); 
+        }
+    }
+
+
+    private void LeftGripRelease(InputAction.CallbackContext obj)
+    {
+        if(currentLeftSpell != null)
+        {
+            currentLeftSpell.GripRelease();
+        }
+
+    }
+    private void LeftGripPress(InputAction.CallbackContext obj)
+    {
+        if (currentLeftSpell != null)
+        {
+            currentLeftSpell.GripPress();
+        }
+    }
+    private void LeftTriggerRelease(InputAction.CallbackContext obj)
+    {
+        if(currentLeftSpell != null && leftHandNotPointingAtUI)
+        {
+            currentLeftSpell.TriggerRelease();
+            leftHandNotPointingAtUI = false;
+        }
+    }
+    private void LeftTriggerPress(InputAction.CallbackContext obj)
+    {
+        if (currentLeftSpell != null)
+        {
+            leftHandNotPointingAtUI = RaycastCheck(LeftRight.Left);
+
+            if (leftHandNotPointingAtUI)
+                currentLeftSpell.TriggerPress();
+        }
+    }
     private void Update()
     {
         if (currentLeftSpell)
         {
-            //Checking for inputs to fire events
-            if (leftTrigger.action.WasPressedThisFrame())
-            {
-                leftHandNotPointingAtUI = RaycastCheck(LeftRight.Left);
-
-                if(leftHandNotPointingAtUI)
-                    currentLeftSpell.TriggerPress();
-            }
-            if (leftTrigger.action.WasReleasedThisFrame() && leftHandNotPointingAtUI)
-            {
-                currentLeftSpell.TriggerRelease();
-                leftHandNotPointingAtUI = false;
-            }
-            if (leftGrip.action.WasPressedThisFrame())
-            {
-                currentLeftSpell.GripPress();
-            }
-            if (leftGrip.action.WasReleasedThisFrame())
-            {
-                currentLeftSpell.GripRelease();
-            }
-
             //Hold events
             if(leftHandNotPointingAtUI)
                 currentLeftSpell.TriggerHoldSafe();
 
             currentLeftSpell.GripHoldSafe();
 
-            //Button pressed values
             currentLeftSpell.gripPressedValue = leftGrip.action.ReadValue<float>();
-            currentLeftSpell.triggerPressedValue = leftTrigger.action.ReadValue<float>(); 
-            
+            currentLeftSpell.triggerPressedValue = leftTrigger.action.ReadValue<float>();
         }
         if (currentRightSpell)
         {   
-            //Checking for inputs to fire events
-            if (rightTrigger.action.WasPressedThisFrame())
-            {
-                rightHandNotPointingAtUI = RaycastCheck(LeftRight.Right);
-
-                if(rightHandNotPointingAtUI)
-                    currentRightSpell.TriggerPress();
-            }
-            if (rightTrigger.action.WasReleasedThisFrame() && rightHandNotPointingAtUI)
-            {
-                currentRightSpell.TriggerRelease();
-                rightHandNotPointingAtUI = false;
-            }
-            if (rightGrip.action.WasPressedThisFrame())
-            {
-                currentRightSpell.GripPress();
-            }
-            if (rightGrip.action.WasReleasedThisFrame())
-            {
-                currentRightSpell.GripRelease();
-            }
-
             //Hold events
             if(rightHandNotPointingAtUI)
                 currentRightSpell.TriggerHoldSafe();
+
             currentRightSpell.GripHoldSafe();
 
             //Button pressed values

@@ -58,11 +58,11 @@ PrefabInstance:
     - target: {fileID: 7344509594335940998, guid: b2bd0de9cf65ae849b68979895acd991, type: 3}
       propertyPath: StoredPuzzle
       value: 
-      objectReference: {fileID: 2853095006244732141, guid: 0b9fb22eca6531746af5a20bfc36da48, type: 3}
+      objectReference: {fileID: 2853095006244732141, guid: 2c488ad327c70964489c616e94c52191, type: 3}
     - target: {fileID: 7344509594335940998, guid: b2bd0de9cf65ae849b68979895acd991, type: 3}
       propertyPath: SolutionPrefab
       value: 
-      objectReference: {fileID: 21300000, guid: c14761c1e7813de45b784f36ba10af72, type: 3}
+      objectReference: {fileID: 21300000, guid: 48add4474181da7429ad5e22ff58f3da, type: 3}
     - target: {fileID: 7344509594335940998, guid: b2bd0de9cf65ae849b68979895acd991, type: 3}
       propertyPath: GrantedSpell.spellIcon
       value: 
@@ -77,7 +77,7 @@ PrefabInstance:
         When you want to choose a location hold the grip and pull your hand upwards.
         \n\nThen at any point later on hold grip and swing your hand downwards to
         strike lightning below the spell circle.\n\nYou can summon multiple circles
-        before striking them"
+        before activating them"
       objectReference: {fileID: 0}
     - target: {fileID: 7344509594335940998, guid: b2bd0de9cf65ae849b68979895acd991, type: 3}
       propertyPath: GrantedSpell.spellCouple.spellCircle

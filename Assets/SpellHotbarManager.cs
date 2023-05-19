@@ -27,13 +27,11 @@ public class SpellHotbarManager : MonoBehaviour
         if (rightHandHotbar[index] != null)
         {
             spellSwap.Invoke(rightHandHotbar[index], LeftRight.Right);
-            //_spellManager.ChangeRightSpell(rightHandHotbar[index]);
         }
     }
 
     public void ChangeRightHotbar(int index, CoreSpellComponents spellToBe)
     {
-        
         if (spawnedRightCircles[index])
         {
             Destroy(spawnedRightCircles[index]);
@@ -48,18 +46,19 @@ public class SpellHotbarManager : MonoBehaviour
         if (leftHandHotbar[index] != null)
         {
             spellSwap.Invoke(leftHandHotbar[index], LeftRight.Left);
-            _spellManager.ChangeLeftSpell(leftHandHotbar[index]);
         }
     }
 
     public void ChangeLeftHotbar(int index, CoreSpellComponents spellToBe)
     {
-        leftHandHotbar[index] = spellToBe;
+        
         if (spawnedLeftCircles[index])
         {
             Destroy(spawnedLeftCircles[index]);
         }
-        spawnedLeftCircles[index] = Instantiate(spellToBe.spellCircle, leftMenuSections[index].transform);
+        leftHandHotbar[index] = spellToBe;
+        if(spellToBe != null)
+            spawnedLeftCircles[index] = Instantiate(spellToBe.spellCircle, leftMenuSections[index].transform);
     }
 
     public void ClearLeftHotbar()

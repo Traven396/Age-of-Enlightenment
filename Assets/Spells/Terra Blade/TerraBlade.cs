@@ -110,7 +110,8 @@ public class TerraBlade : SpellBlueprint
     public override void OnDeselect()
     {
         base.OnDeselect();
-        if(BladeSpawner.instantiatedObject)
+
+        if(BladeSpawner.instantiatedObject != null)
             Destroy(BladeSpawner.instantiatedObject);
     }
 }

@@ -7,6 +7,8 @@ using UnityEngine.XR;
 
 public class CustomPlayerController : MonoBehaviour
 {
+    [Header("Menu Things")]
+    public Transform bookTrans;
     [Header("Behaviour Options")]
 
     [SerializeField]
@@ -155,6 +157,8 @@ public class CustomPlayerController : MonoBehaviour
 
         capsuleCollider.height = height;
         capsuleCollider.center = center;
+
+        bookTrans.position = center;
     }
 
     private void SafetyNet()
