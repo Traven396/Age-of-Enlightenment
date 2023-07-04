@@ -59,6 +59,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 21300000, guid: c14761c1e7813de45b784f36ba10af72, type: 3}
     - target: {fileID: 7344509594335940998, guid: b2bd0de9cf65ae849b68979895acd991, type: 3}
+      propertyPath: GrantedSpell.school
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 7344509594335940998, guid: b2bd0de9cf65ae849b68979895acd991, type: 3}
       propertyPath: GrantedSpell.spellIcon
       value: 
       objectReference: {fileID: 21300000, guid: 23b57d7324b896840b8586a6d17cd7ad, type: 3}

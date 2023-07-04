@@ -64,6 +64,43 @@ PrefabInstance:
       propertyPath: SolutionPrefab
       value: 
       objectReference: {fileID: 21300000, guid: c14761c1e7813de45b784f36ba10af72, type: 3}
+    - target: {fileID: 7344509594335940998, guid: b2bd0de9cf65ae849b68979895acd991, type: 3}
+      propertyPath: GrantedSpell.school
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7344509594335940998, guid: b2bd0de9cf65ae849b68979895acd991, type: 3}
+      propertyPath: GrantedSpell.spellIcon
+      value: 
+      objectReference: {fileID: 21300000, guid: 9da9fb0de8d54574eb8a8c9ec555f670, type: 3}
+    - target: {fileID: 7344509594335940998, guid: b2bd0de9cf65ae849b68979895acd991, type: 3}
+      propertyPath: GrantedSpell.spellName
+      value: Fly
+      objectReference: {fileID: 0}
+    - target: {fileID: 7344509594335940998, guid: b2bd0de9cf65ae849b68979895acd991, type: 3}
+      propertyPath: GrantedSpell.spellDescription
+      value: 'While holding the trigger you expel a constant stream of air from your
+        palm. Use it to propel youself
+
+        While holding grip you can slow down
+        the force of gravity and momentum on yourself, allowing you to float in the
+        air'
+      objectReference: {fileID: 0}
+    - target: {fileID: 7344509594335940998, guid: b2bd0de9cf65ae849b68979895acd991, type: 3}
+      propertyPath: GrantedSpell.spellCouple.spellCircle
+      value: 
+      objectReference: {fileID: 776886629064782777, guid: 9300ac926c2d3d348987bd2bcb100dc7, type: 3}
+    - target: {fileID: 7344509594335940998, guid: b2bd0de9cf65ae849b68979895acd991, type: 3}
+      propertyPath: GrantedSpell.spellCouple.spellMechanics
+      value: 
+      objectReference: {fileID: 5305842503549153314, guid: 3891b23e680c038468119a292a972b97, type: 3}
+    - target: {fileID: 7344509594335940998, guid: b2bd0de9cf65ae849b68979895acd991, type: 3}
+      propertyPath: GrantedSpell.spellCouple.LeftAnimationController
+      value: 
+      objectReference: {fileID: 22100000, guid: 39eb2c994df5d7642bc3fc36dca08cc5, type: 2}
+    - target: {fileID: 7344509594335940998, guid: b2bd0de9cf65ae849b68979895acd991, type: 3}
+      propertyPath: GrantedSpell.spellCouple.RightAnimationController
+      value: 
+      objectReference: {fileID: 22100000, guid: 645cbc11ddd5d2a45b7c009c0a200f1a, type: 2}
     - target: {fileID: 7344509594335941017, guid: b2bd0de9cf65ae849b68979895acd991, type: 3}
       propertyPath: m_RootOrder
       value: 0

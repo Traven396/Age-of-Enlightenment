@@ -6,7 +6,7 @@ using UnityEngine;
 public class TargettableEntity : MonoBehaviour
 {
     public bool TeleTargettable = false, PyroTargettable = false, MetalTargettable = false,
-        AquaTargettable = false, GeneralTargettable = false;
+        AquaTargettable = false, GeneralTargettable = false, EarthTargettable = false;
     private Rigidbody targetRB;
     private Outline selfOutline;
     public bool isSelected = false;

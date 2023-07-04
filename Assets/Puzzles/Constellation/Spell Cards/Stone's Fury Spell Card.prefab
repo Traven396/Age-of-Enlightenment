@@ -1,0 +1,145 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1001 &6469764570342478617
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 572214746768461559, guid: b2bd0de9cf65ae849b68979895acd991, type: 3}
+      propertyPath: m_text
+      value: 'Shield
+
+'
+      objectReference: {fileID: 0}
+    - target: {fileID: 572214746768461559, guid: b2bd0de9cf65ae849b68979895acd991, type: 3}
+      propertyPath: m_fontStyle
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 572214746768461559, guid: b2bd0de9cf65ae849b68979895acd991, type: 3}
+      propertyPath: m_fontColor.b
+      value: 0.3679245
+      objectReference: {fileID: 0}
+    - target: {fileID: 572214746768461559, guid: b2bd0de9cf65ae849b68979895acd991, type: 3}
+      propertyPath: m_fontColor.g
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 572214746768461559, guid: b2bd0de9cf65ae849b68979895acd991, type: 3}
+      propertyPath: m_fontColor.r
+      value: 0.12063102
+      objectReference: {fileID: 0}
+    - target: {fileID: 572214746768461559, guid: b2bd0de9cf65ae849b68979895acd991, type: 3}
+      propertyPath: m_fontColor32.rgba
+      value: 4284350495
+      objectReference: {fileID: 0}
+    - target: {fileID: 2248582323238589103, guid: b2bd0de9cf65ae849b68979895acd991, type: 3}
+      propertyPath: m_text
+      value: "1st Orbit \nAstral\n\nConjure a physical barrier to protect yourself
+        from enemies"
+      objectReference: {fileID: 0}
+    - target: {fileID: 2248582323238589103, guid: b2bd0de9cf65ae849b68979895acd991, type: 3}
+      propertyPath: m_fontSizeBase
+      value: 1.15
+      objectReference: {fileID: 0}
+    - target: {fileID: 2248582323238589103, guid: b2bd0de9cf65ae849b68979895acd991, type: 3}
+      propertyPath: m_fontColor32.rgba
+      value: 4278190080
+      objectReference: {fileID: 0}
+    - target: {fileID: 7344509594335940998, guid: b2bd0de9cf65ae849b68979895acd991, type: 3}
+      propertyPath: GrantedSpell
+      value: 
+      objectReference: {fileID: 6834804205108281816, guid: 95ed91ef08526f54ab91cab38731bb5f, type: 3}
+    - target: {fileID: 7344509594335940998, guid: b2bd0de9cf65ae849b68979895acd991, type: 3}
+      propertyPath: StoredPuzzle
+      value: 
+      objectReference: {fileID: 2853095006244732141, guid: 0b9fb22eca6531746af5a20bfc36da48, type: 3}
+    - target: {fileID: 7344509594335940998, guid: b2bd0de9cf65ae849b68979895acd991, type: 3}
+      propertyPath: SolutionPrefab
+      value: 
+      objectReference: {fileID: 21300000, guid: c14761c1e7813de45b784f36ba10af72, type: 3}
+    - target: {fileID: 7344509594335940998, guid: b2bd0de9cf65ae849b68979895acd991, type: 3}
+      propertyPath: GrantedSpell.school
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7344509594335940998, guid: b2bd0de9cf65ae849b68979895acd991, type: 3}
+      propertyPath: GrantedSpell.spellIcon
+      value: 
+      objectReference: {fileID: 21300000, guid: 14637cc31e725de4a85969d80e169c6e, type: 3}
+    - target: {fileID: 7344509594335940998, guid: b2bd0de9cf65ae849b68979895acd991, type: 3}
+      propertyPath: GrantedSpell.spellName
+      value: Stone's Fury
+      objectReference: {fileID: 0}
+    - target: {fileID: 7344509594335940998, guid: b2bd0de9cf65ae849b68979895acd991, type: 3}
+      propertyPath: GrantedSpell.spellDescription
+      value: Pressing the trigger will allow you to begin targeting where you would
+        like to punch. Once you are satisfied, press and hold the grip. Then point
+        your palm to the sky, pull up quickly, and watch as your enemies go flying
+        away.
+      objectReference: {fileID: 0}
+    - target: {fileID: 7344509594335940998, guid: b2bd0de9cf65ae849b68979895acd991, type: 3}
+      propertyPath: GrantedSpell.spellCouple.spellCircle
+      value: 
+      objectReference: {fileID: 776886629064782777, guid: cd12385a9da17fd4dadff7230f7b0bd9, type: 3}
+    - target: {fileID: 7344509594335940998, guid: b2bd0de9cf65ae849b68979895acd991, type: 3}
+      propertyPath: GrantedSpell.spellCouple.spellMechanics
+      value: 
+      objectReference: {fileID: 8833616790026167706, guid: 6a8d1da9637cb834288f001c1e01d5e4, type: 3}
+    - target: {fileID: 7344509594335941017, guid: b2bd0de9cf65ae849b68979895acd991, type: 3}
+      propertyPath: m_RootOrder
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7344509594335941017, guid: b2bd0de9cf65ae849b68979895acd991, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -29.8211
+      objectReference: {fileID: 0}
+    - target: {fileID: 7344509594335941017, guid: b2bd0de9cf65ae849b68979895acd991, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.4561
+      objectReference: {fileID: 0}
+    - target: {fileID: 7344509594335941017, guid: b2bd0de9cf65ae849b68979895acd991, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -3.25
+      objectReference: {fileID: 0}
+    - target: {fileID: 7344509594335941017, guid: b2bd0de9cf65ae849b68979895acd991, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7344509594335941017, guid: b2bd0de9cf65ae849b68979895acd991, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7344509594335941017, guid: b2bd0de9cf65ae849b68979895acd991, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7344509594335941017, guid: b2bd0de9cf65ae849b68979895acd991, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7344509594335941017, guid: b2bd0de9cf65ae849b68979895acd991, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7344509594335941017, guid: b2bd0de9cf65ae849b68979895acd991, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7344509594335941017, guid: b2bd0de9cf65ae849b68979895acd991, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7344509594335941019, guid: b2bd0de9cf65ae849b68979895acd991, type: 3}
+      propertyPath: m_InteractionManager
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 7344509594335941021, guid: b2bd0de9cf65ae849b68979895acd991, type: 3}
+      propertyPath: m_Name
+      value: Stone's Fury Spell Card
+      objectReference: {fileID: 0}
+    - target: {fileID: 7344509595422083567, guid: b2bd0de9cf65ae849b68979895acd991, type: 3}
+      propertyPath: m_Camera
+      value: 
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: b2bd0de9cf65ae849b68979895acd991, type: 3}

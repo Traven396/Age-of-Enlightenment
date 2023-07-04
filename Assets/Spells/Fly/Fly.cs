@@ -43,11 +43,13 @@ public class Fly : SpellBlueprint
             {
                 if (currentHand == 0)
                 {
-                    _applyMotion.Cast(playerRb, -_palmLocation.transform.right * triggerPressedValue);
+                    //_applyMotion.Cast(playerRb, -_palmLocation.transform.right * triggerPressedValue);
+                    playerPhys.AddVelocity(-_palmLocation.transform.right * triggerPressedValue * 12);
                 }
                 else
                 {
-                    _applyMotion.Cast(playerRb, _palmLocation.transform.right * triggerPressedValue);
+                    //_applyMotion.Cast(playerRb, _palmLocation.transform.right * triggerPressedValue);
+                    playerPhys.AddVelocity(_palmLocation.transform.right * triggerPressedValue * 12);
                 }
 
                 if (!_objectSpawn.instantiatedObject)

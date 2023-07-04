@@ -1239,7 +1239,7 @@ GameObject:
   - component: {fileID: 5387968087932938540}
   - component: {fileID: 7341040947945423992}
   - component: {fileID: 8173994386222205406}
-  - component: {fileID: 2363860930176890392}
+  - component: {fileID: 8793469832768665684}
   m_Layer: 0
   m_Name: Locomotion System
   m_TagString: Untagged
@@ -1260,7 +1260,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 6257067206935007096}
-  m_RootOrder: 8
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &7341040947945423992
 MonoBehaviour:
@@ -1288,7 +1288,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 919e39492806b334982b6b84c90dd927, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_System: {fileID: 0}
+  m_System: {fileID: 7341040947945423992}
   m_TurnSpeed: 60
   m_LeftHandTurnAction:
     m_UseReference: 0
@@ -1314,48 +1314,48 @@ MonoBehaviour:
       m_SingletonActionBindings: []
       m_Flags: 0
     m_Reference: {fileID: -6493913391331992944, guid: c348712bda248c246b8c49b3db54643f, type: 3}
---- !u!114 &2363860930176890392
+--- !u!114 &8793469832768665684
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3741222363453928552}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0bf296fc962d7184ab14ad1841598d5f, type: 3}
+  m_Script: {fileID: 11500000, guid: 2213c36610e3b1c4bbf886810ed9db12, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_System: {fileID: 7341040947945423992}
-  m_MoveSpeed: 3
-  m_EnableStrafe: 1
-  m_UseGravity: 1
-  m_GravityApplicationMode: 1
-  m_ForwardSource: {fileID: 6257067208094543879}
-  m_LeftHandMoveAction:
-    m_UseReference: 1
-    m_Action:
-      m_Name: Left Hand Move
-      m_Type: 0
-      m_ExpectedControlType: 
-      m_Id: 75f1b245-c357-48c8-9acb-8967bec9dda2
-      m_Processors: 
-      m_Interactions: 
-      m_SingletonActionBindings: []
-      m_Flags: 0
-    m_Reference: {fileID: 6972639530819350904, guid: c348712bda248c246b8c49b3db54643f, type: 3}
-  m_RightHandMoveAction:
+  m_System: {fileID: 0}
+  m_TurnAmount: 45
+  m_DebounceTime: 0.5
+  m_EnableTurnLeftRight: 1
+  m_EnableTurnAround: 0
+  m_DelayTime: 0
+  m_LeftHandSnapTurnAction:
     m_UseReference: 0
     m_Action:
-      m_Name: Right Hand Move
+      m_Name: Left Hand Snap Turn
       m_Type: 0
       m_ExpectedControlType: 
-      m_Id: 6bf6c732-e011-46b1-acc5-b649a4ec5f10
+      m_Id: a1d07c24-ca50-422a-a23f-685d9fabf63b
       m_Processors: 
       m_Interactions: 
       m_SingletonActionBindings: []
       m_Flags: 0
-    m_Reference: {fileID: -8198699208435500284, guid: c348712bda248c246b8c49b3db54643f, type: 3}
+    m_Reference: {fileID: 1010738217276881514, guid: c348712bda248c246b8c49b3db54643f, type: 3}
+  m_RightHandSnapTurnAction:
+    m_UseReference: 1
+    m_Action:
+      m_Name: Right Hand Snap Turn
+      m_Type: 0
+      m_ExpectedControlType: 
+      m_Id: a7b54797-6974-4f75-81d0-42b9c15ef1e0
+      m_Processors: 
+      m_Interactions: 
+      m_SingletonActionBindings: []
+      m_Flags: 0
+    m_Reference: {fileID: -6493913391331992944, guid: c348712bda248c246b8c49b3db54643f, type: 3}
 --- !u!1 &3796150247555028130
 GameObject:
   m_ObjectHideFlags: 0
@@ -2567,7 +2567,6 @@ Transform:
   - {fileID: 6257067206602364080}
   - {fileID: 5265636409970503681}
   - {fileID: 6257067207464898669}
-  - {fileID: 3891334479781005703}
   - {fileID: 5387968087932938540}
   m_Father: {fileID: 6257067208314467266}
   m_RootOrder: 0
@@ -3993,6 +3992,7 @@ Transform:
   - {fileID: 6257067206935007096}
   - {fileID: 4414403936837926056}
   - {fileID: 5319948827453228032}
+  - {fileID: 3415869147130054645}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -4025,19 +4025,164 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   newSpellLearned:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 3354832543348190148}
-        m_TargetAssemblyTypeName: SpellTabManager, Assembly-CSharp
-        m_MethodName: UpdateList
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
+  knownFireSpells:
+  - spellDisplayIcon: {fileID: 21300000, guid: 04dd4fcda4762f549a5c78ffde8a8a0a, type: 3}
+    spellName: Cinder Blast
+    spellCouple:
+      spellMechanics: {fileID: 5179050301788854179, guid: b04d9014908bca747bf0b26ef1cec7f9, type: 3}
+      spellCircle: {fileID: 776886629064782777, guid: 00d0cc5c01193c14fae359ce9a78e381, type: 3}
+      RightAnimationController: {fileID: 0}
+      LeftAnimationController: {fileID: 0}
+    spellDescription: Charge up the blast by holding down the trigger. Once the spell
+      circle stops growing, release the button to launch out a shotgun blast of ashes
+    school: 0
+  - spellDisplayIcon: {fileID: 21300000, guid: cf2855fb18a21fa45ae954e84f9f4a2e, type: 3}
+    spellName: Firebolt
+    spellCouple:
+      spellMechanics: {fileID: 1967907942461160733, guid: a6c5168b6cbe6994a895b4219eaa724d, type: 3}
+      spellCircle: {fileID: 776886629064782777, guid: 4ece181df3095f245b552d27b3004688, type: 3}
+      RightAnimationController: {fileID: 22100000, guid: ed9562a03f610e748b91024be417fcd0, type: 2}
+      LeftAnimationController: {fileID: 22100000, guid: e16dd7d0f4d1edd47b5c569500af58bb, type: 2}
+    spellDescription: FIRE! By holding the trigger you can charge a thrown explosive
+      projectile. But by holding down grip you can launch smaller, faster fire bursts
+      instead. Either way the enemy dies
+    school: 0
+  knownEarthSpells:
+  - spellDisplayIcon: {fileID: 21300000, guid: 14637cc31e725de4a85969d80e169c6e, type: 3}
+    spellName: Stone's Fury
+    spellCouple:
+      spellMechanics: {fileID: 8833616790026167706, guid: 6a8d1da9637cb834288f001c1e01d5e4, type: 3}
+      spellCircle: {fileID: 776886629064782777, guid: cd12385a9da17fd4dadff7230f7b0bd9, type: 3}
+      RightAnimationController: {fileID: 0}
+      LeftAnimationController: {fileID: 0}
+    spellDescription: Pressing the trigger will allow you to begin targeting where
+      you would like to punch. Once you are satisfied, press and hold the grip. Then
+      point your palm to the sky, pull up quickly, and watch as your enemies go flying
+      away.
+    school: 1
+  - spellDisplayIcon: {fileID: 21300000, guid: 9406a98d77ad2a24e967025d22647c99, type: 3}
+    spellName: Terra Blade
+    spellCouple:
+      spellMechanics: {fileID: 5324684325716610943, guid: 7f04f108da83bac478d5176a703552de, type: 3}
+      spellCircle: {fileID: 776886629064782777, guid: 78a961017297a024aa1fa89f13b3c960, type: 3}
+      RightAnimationController: {fileID: 0}
+      LeftAnimationController: {fileID: 0}
+    spellDescription: 'Holding down the grip button and swinging your arm outwards
+      will spawn a blade along the back of your hand. Also, if you press trigger
+      you can launch the blade as a projectile.
+
+
+      This one is kinda glitchy'
+    school: 1
+  knownWindSpells:
+  - spellDisplayIcon: {fileID: 21300000, guid: 9da9fb0de8d54574eb8a8c9ec555f670, type: 3}
+    spellName: Fly
+    spellCouple:
+      spellMechanics: {fileID: 5305842503549153314, guid: 3891b23e680c038468119a292a972b97, type: 3}
+      spellCircle: {fileID: 776886629064782777, guid: 9300ac926c2d3d348987bd2bcb100dc7, type: 3}
+      RightAnimationController: {fileID: 22100000, guid: 645cbc11ddd5d2a45b7c009c0a200f1a, type: 2}
+      LeftAnimationController: {fileID: 22100000, guid: 39eb2c994df5d7642bc3fc36dca08cc5, type: 2}
+    spellDescription: 'While holding the trigger you expel a constant stream of air
+      from your palm. Use it to propel youself
+
+      While holding grip you can
+      slow down the force of gravity and momentum on yourself, allowing you to float
+      in the air'
+    school: 2
+  - spellDisplayIcon: {fileID: 21300000, guid: 9e5abf9cdb5d3c9488575cebfef9b5bf, type: 3}
+    spellName: Step of the Wind
+    spellCouple:
+      spellMechanics: {fileID: 5100481798701309517, guid: 380c38a6092b35545bf919fe21feec2d, type: 3}
+      spellCircle: {fileID: 776886629064782777, guid: 17357bdac2637724fb6b852b7c621658, type: 3}
+      RightAnimationController: {fileID: 0}
+      LeftAnimationController: {fileID: 0}
+    spellDescription: 'By pressing and releasing trigger you can increase your passive
+      movement speed. This spell will stay active even if you select a different
+      one. It will decrease your Max Mana as a cost though.
+
+
+      You can tell
+      this is active if the spell circle is enlarged'
+    school: 2
+  knownWaterSpells: []
+  knownIceSpells:
+  - spellDisplayIcon: {fileID: 21300000, guid: f5ab3f534c1138f4786f23cd74103223, type: 3}
+    spellName: Ice Knife
+    spellCouple:
+      spellMechanics: {fileID: 3900314875810967446, guid: 855878f5459ed114caa22f397db85310, type: 3}
+      spellCircle: {fileID: 776886629064782777, guid: 64023b342b7887645a1347d15aec6b5d, type: 3}
+      RightAnimationController: {fileID: 0}
+      LeftAnimationController: {fileID: 0}
+    spellDescription: 'To start aiming the spell hold down the grip button, then
+      by holding trigger you can charge the spike on the back of your hand. The longer
+      you charge, the stronger it will become.
+
+
+      Release the trigger to launch
+      it '
+    school: 4
+  knownLightningSpells:
+  - spellDisplayIcon: {fileID: 21300000, guid: 2456dd2824f5ec540830760922f5bac6, type: 3}
+    spellName: Smite
+    spellCouple:
+      spellMechanics: {fileID: 209610345538036072, guid: 52b307628d1dd2540ab466186f0103d1, type: 3}
+      spellCircle: {fileID: 8702230245120405995, guid: 7526b9a0643da834c8f86a1e777c4dfe, type: 3}
+      RightAnimationController: {fileID: 0}
+      LeftAnimationController: {fileID: 0}
+    spellDescription: "By holding trigger you can begin targetting when pointing
+      at the ground. When you want to choose a location hold the grip and pull your
+      hand upwards. \n\nThen at any point later on hold grip and swing your hand
+      downwards to strike lightning below the spell circle.\n\nYou can summon multiple
+      circles before activating them"
+    school: 5
+  knownMetalSpells: []
+  knownPlantSpells: []
+  knownAstralSpells:
+  - spellDisplayIcon: {fileID: 21300000, guid: 3638fcac3952b374f96167d7c8a735ae, type: 3}
+    spellName: Catapult
+    spellCouple:
+      spellMechanics: {fileID: 1199593121343689505, guid: d7aa3db6fa196cc4ab81f19bd343cfb0, type: 3}
+      spellCircle: {fileID: 776886629064782777, guid: 8f6fc34074f88dc4298eda6499a9691e, type: 3}
+      RightAnimationController: {fileID: 0}
+      LeftAnimationController: {fileID: 0}
+    spellDescription: 'Holding down trigger will allow you to target specific objects,
+      upon release they will begin floating. While an object is floating you can
+      hold the grip and throw your hand to launch them in the direction you throw.
+
+
+      Try
+      it on the crates outside'
+    school: 8
+  - spellDisplayIcon: {fileID: 21300000, guid: bb64f701c4c136944bbccede9b89a4dd, type: 3}
+    spellName: Gravity Burst
+    spellCouple:
+      spellMechanics: {fileID: 2859709878002125458, guid: 00c3150633a25e4408b624060b4739d7, type: 3}
+      spellCircle: {fileID: 776886629064782777, guid: 1b3e1f3e082087d47b746097b9af36c8, type: 3}
+      RightAnimationController: {fileID: 0}
+      LeftAnimationController: {fileID: 0}
+    spellDescription: 'Hold down the trigger to begin charging the force blast. Upon
+      release, launch all objects in front of you with a force dependent on your
+      charge.
+
+
+      This also will deflect projectiles'
+    school: 8
+  - spellDisplayIcon: {fileID: 21300000, guid: 23b57d7324b896840b8586a6d17cd7ad, type: 3}
+    spellName: Shield
+    spellCouple:
+      spellMechanics: {fileID: 6834804205108281816, guid: 95ed91ef08526f54ab91cab38731bb5f, type: 3}
+      spellCircle: {fileID: 6564065835548441453, guid: 7b465e4dd1b62d44fbcde0d4f8db1441, type: 3}
+      RightAnimationController: {fileID: 0}
+      LeftAnimationController: {fileID: 0}
+    spellDescription: 'Protect yo self fool. By holding grip the shield will enlarge
+      and become physical. Holding it too close to your body will sometimes allow
+      projectiles to hit you still.
+
+
+      Try catching one of the small boxes on
+      it using catapult, or don''t. I''m just a book'
+    school: 8
 --- !u!114 &6257067208314467267
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4067,8 +4212,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dcdb77078d753de4fbb36f896643b6b7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bookTrans: {fileID: 3891334479781005703}
-  speed: 1.5
+  speed: 4
   jumpForce: 250
   MoveJoystick: {fileID: 6972639530819350904, guid: c348712bda248c246b8c49b3db54643f, type: 3}
   JumpButton: {fileID: 8597155949774336733, guid: c348712bda248c246b8c49b3db54643f, type: 3}
@@ -4299,6 +4443,37 @@ Transform:
   - {fileID: 5365356880547482964}
   m_Father: {fileID: 2788815503754477399}
   m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &6810575304395645852
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3415869147130054645}
+  m_Layer: 3
+  m_Name: Book Travel
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3415869147130054645
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6810575304395645852}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0.2, z: -0.12}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 6257067208314467266}
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &6963616866416220731
 GameObject:
@@ -5026,37 +5201,6 @@ Transform:
   m_Father: {fileID: 2656434098904741610}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &9039477382089923470
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 3891334479781005703}
-  m_Layer: 3
-  m_Name: BookTravelPoint
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &3891334479781005703
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9039477382089923470}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: -0.31059998, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 6257067206935007096}
-  m_RootOrder: 7
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &2169350366763185365
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -5445,7 +5589,7 @@ PrefabInstance:
     - target: {fileID: 2039792266381594586, guid: 65a9e9e90e08f2d408e57799b831e8ea, type: 3}
       propertyPath: bookPoint
       value: 
-      objectReference: {fileID: 3891334479781005703}
+      objectReference: {fileID: 3415869147130054645}
     - target: {fileID: 2039792266381594586, guid: 65a9e9e90e08f2d408e57799b831e8ea, type: 3}
       propertyPath: handPoint
       value: 
@@ -5564,6 +5708,10 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 5
       objectReference: {fileID: 0}
+    - target: {fileID: 5065741728526312782, guid: 65a9e9e90e08f2d408e57799b831e8ea, type: 3}
+      propertyPath: _hotbar
+      value: 
+      objectReference: {fileID: 3743361995013265950}
     - target: {fileID: 5916938781697416071, guid: 65a9e9e90e08f2d408e57799b831e8ea, type: 3}
       propertyPath: m_Layer
       value: 5
@@ -5576,6 +5724,10 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 5
       objectReference: {fileID: 0}
+    - target: {fileID: 7070213205617345865, guid: 65a9e9e90e08f2d408e57799b831e8ea, type: 3}
+      propertyPath: LocomotionSystem
+      value: 
+      objectReference: {fileID: 3741222363453928552}
     - target: {fileID: 7589483676867505661, guid: 65a9e9e90e08f2d408e57799b831e8ea, type: 3}
       propertyPath: m_Camera
       value: 
