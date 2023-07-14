@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
+[RequireComponent(typeof(Rigidbody))]
 public class PhysicalHands : MonoBehaviour
 {
     [Header("Required Components")]
@@ -13,6 +14,9 @@ public class PhysicalHands : MonoBehaviour
     //More locations for more accurate travel
     public Transform Shoulder;
     public Rigidbody ParentBody;
+    [Header("Offsets")]
+    public Vector3 positionalOffset;
+    public Vector3 rotationalOffset;
 
     [Header("Settings")]
     public JointSettings JointSettings;
@@ -27,7 +31,6 @@ public class PhysicalHands : MonoBehaviour
     private bool isReturning;
     private Vector3 previousPosition;
     private Quaternion previousRotation;
-    private float timer = 0;
     public Rigidbody rb { get; private set; }
     public ConfigurableJoint Joint { get; set; }
     public HandStrength StrengthHandler;
@@ -74,10 +77,9 @@ public class PhysicalHands : MonoBehaviour
     {
         UpdateAnchor();
 
-        Joint.targetRotation = Quaternion.Inverse(ParentBody.rotation) * Target.rotation * _jointOffset;
+        Joint.targetRotation = Quaternion.Inverse(ParentBody.rotation) * Target.rotation * _jointOffset * Quaternion.Euler(rotationalOffset);
 
         UpdateTargetVelocity();
-        //UpdateDistanceCheck();
     }
     public void UpdateTargetVelocity()
     {
@@ -92,33 +94,6 @@ public class PhysicalHands : MonoBehaviour
 
         previousRotation = Target.rotation;
     }
-    private void UpdateDistanceCheck()
-    {
-        if (!isReturning)
-        {
-            var reached = false;
-            if (Shoulder)
-                reached = Vector3.Distance(Shoulder.position, transform.position) > ArmLength;
-            if (!reached)
-                reached = Vector3.Distance(transform.position, Target.position) > MaxTargetDistance;
-
-            if (reached)
-            {
-                isReturning = true;
-                rb.detectCollisions = false;
-            }
-        }
-        else if (isReturning)
-        {
-            transform.position = Vector3.MoveTowards(transform.position, Target.position, ReturnSpeed * Time.deltaTime);
-
-            if (Vector3.Distance(transform.position, Target.position) < .05f)
-            {
-                isReturning = false;
-                rb.detectCollisions = true;
-            }
-        }
-    }
     private void UpdateAnchor()
     {
         //Moves the joint anchor every frame
@@ -130,12 +105,12 @@ public class PhysicalHands : MonoBehaviour
             var dir = localTargetPosition - localAnchor;
             dir = Vector3.ClampMagnitude(dir, ArmLength);
 
-            var point = localAnchor + dir;
+            var point = localAnchor + dir + positionalOffset;
             Joint.targetPosition = point;
         }
         else
         {
-            Joint.targetPosition = localTargetPosition;
+            Joint.targetPosition = localTargetPosition + positionalOffset;
         }
     }
     public Vector3 AngularVelocity(Quaternion current, Quaternion previous)

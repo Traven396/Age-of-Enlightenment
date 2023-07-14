@@ -49,6 +49,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   currentHand: 0
   playerRb: {fileID: 0}
+  playerPhys: {fileID: 0}
   circleHolder: {fileID: 0}
   spellCircle: {fileID: 0}
   _palmLocation: {fileID: 0}
@@ -61,7 +62,7 @@ MonoBehaviour:
   triggerPressedValue: 0
   gripPressedValue: 0
   maxDistance: 10
-  maxAngle: 30
+  maxAngle: 45
   maxPillars: 2
   ManaCost: 30
 --- !u!114 &-3943025776314697370
