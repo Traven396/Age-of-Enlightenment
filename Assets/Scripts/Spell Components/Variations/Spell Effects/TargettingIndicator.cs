@@ -51,7 +51,7 @@ public class TargettingIndicator : MonoBehaviour
                 spellCircle.transform.parent = null;
 
                 //The moving and rotation of the spell circle for visuals
-                iTween.MoveUpdate(spellCircle, currHit.point + new Vector3(0, 0.01f, 0), .5f);
+                iTween.MoveUpdate(spellCircle, currHit.point + (currHit.normal * 0.03f), .5f);
                 iTween.RotateUpdate(spellCircle, rotationToBe.eulerAngles, .5f);
 
                 //Tell the program everything is ok to cast
@@ -95,12 +95,13 @@ public class TargettingIndicator : MonoBehaviour
     {
         if(hit.point != Vector3.zero)
         {
-            iTween.MoveTo(spellCircle, hit.point + new Vector3(0, 0.05f, 0), .2f);
+            var finalRotation = Quaternion.FromToRotation(spellCircle.transform.up, hit.normal) * spellCircle.transform.rotation;
 
-            iTween.RotateTo(spellCircle, Vector3.zero, .5f);
+            iTween.MoveTo(spellCircle, (hit.point + (hit.normal * 0.03f)), .2f);
+
+            iTween.RotateTo(spellCircle, finalRotation.eulerAngles, .5f);
 
             iTween.ScaleTo(spellCircle, Vector3.one * 4, 1f);
-
             readyToCast = true;
         }
     }

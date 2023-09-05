@@ -74,7 +74,9 @@ public class StoneFury : SpellBlueprint
             {
                 _objectSpawn.Cast(spellCircle.transform);
 
-                Player.Instance.SubtractCurrentMana(manaCost);
+                _objectSpawn.instantiatedObject.GetComponent<SummonedObjectBehavior>().BeginLifeCycle();
+
+                Player.Instance.SubtractMana(manaCost);
                     
                 performed = true;
             }

@@ -49,7 +49,7 @@ public class EnemyAi : MonoBehaviour, IEntity, IDamageable
     private LayerMask enemyLayer;
     private void Awake()
     {
-        player = GameObject.Find("Player").transform;
+        player = Player.Instance.transform.GetChild(0).transform;
         agent = GetComponent<NavMeshAgent>();
         rb = GetComponent<Rigidbody>();
         enemyLayer = LayerMask.NameToLayer("EnemyProjectile");

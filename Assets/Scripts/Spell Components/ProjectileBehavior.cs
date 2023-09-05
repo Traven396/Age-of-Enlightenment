@@ -70,20 +70,23 @@ public class ProjectileBehavior : MonoBehaviour
             }
 
         }
-        Vector3 movementThisStep = rb.position - previousPosition;
-        float movementSqrMagnitude = movementThisStep.sqrMagnitude;
-
-        if (movementSqrMagnitude > sqrMinimumExtent)
+        if (enableCollisions)
         {
-            float movementMagnitude = Mathf.Sqrt(movementSqrMagnitude);
-            RaycastHit hitInfo;
+            Vector3 movementThisStep = rb.position - previousPosition;
+            float movementSqrMagnitude = movementThisStep.sqrMagnitude;
 
-            //check for obstructions we might have missed 
-            if (Physics.Raycast(previousPosition, movementThisStep, out hitInfo, movementMagnitude, nonCollidableLayers))
-                rb.position = hitInfo.point - (movementThisStep / movementMagnitude) * partialExtent;
+            if (movementSqrMagnitude > sqrMinimumExtent)
+            {
+                float movementMagnitude = Mathf.Sqrt(movementSqrMagnitude);
+                RaycastHit hitInfo;
+
+                //check for obstructions we might have missed 
+                if (Physics.Raycast(previousPosition, movementThisStep, out hitInfo, movementMagnitude, nonCollidableLayers))
+                    rb.position = hitInfo.point - (movementThisStep / movementMagnitude) * partialExtent;
+            }
+
+            previousPosition = rb.position; 
         }
-
-        previousPosition = rb.position;
     }
     private void OnCollisionEnter(Collision collision)
     {
@@ -185,5 +188,7 @@ public enum DamageType{
     Earth,
     Air,
     Force,
+    Metal,
+    Plant,
     Physical
 }

@@ -16,6 +16,22 @@ public class LightningStrike : MonoBehaviour
     private void Start()
     {
         strikeRay = new Ray(transform.position, Vector3.down);
+        EntireLifetime();
+    }
+    private void EntireLifetime()
+    {
+        var yOffset = 4f - Random.Range(0, .3f);
+        if (Physics.Raycast(transform.position + new Vector3(0, .1f, 0), Vector3.up, out RaycastHit smallHit, 4))
+        {
+            yOffset = smallHit.point.y - transform.position.y;
+        }
+
+        iTween.MoveBy(gameObject, iTween.Hash("y", yOffset,
+                                                "oncompletetarget", gameObject,
+                                                "oncomplete", "Strike",
+                                                "time", .7f));
+        iTween.ScaleTo(gameObject, Vector3.one * 5f, 1f);
+
     }
     public void Strike()
     {

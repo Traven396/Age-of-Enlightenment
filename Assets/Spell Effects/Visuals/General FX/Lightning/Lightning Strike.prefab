@@ -48,9 +48,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f3e488f58940bef4a9bc322c078fd62a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  lifeExpectancy: 10
-  postMortemTime: 1
-  destroyAnimation: {fileID: 7400000, guid: 7bffc3d60f60a0a41acb65e1a0e99a85, type: 2}
+  _lifeTime: 3
+  _destroyAfterLastAnimation: 1
+  _spawnAnimation: {fileID: 0}
+  _destroyAnimation: {fileID: 7400000, guid: 7bffc3d60f60a0a41acb65e1a0e99a85, type: 2}
 --- !u!111 &579574169454913540
 Animation:
   m_ObjectHideFlags: 0

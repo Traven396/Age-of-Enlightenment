@@ -97,7 +97,7 @@ public class GravityBurst : SpellBlueprint
                 }
                 StartCoroutine(CirclePushVisuals());
 
-                Player.Instance.SubtractCurrentMana(curManaCost);
+                Player.Instance.SubtractMana(curManaCost);
             }
         }
         else

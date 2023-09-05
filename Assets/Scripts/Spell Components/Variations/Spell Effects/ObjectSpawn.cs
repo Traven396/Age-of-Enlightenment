@@ -165,6 +165,10 @@ public class ObjectSpawn : MonoBehaviour
     {
         GravityAffected = YN;
     }
+    public void SetSpawnObject(GameObject newObject)
+    {
+        objectToSpawn = newObject;
+    }
 }
 public enum Direction
 {

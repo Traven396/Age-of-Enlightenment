@@ -28,12 +28,12 @@ public class HealthIndicator : MonoBehaviour
 
     void UpdateGraphic()
     {
-        float currentFill = (float)Player.Instance.currentHealth / (float)Player.Instance.maximumHealth;
+        float currentFill = (float)Player.Instance.currentHealth / (float)Player.Instance.maximumHealth.Value;
         iTween.ScaleTo(healthFill, new Vector3(currentFill, currentFill), .5f);
         //manaFill.transform.localScale = new Vector3(currentFill, currentFill);
     }
     void UpdateText()
     {
-        healthValue.text = Player.Instance.currentHealth + "/" + Player.Instance.maximumHealth;
+        healthValue.text = Player.Instance.currentHealth + "/" + Player.Instance.maximumHealth.Value;
     }
 }

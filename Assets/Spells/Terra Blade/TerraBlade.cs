@@ -57,7 +57,7 @@ public class TerraBlade : SpellBlueprint
             {
                 if (Player.Instance.currentMana >= manaCost)
                 {
-                    Player.Instance.SubtractCurrentMana(manaCost);
+                    Player.Instance.SubtractMana(manaCost);
 
                     bladeSpawned = true;
 

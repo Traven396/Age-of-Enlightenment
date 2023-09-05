@@ -43,7 +43,7 @@ public class CinderBlast : SpellBlueprint
                 spellSoundSource.pitch = Random.Range(0.85f, .95f);
                 spellSoundSource.Play();
 
-                Player.Instance.SubtractCurrentMana(manaCost);
+                Player.Instance.SubtractMana(manaCost);
             }
         }
         _charge.StopCharging();

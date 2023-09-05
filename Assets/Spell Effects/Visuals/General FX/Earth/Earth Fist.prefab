@@ -1714,8 +1714,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6385498694899019270}
   m_LocalRotation: {x: -0, y: -0, z: 0.7071068, w: 0.7071068}
-  m_LocalPosition: {x: -0.74, y: 0.21, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: -0.74, y: 0, z: 0}
+  m_LocalScale: {x: 0, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 4128279779978185912}
@@ -2150,12 +2150,12 @@ Animation:
   m_GameObject: {fileID: 7912488747389556614}
   m_Enabled: 1
   serializedVersion: 3
-  m_Animation: {fileID: 7400000, guid: 88eb18a6349e81247837bff446e071f0, type: 2}
+  m_Animation: {fileID: 0}
   m_Animations:
   - {fileID: 7400000, guid: 88eb18a6349e81247837bff446e071f0, type: 2}
   - {fileID: 7400000, guid: 153366802eafd7e468e8909d5e272963, type: 2}
   m_WrapMode: 0
-  m_PlayAutomatically: 1
+  m_PlayAutomatically: 0
   m_AnimatePhysics: 1
   m_CullingType: 0
 --- !u!114 &5609885441477637764
@@ -2170,9 +2170,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f3e488f58940bef4a9bc322c078fd62a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  lifeExpectancy: 7
-  postMortemTime: 5
-  destroyAnimation: {fileID: 7400000, guid: 153366802eafd7e468e8909d5e272963, type: 2}
+  _lifeTime: 5
+  _destroyAfterLastAnimation: 1
+  _spawnAnimation: {fileID: 7400000, guid: 88eb18a6349e81247837bff446e071f0, type: 2}
+  _destroyAnimation: {fileID: 7400000, guid: 153366802eafd7e468e8909d5e272963, type: 2}
 --- !u!114 &7438922695126240686
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2187,3 +2188,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   forceMultipler: 1
   range: 1
+  damageAmount: 16

@@ -46,6 +46,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   currentHand: 0
   playerRb: {fileID: 0}
+  playerPhys: {fileID: 0}
   circleHolder: {fileID: 0}
   spellCircle: {fileID: 0}
   _palmLocation: {fileID: 0}
@@ -58,4 +59,4 @@ MonoBehaviour:
   triggerPressedValue: 0
   gripPressedValue: 0
   initialManaCost: 8
-  manaDrain: 3
+  manaDrainCost: 1

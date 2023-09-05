@@ -1,19 +1,29 @@
 using UnityEngine;
+using Kryz.CharacterStats;
 public class Fly : SpellBlueprint
 {
-    public int flyManaDrain = 1;
-    public int brakeManaDrain = 2;
+    public float _flyManaCost;
+    public float _brakeManaCost;
+
+    private StatModifier FlightRegenModifier;
+    private StatModifier BrakeRegenModifier;
+    [Range(0.00001f, 1)]
+    public float flySpeed = 0.7f;
+    public float brakeSlowSpeed = 10;
 
 
     private ApplyMotion _applyMotion;
     private ObjectSpawn _objectSpawn;
 
-    private bool brakeActive = false, flightActive = false;
+    private bool brakeActive = false, flightActive;
 
     private void Start()
     {
         _applyMotion = GetComponent<ApplyMotion>();
         _objectSpawn = GetComponent<ObjectSpawn>();
+
+        FlightRegenModifier = new StatModifier(-_flyManaCost, StatModType.Flat, this);
+        BrakeRegenModifier = new StatModifier(-_brakeManaCost, StatModType.Flat, this);
     }
     private void Update()
     {
@@ -31,7 +41,7 @@ public class Fly : SpellBlueprint
         _objectSpawn.Cast(spellCircle.transform);
 
         //InvokeRepeating("FlyDrain", 0, 1);
-        Player.Instance.SubtractManaRegen(flyManaDrain);
+        Player.Instance.AddManaRegenModifier(FlightRegenModifier);
 
         flightActive = true;
     }
@@ -39,24 +49,26 @@ public class Fly : SpellBlueprint
     {
         if (triggerPressed)
         {
-            if (Player.Instance.currentMana >= flyManaDrain)
+            if (Player.Instance.currentMana >= FlightRegenModifier.Value)
             {
                 if (currentHand == 0)
                 {
                     //_applyMotion.Cast(playerRb, -_palmLocation.transform.right * triggerPressedValue);
-                    playerPhys.AddVelocity(-_palmLocation.transform.right * triggerPressedValue * 12);
+                    //playerPhys.AddVelocity(-_palmLocation.transform.right * triggerPressedValue * 12);
+                    playerPhys.AddMomentum(-_palmLocation.transform.right * triggerPressedValue * flySpeed);
                 }
                 else
                 {
                     //_applyMotion.Cast(playerRb, _palmLocation.transform.right * triggerPressedValue);
-                    playerPhys.AddVelocity(_palmLocation.transform.right * triggerPressedValue * 12);
+                    //playerPhys.AddVelocity(_palmLocation.transform.right * triggerPressedValue * 12);
+                    playerPhys.AddMomentum(_palmLocation.transform.right * triggerPressedValue * flySpeed);
                 }
 
                 if (!_objectSpawn.instantiatedObject)
                 {
                     _objectSpawn.Cast(spellCircle.transform);
 
-                    Player.Instance.SubtractManaRegen(flyManaDrain);
+                    Player.Instance.AddManaRegenModifier(FlightRegenModifier);
 
                     flightActive = true;
                 }
@@ -66,7 +78,7 @@ public class Fly : SpellBlueprint
                 if (_objectSpawn.instantiatedObject)
                 {
                     Destroy(_objectSpawn.instantiatedObject);
-                    Player.Instance.AddManaRegen(flyManaDrain);
+                    Player.Instance.RemoveManaRegenModifier(FlightRegenModifier);
                     flightActive = false;
                 }
             }
@@ -85,7 +97,7 @@ public class Fly : SpellBlueprint
 
         Destroy(_objectSpawn.instantiatedObject, .3f);
 
-        Player.Instance.AddManaRegen(flyManaDrain);
+        Player.Instance.RemoveManaRegenModifier(FlightRegenModifier);
 
         flightActive = false;
 
@@ -95,7 +107,7 @@ public class Fly : SpellBlueprint
     {
         base.GripPress();
 
-        playerRb.useGravity = false;
+        playerPhys.ChangeGravity(-brakeSlowSpeed, false);
 
         iTween.ScaleTo(spellCircle, Vector3.one * 1.5f, .2f);
 
@@ -106,9 +118,9 @@ public class Fly : SpellBlueprint
     {
         if (gripPressed)
         {
-            if (Player.Instance.currentMana >= brakeManaDrain)
+            if (Player.Instance.currentMana >= BrakeRegenModifier.Value)
             {
-                playerRb.velocity = iTween.Vector3Update(playerRb.velocity, new Vector3(0, 0, 0), .7f);
+                playerPhys.SetMomentum(iTween.Vector3Update(playerPhys.GetMomentum(), new Vector3(0, 0, 0), .7f));
 
                 if (spellCircle.transform.localScale != Vector3.one * 1.5f)
                 {
@@ -131,7 +143,7 @@ public class Fly : SpellBlueprint
     {
         base.GripRelease();
 
-        playerRb.useGravity = true;
+        playerPhys.ChangeGravity(brakeSlowSpeed, false);
 
         iTween.ScaleTo(spellCircle, Vector3.one, .2f);
 
@@ -144,12 +156,12 @@ public class Fly : SpellBlueprint
         base.OnDeselect();
         if (gripPressed)
         {
-            Player.Instance.AddManaRegen(brakeManaDrain);
-            playerRb.useGravity = true;
+            Player.Instance.RemoveManaRegenModifier(BrakeRegenModifier);
+            playerPhys.ChangeGravity(10, false);
         }
         if (triggerPressed)
         {
-            Player.Instance.AddManaRegen(flyManaDrain);
+            Player.Instance.RemoveManaRegenModifier(FlightRegenModifier);
         }
     }
     void BrakeDrain(bool active)
@@ -158,7 +170,7 @@ public class Fly : SpellBlueprint
         {
             if (!brakeActive)
             {
-                Player.Instance.SubtractManaRegen(brakeManaDrain);
+                Player.Instance.AddManaRegenModifier(BrakeRegenModifier);
                 brakeActive = true;
             }
         }
@@ -166,7 +178,7 @@ public class Fly : SpellBlueprint
         {
             if (brakeActive)
             {
-                Player.Instance.AddManaRegen(brakeManaDrain);
+                Player.Instance.RemoveManaRegenModifier(BrakeRegenModifier);
                 brakeActive = false; 
             }
         }

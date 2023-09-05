@@ -48,6 +48,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   currentHand: 0
   playerRb: {fileID: 0}
+  playerPhys: {fileID: 0}
   circleHolder: {fileID: 0}
   spellCircle: {fileID: 0}
   _palmLocation: {fileID: 0}
@@ -59,8 +60,10 @@ MonoBehaviour:
   _visualsManager: {fileID: 0}
   triggerPressedValue: 0
   gripPressedValue: 0
-  flyManaDrain: 2
-  brakeManaDrain: 2
+  _flyManaCost: 1
+  _brakeManaCost: 2
+  flySpeed: 0.35
+  brakeSlowSpeed: 13
 --- !u!114 &3322788562805002375
 MonoBehaviour:
   m_ObjectHideFlags: 0

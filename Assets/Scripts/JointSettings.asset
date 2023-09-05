@@ -14,13 +14,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   XMaster: 1
   XDrive:
-    Spring: 1500
-    Damper: 100
-    MaxForce: 750
+    Spring: 3000
+    Damper: 300
+    MaxForce: 850
   SlerpDrive:
-    Spring: 200
-    Damper: 10
-    MaxForce: 50
+    Spring: 500
+    Damper: 50
+    MaxForce: 75
   ApplyMode: 0
   EnableCollision: 0
   EnablePreprocessing: 1
@@ -51,9 +51,9 @@ MonoBehaviour:
     Damper: 0
     MaxForce: 0
   LinearLimit:
-    Limit: 0
+    Limit: 0.02
     Bounciness: 0
-    ContactDistance: 0
+    ContactDistance: 0.01
   LinearLimitSpring:
     Spring: 0
     Damper: 0

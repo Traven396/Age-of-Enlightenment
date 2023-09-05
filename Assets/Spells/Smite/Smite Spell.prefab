@@ -13,7 +13,6 @@ GameObject:
   - component: {fileID: -5946475112185857334}
   - component: {fileID: -2917733999944763249}
   - component: {fileID: 3413955877899434263}
-  - component: {fileID: 26448139744661724}
   m_Layer: 0
   m_Name: Smite Spell
   m_TagString: Untagged
@@ -50,6 +49,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   currentHand: 0
   playerRb: {fileID: 0}
+  playerPhys: {fileID: 0}
   circleHolder: {fileID: 0}
   spellCircle: {fileID: 0}
   _palmLocation: {fileID: 0}
@@ -113,17 +113,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 33f6457ee1946694ca677938ebad4aac, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  yVelThreshold: 3
---- !u!114 &26448139744661724
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 209610345538036072}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b8402f17c3ed5e943895606dcf88fe5b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  yVelThreshold: 3
+  yVelThreshold: 4

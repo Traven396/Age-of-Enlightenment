@@ -1,50 +1,60 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Kryz.CharacterStats;
 
 public class StepOfTheWind : SpellBlueprint
 {
-    [Header("Mana Cost")]
-    public int maxManaCost = 20;
-    public float increaseAmount = 4;
+    const string MOVEMENT_MODIFIER_NAME = "StepOfTheWind_Speed";
+    const string MANA_MODIFIER_NAME = "StepOfTheWind_Mana";
 
-    private bool wasActuallyPressed = false;
+    [Header("Mana Cost")]
+    public int _maxManaCost;
+    [Range(0, 1)]
+    public float _movementIncreaseAmount;
+
+    private StatModifier MaxManaMod;
+    private static StatModifier MovementMod;
+
+    private bool validTriggerPress = false;
 
 
     private void Start()
     {
-        
         spellCircle = circleHolder.transform.GetChild(circleHolder.transform.childCount - 1).gameObject;
-        if (Player.Instance.stepOfWindOn)
+        if (Player.Instance._PassiveManager.QueryEtherealSpell(MOVEMENT_MODIFIER_NAME))
         {
             iTween.ScaleTo(spellCircle, Vector3.one * 1.5f, .2f);
         }
+
+        MaxManaMod = new StatModifier(-_maxManaCost, StatModType.Flat);
+        MovementMod = new StatModifier(_movementIncreaseAmount, StatModType.PercentAdd);
     }
     public override void TriggerPress()
     {
         base.TriggerPress();
-        wasActuallyPressed = true;
+        validTriggerPress = true;
     }
     public override void TriggerRelease()
     {
         base.TriggerRelease();
-        if (wasActuallyPressed)
+        if (validTriggerPress)
         {
-            if (Player.Instance.stepOfWindOn)
+            if (Player.Instance._PassiveManager.TogglePassiveEtherealSpell(MOVEMENT_MODIFIER_NAME, MovementMod, Player.Instance.movementSpeed))
             {
-                Player.Instance.SubtractPlayerMoveSpeed(increaseAmount);
-                Player.Instance.AddMaximumMana(maxManaCost);
-                Player.Instance.stepOfWindOn = false;
-                iTween.ScaleTo(spellCircle, Vector3.one, .2f);
+                //Player.Instance._PassiveManager.AddEtherealSpell(MOVEMENT_MODIFIER_NAME, MovementMod, Player.Instance.movementSpeed);
+                Player.Instance.AddMaximumManaModifier(MaxManaMod);
+
+                iTween.ScaleTo(spellCircle, Vector3.one * 1.5f, .2f);
             }
             else
             {
-                Player.Instance.AddPlayerMoveSpeed(increaseAmount);
-                Player.Instance.SubtractMaximumMana(maxManaCost);
-                Player.Instance.stepOfWindOn = true;
-                iTween.ScaleTo(spellCircle, Vector3.one * 1.5f, .2f);
+                //Player.Instance._PassiveManager.RemoveEtherealSpell(MOVEMENT_MODIFIER_NAME);
+                Player.Instance.RemoveMaxiumumManaModifier(MaxManaMod);
+
+                iTween.ScaleTo(spellCircle, Vector3.one, .2f);
             }
-            wasActuallyPressed = false;
+            validTriggerPress = false;
         }
     }
 }

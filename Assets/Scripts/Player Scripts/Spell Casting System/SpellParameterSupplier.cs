@@ -5,7 +5,7 @@ using UnityEngine;
 public class SpellParameterSupplier : MonoBehaviour
 {
     public Rigidbody playerRb;
-    public CustomPlayerController playerPhys;
+    public FrankensteinCharacterController playerPhys;
     [Space(10)]
     public Transform leftPalm;
     public Transform leftBackOfHand;

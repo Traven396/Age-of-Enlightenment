@@ -88,7 +88,7 @@ public class Firebolt : SpellBlueprint
                                                                                     "time", .2f, 
                                                                                     "oncompletetarget", gameObject, 
                                                                                     "oncomplete", "DoneScaling"));
-                Player.Instance.SubtractCurrentMana(bigFireballManaCost);
+                Player.Instance.SubtractMana(bigFireballManaCost);
             }
         }
         else
@@ -99,7 +99,7 @@ public class Firebolt : SpellBlueprint
                 spellCircleAudioSource.PlayOneShot(spellCircleAudioSource.clip);
 
                 _smallFireboltSpawn.LaunchProjectile(spellCircle.transform, currentHand, tinyLaunchSpeed);
-                Player.Instance.SubtractCurrentMana(tinyFireballManaCost); 
+                Player.Instance.SubtractMana(tinyFireballManaCost); 
             }
         }
     }

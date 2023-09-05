@@ -74,7 +74,7 @@ public class IceKnife : SpellBlueprint
             {
                 _objectSpawn.Cast(spellCircle.transform);
                 iTween.ScaleFrom(_objectSpawn.instantiatedObject, Vector3.zero, .15f);
-                Player.Instance.SubtractCurrentMana(manaCost);
+                Player.Instance.SubtractMana(manaCost);
             }
         }
     }

@@ -46,6 +46,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   currentHand: 0
   playerRb: {fileID: 0}
+  playerPhys: {fileID: 0}
   circleHolder: {fileID: 0}
   spellCircle: {fileID: 0}
   _palmLocation: {fileID: 0}
@@ -54,6 +55,8 @@ MonoBehaviour:
   _playerLocation: {fileID: 0}
   _targetManager: {fileID: 0}
   _gestureManager: {fileID: 0}
+  _visualsManager: {fileID: 0}
   triggerPressedValue: 0
   gripPressedValue: 0
-  increaseAmount: 4
+  _maxManaCost: 15
+  _movementIncreaseAmount: 0.35

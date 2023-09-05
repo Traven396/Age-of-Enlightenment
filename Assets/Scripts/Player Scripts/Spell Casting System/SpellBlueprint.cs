@@ -12,7 +12,7 @@ public abstract class SpellBlueprint : MonoBehaviour
 
     //Physical world parameters
     [HideInInspector] public Rigidbody playerRb;
-    [HideInInspector] public CustomPlayerController playerPhys;
+    [HideInInspector] public FrankensteinCharacterController playerPhys;
     [HideInInspector] public GameObject circleHolder;
     [HideInInspector] public GameObject spellCircle;
 

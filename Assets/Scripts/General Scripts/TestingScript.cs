@@ -7,18 +7,12 @@ using UnityEngine.XR.OpenXR;
 
 public class TestingScript : MonoBehaviour
 {
-    private Image gridImage;
-    public Color invalidColor, validColor;
     private void Start()
     {
-        gridImage = GetComponentInChildren<Image>();
-    }
-    public void SetInvalid()
-    {
-        gridImage.color = invalidColor;
-    }
-    public void SetValid()
-    {
-        gridImage.color = validColor;
+        for (int i = 0; i < 10; i++)
+        {
+            Debug.Log("In Loop");
+        }
+        Debug.Log("Out of loop");
     }
 }

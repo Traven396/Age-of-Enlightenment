@@ -86,7 +86,7 @@ public class Catapult : SpellBlueprint
                 {
                     selectedObjects.Add(currentTargettedEntity);
                     StartCoroutine(FloatingSelection(currentTargettedEntity));
-                    Player.Instance.SubtractCurrentMana(manaCost);
+                    Player.Instance.SubtractMana(manaCost);
                 }
             }
         }

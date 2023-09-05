@@ -4,53 +4,50 @@ using UnityEngine;
 
 public class SummonedObjectBehavior : MonoBehaviour
 {
-    [SerializeField] private float lifeExpectancy = 5;
-    [SerializeField] private float postMortemTime = 2;
-    [SerializeField] private AnimationClip destroyAnimation;
-    public bool waitToStartCountdown = false;
+    [SerializeField] private float _lifeTime = 5;
+    [SerializeField] private bool _destroyAfterLastAnimation = true;
 
-    private Animation selfAnimation;
+    [Space(15f)]
 
-    private void Start()
+    [SerializeField] private AnimationClip _spawnAnimation;
+    [SerializeField] private AnimationClip _destroyAnimation;
+
+    private Animation selfAnimator;
+
+    private void OnEnable()
     {
-        selfAnimation = GetComponent<Animation>();
-        if (!waitToStartCountdown)
-        {
-            if (!destroyAnimation)
-            {
-                Debug.Log("No death animation. Just killing with no animation effects");
-                Destroy(gameObject, lifeExpectancy + postMortemTime);
-                return;
-            }
-            if (selfAnimation.clip == null)
-            {
-                Debug.Log("No opening clip. Killing after lifetime");
-                StartDeathCountdown();
-            } 
-        }
+        selfAnimator = GetComponent<Animation>();
     }
-    public void StartDeathCountdown()
-    {
-        Invoke(nameof(PlayDeathAnimation), lifeExpectancy);
 
-        if (destroyAnimation)
+    public void BeginLifeCycle() 
+    {
+        if (selfAnimator != null && _spawnAnimation != null)
         {
-            Destroy(this.gameObject, lifeExpectancy + destroyAnimation.length + postMortemTime);
-            Debug.Log("Killing after " + (lifeExpectancy + destroyAnimation.length + postMortemTime) + " seconds");
+            selfAnimator.clip = _spawnAnimation;
+            selfAnimator.Play();
+
+            Invoke(nameof(MiddleLifeCycle), _spawnAnimation.length);
         }
         else
-        {
-            Destroy(gameObject, lifeExpectancy + postMortemTime);
-            Debug.Log("Destroying");
-        }
-
+            MiddleLifeCycle();
     }
-    private void PlayDeathAnimation()
+
+    private void MiddleLifeCycle()
     {
-        if (selfAnimation != null)
+        Invoke(nameof(EndCycle), _lifeTime);
+    }
+
+    private void EndCycle()
+    {
+        if (selfAnimator != null && _destroyAnimation != null)
         {
-            selfAnimation.clip = destroyAnimation;
-            selfAnimation.Play(); 
+
+            selfAnimator.clip = _destroyAnimation;
+            selfAnimator.Play();
+
+            Destroy(gameObject, _destroyAnimation.length);
         }
+        else
+            Destroy(gameObject);
     }
 }

@@ -12,9 +12,11 @@ public class ManaIndicator : MonoBehaviour
     private void OnEnable()
     {
         Player.ManaChanged += UpdateGraphic;
+        Player.MaxManaChanged += UpdateGraphic;
         Player.ManaChanged += UpdateText;
+        Player.MaxManaChanged += UpdateText;
 
-        
+
     }
     private void Start()
     {
@@ -25,16 +27,18 @@ public class ManaIndicator : MonoBehaviour
     {
         Player.ManaChanged -= UpdateGraphic;
         Player.ManaChanged -= UpdateText;
+        Player.ManaChanged -= UpdateText;
+        Player.MaxManaChanged -= UpdateText;
     }
 
     void UpdateGraphic()
     {
-        float currentFill = (float)Player.Instance.currentMana / (float)Player.Instance.maximumMana;
+        float currentFill = (float)Player.Instance.currentMana / (float)Player.Instance.maximumMana.Value;
         //iTween.ScaleTo(manaFill, new Vector3(currentFill, currentFill), .5f);
         manaFill.fillAmount = currentFill;
     }
     void UpdateText()
     {
-        manaValue.text = Player.Instance.currentMana + "/" + Player.Instance.maximumMana;
+        manaValue.text = Player.Instance.currentMana + "/" + Player.Instance.maximumMana.Value;
     }
 }
