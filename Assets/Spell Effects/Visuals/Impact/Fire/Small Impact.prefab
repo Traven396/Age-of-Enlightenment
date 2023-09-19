@@ -4915,6 +4915,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: acee06e8f817cc94584cee343481c7a2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  AutoCalculateLifetime: 1
+  TypeOfImpact: 1
+  StartTween: 0
+  EndTween: 0
+  StartTweenSpeed: 0
+  EndTweenSpeed: 0
+  _maxLifetime: 0
 --- !u!1 &9173613712554759745
 GameObject:
   m_ObjectHideFlags: 0

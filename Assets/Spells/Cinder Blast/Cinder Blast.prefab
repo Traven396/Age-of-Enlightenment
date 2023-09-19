@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 3226501201991941859}
   - component: {fileID: -7922216242493135715}
   - component: {fileID: 8153499114401393444}
-  - component: {fileID: -733284746492993691}
+  - component: {fileID: -163578351456707495}
   m_Layer: 0
   m_Name: Cinder Blast
   m_TagString: Untagged
@@ -48,6 +48,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   currentHand: 0
   playerRb: {fileID: 0}
+  playerPhys: {fileID: 0}
   circleHolder: {fileID: 0}
   spellCircle: {fileID: 0}
   _palmLocation: {fileID: 0}
@@ -59,9 +60,12 @@ MonoBehaviour:
   _visualsManager: {fileID: 0}
   triggerPressedValue: 0
   gripPressedValue: 0
-  manaCost: 15
-  requiredCharge: 1.5
-  launchSpeed: 8
+  ManaCost: 12
+  RequiredCharge: 1
+  LaunchSpeed: 5
+  NumOfProjectiles: 5
+  SpreadAmount: 65
+  DamageAmount: 5
 --- !u!114 &8153499114401393444
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -75,7 +79,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxCharge: 3
---- !u!114 &-733284746492993691
+--- !u!114 &-163578351456707495
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -84,18 +88,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 5179050301788854179}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 945e6df227a964c44b56155c2284a633, type: 3}
+  m_Script: {fileID: 11500000, guid: 759f587e3edf4f54d92497dba193951f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  objectToSpawn: {fileID: 8452052330996886707, guid: 5c4d9882a88d7314785f0f7cb74d0863, type: 3}
-  ParentToTarget: 0
-  rotationOffset: {x: 0, y: 0, z: 0}
-  LockRotation: 0
-  LockPosition: 0
-  GravityAffected: 0
-  instantiatedObject: {fileID: 0}
-  instantiatedRB: {fileID: 0}
-  spawnAmount: 10
-  shootDirection: 0
-  projectileGravity: 0
-  spreadAmount: 0.2
+  ProjectilePrefab: {fileID: 1786885688205914580, guid: 61069c6e5c6684f4ba4bebb120239ba7, type: 3}
+  ImpactFXPrefab: {fileID: 0}
+  PoolSize: 10
+  ProjectileLayer: PlayerProjectile
+  NonCollidableLayers:
+    serializedVersion: 2
+    m_Bits: 2056

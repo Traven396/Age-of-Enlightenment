@@ -4,21 +4,30 @@ using UnityEngine;
 
 public class CinderBlast : SpellBlueprint
 {
-    [Header("Mana")]
-    public int manaCost = 12;
-    [Header("Spell Parameters")]
-    public float requiredCharge = 1f;
-    public float launchSpeed = 250f;
+    [Header("Spell Settings")]
+    public int ManaCost = 12;
+    public float RequiredCharge = 1f;
+    public float LaunchSpeed = 250f;
+    public int NumOfProjectiles = 5;
+    public float SpreadAmount = 15;
+    public float DamageAmount = 5;
+
+    private DamageType ProjectileTyping = DamageType.Fire;
 
     private AudioSource spellSoundSource;
 
     private Chargeable _charge;
     private ObjectSpawn _objectSpawn;
+    private ProjectileShooter _shooter;
 
     private void Start()
     {
         _charge = GetComponent<Chargeable>();
         _objectSpawn = GetComponent<ObjectSpawn>();
+        _shooter = GetComponent<ProjectileShooter>();
+
+        _shooter.SetDamage(DamageAmount, ProjectileTyping);
+        _shooter.SetSpread(SpreadAmount);
 
         spellCircle = circleHolder.transform.GetChild(circleHolder.transform.childCount - 1).gameObject;
         spellSoundSource = spellCircle.GetComponent<AudioSource>();
@@ -33,17 +42,20 @@ public class CinderBlast : SpellBlueprint
     public override void TriggerRelease()
     {
         base.TriggerRelease();
-        if(_charge.GetCurrentCharge() >= requiredCharge)
+        if(_charge.GetCurrentCharge() >= RequiredCharge)
         {
-            if (Player.Instance.currentMana >= manaCost)
+            if (Player.Instance.currentMana >= ManaCost)
             {
-                _objectSpawn.Cast(_palmLocation);
-                _objectSpawn.LaunchProjectile(_palmLocation, currentHand, launchSpeed);
+                for (int i = 0; i < NumOfProjectiles; i++)
+                {
+                    _shooter.SpawnProjectile(_palmLocation);
+                }
+                _shooter.LaunchAllProjectiles(_palmLocation.forward, LaunchSpeed);
 
                 spellSoundSource.pitch = Random.Range(0.85f, .95f);
                 spellSoundSource.Play();
 
-                Player.Instance.SubtractMana(manaCost);
+                Player.Instance.SubtractMana(ManaCost);
             }
         }
         _charge.StopCharging();

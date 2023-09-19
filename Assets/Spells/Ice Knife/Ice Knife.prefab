@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7340176454797028368}
   - component: {fileID: 9056816007878641503}
-  - component: {fileID: -7015571277545688445}
+  - component: {fileID: -8063669347939017242}
   m_Layer: 0
   m_Name: Ice Knife
   m_TagString: Untagged
@@ -47,6 +47,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   currentHand: 0
   playerRb: {fileID: 0}
+  playerPhys: {fileID: 0}
   circleHolder: {fileID: 0}
   spellCircle: {fileID: 0}
   _palmLocation: {fileID: 0}
@@ -58,9 +59,11 @@ MonoBehaviour:
   _visualsManager: {fileID: 0}
   triggerPressedValue: 0
   gripPressedValue: 0
-  manaCost: 6
-  launchSpeed: 12
---- !u!114 &-7015571277545688445
+  ManaCost: 6
+  LaunchSpeed: 5
+  Damage: 10
+  MaxProjectileSize: 2
+--- !u!114 &-8063669347939017242
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -69,18 +72,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 3900314875810967446}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 945e6df227a964c44b56155c2284a633, type: 3}
+  m_Script: {fileID: 11500000, guid: 759f587e3edf4f54d92497dba193951f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  objectToSpawn: {fileID: 4446097827289362928, guid: 831605ea5e9063a4896375072bf24cc4, type: 3}
-  ParentToTarget: 1
-  rotationOffset: {x: -90, y: 0, z: 0}
-  LockRotation: 1
-  LockPosition: 0
-  GravityAffected: 0
-  instantiatedObject: {fileID: 0}
-  instantiatedRB: {fileID: 0}
-  spawnAmount: 1
-  shootDirection: 4
-  projectileGravity: 0
-  spreadAmount: 0
+  ProjectilePrefab: {fileID: 5676163130565431652, guid: 012ef1902408c09488206a52763fe133, type: 3}
+  ImpactFXPrefab: {fileID: -1697571176151429899, guid: c4fa2a610fcb07542b43969e9118d414, type: 3}
+  PoolSize: 5
+  ProjectileLayer: PlayerProjectile
+  NonCollidableLayers:
+    serializedVersion: 2
+    m_Bits: 2056

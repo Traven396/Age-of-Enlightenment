@@ -60,6 +60,7 @@ GameObject:
   - component: {fileID: 3602396862108199543}
   - component: {fileID: 1555128227551730828}
   - component: {fileID: 83974023665474771}
+  - component: {fileID: 8987166667371980896}
   m_Layer: 11
   m_Name: Physical Halo Prefab
   m_TagString: Untagged
@@ -134,4 +135,23 @@ MonoBehaviour:
   Radius: 0.2
   MaxProjectiles: 7
   LaunchSpeed: 6
-  FireballPrefab: {fileID: 206674190008183963, guid: 1f63ada5d11091a4499c7aae998197ff, type: 3}
+  DamageAmount: 4
+--- !u!114 &8987166667371980896
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8588665083456083612}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 759f587e3edf4f54d92497dba193951f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ProjectilePrefab: {fileID: 6894643571341089769, guid: 03ae67862fe7cf64383fa72436bd7d2f, type: 3}
+  ImpactFXPrefab: {fileID: 4530244545270890186, guid: 3ed0d324122d7b24eaec75c55c74aafc, type: 3}
+  PoolSize: 7
+  ProjectileLayer: PlayerProjectile
+  NonCollidableLayers:
+    serializedVersion: 2
+    m_Bits: 2056

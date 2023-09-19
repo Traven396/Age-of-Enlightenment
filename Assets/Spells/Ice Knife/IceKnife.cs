@@ -4,64 +4,52 @@ using UnityEngine;
 
 public class IceKnife : SpellBlueprint
 {
-    private ObjectSpawn _objectSpawn;
+    private ProjectileShooter shooter;
 
     [Header("Spell Stats")]
-    public int manaCost = 6;
-    public float launchSpeed;
+    public int ManaCost = 6;
+    public float LaunchSpeed;
+    public float Damage = 10;
+    public float MaxProjectileSize = 4;
 
-    private void Start()
+    private DamageType ProjectileDamageType = DamageType.Ice;
+
+    private void Awake()
     {
-        _objectSpawn = GetComponent<ObjectSpawn>();
-        if(currentHand == 0)
-        {
-            _objectSpawn.SetRotationOffset(new Vector3(91, 0));
-        }
+        shooter = GetComponent<ProjectileShooter>();
     }
     private void Update()
     {
         if (!gripPressed)
         {
-            if (Quaternion.Angle(spellCircle.transform.rotation, circleHolder.transform.rotation) > .1)
-            {
-                iTween.RotateUpdate(spellCircle, circleHolder.transform.rotation.eulerAngles, .1f);
-
-            }
-            if (Vector3.Distance(circleHolder.transform.position, spellCircle.transform.position) > .001f)
-            {
-                iTween.MoveUpdate(spellCircle, circleHolder.transform.position, .1f);
-            }
+            _visualsManager.ReturnCircleToHolder(currentHand);
         }
     }
     public override void GripPress()
     {
         base.GripPress();
-        if(!triggerPressed)
-            iTween.ScaleTo(spellCircle, Vector3.one * .5f, .7f);
+        
+        iTween.ScaleTo(spellCircle, Vector3.one * .5f, .7f);
     }
     public override void GripHold()
     {
-        if (!triggerPressed)
+        if (currentHand == 0)
         {
-            if (currentHand == 0)
-            {
-                iTween.RotateUpdate(spellCircle, (circleHolder.transform.rotation * Quaternion.Euler(-90, 0, 0)).eulerAngles, .4f);
-            }
-            else
-            {
-                iTween.RotateUpdate(spellCircle, (circleHolder.transform.rotation * Quaternion.Euler(90, 0, 0)).eulerAngles, .4f);
-            }
-            iTween.MoveUpdate(spellCircle, circleHolder.transform.position + circleHolder.transform.TransformDirection(new Vector3(0, .05f, .1f)), .1f);
-
+            iTween.RotateUpdate(spellCircle, (circleHolder.transform.rotation * Quaternion.Euler(-90, 0, 0)).eulerAngles, .4f);
         }
+        else
+        {
+            iTween.RotateUpdate(spellCircle, (circleHolder.transform.rotation * Quaternion.Euler(90, 0, 0)).eulerAngles, .4f);
+        }
+        iTween.MoveUpdate(spellCircle, circleHolder.transform.TransformPoint(new Vector3(0, .05f, .1f)), .1f);
     }
     public override void GripRelease()
     {
         base.GripRelease();
         iTween.ScaleTo(spellCircle, Vector3.one, .1f);
-        if (_objectSpawn.instantiatedObject && _objectSpawn.instantiatedObject.transform.parent != null)
+        if(shooter.latestInstantiatedObject && shooter.latestInstantiatedObject.transform.parent != null)
         {
-            Destroy(_objectSpawn.instantiatedObject);
+            shooter.DespawnAllProjectiles();
         }
     }
     public override void TriggerPress()
@@ -70,30 +58,35 @@ public class IceKnife : SpellBlueprint
 
         if (gripPressed)
         {
-            if (Player.Instance.currentMana >= manaCost)
+            if (Player.Instance.currentMana >= ManaCost)
             {
-                _objectSpawn.Cast(spellCircle.transform);
-                iTween.ScaleFrom(_objectSpawn.instantiatedObject, Vector3.zero, .15f);
-                Player.Instance.SubtractMana(manaCost);
+                //Spawn the projectile as a child of the spell circle
+                shooter.SpawnProjectile(spellCircle.transform);
+
+                //Grow it from nothing for a visual spawn effect
+                iTween.ScaleFrom(shooter.latestInstantiatedObject, Vector3.zero, .15f);
+                
+                //Subtract the mana cost for spawning a projectile
+                Player.Instance.SubtractMana(ManaCost);
             }
         }
     }
     public override void TriggerHold()
     {
-        if (gripPressed && _objectSpawn.instantiatedObject)
+        if (gripPressed && shooter.latestInstantiatedObject)
         {
-            iTween.MoveUpdate(spellCircle, circleHolder.transform.position + circleHolder.transform.TransformDirection(new Vector3(0, .05f, -.04f)), 6);
-            iTween.ScaleUpdate(_objectSpawn.instantiatedObject, iTween.Hash("time", 6, "z", 2));
+            iTween.MoveUpdate(spellCircle, circleHolder.transform.TransformPoint(new Vector3(0, .05f, -.04f)), 6);
+            iTween.ScaleUpdate(shooter.latestInstantiatedObject, iTween.Hash("time", 6, "y", MaxProjectileSize * 2));
             
         }
     }
     public override void TriggerRelease()
     {
         base.TriggerRelease(); 
-        if (gripPressed && _objectSpawn.instantiatedObject)
+        if (gripPressed && shooter.latestInstantiatedObject)
         {
-            _objectSpawn.instantiatedObject.GetComponent<ProjectileBehavior>().damageAmount *= _objectSpawn.instantiatedObject.transform.localScale.magnitude;
-            _objectSpawn.LaunchProjectile(circleHolder.transform, currentHand, launchSpeed);
+            shooter.SetDamage(Damage * shooter.latestInstantiatedObject.transform.localScale.z, ProjectileDamageType);
+            shooter.LaunchAllProjectiles(circleHolder.transform.forward, LaunchSpeed);
         }
     }
 }

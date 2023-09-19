@@ -10,36 +10,54 @@ public class ProjectileShooter : MonoBehaviour
     [SerializeField] private ProjectileImpact ImpactFXPrefab;
     [SerializeField] private int PoolSize = 5;
     [SerializeField] private string ProjectileLayer = "PlayerProjectile";
-
+    [SerializeField] private LayerMask NonCollidableLayers;
     //Things that are read by code, but should never be changed outside this script
-    public SpellProjectile latestInstantiatedObject { get; private set; }
+    public GameObject latestInstantiatedObject { get; private set; }
     public Rigidbody latestInstantiatedObjectRB { get; private set; }
+    public List<SpellProjectile> activeProjectiles { get; private set; } = new List<SpellProjectile>();
+    
 
     //Settings that the different spells should set upon waking up. 
     [Min(0)]
     private float _spreadAmount = 0;
-    
+    [Min(0)]
+    private float _damageAmount = 0;
+    private DamageType _damageTyping;
         
     //Settings and references required for function by this script alone
-    private ObjectPool<SpellProjectile> _projectilePool;
-    private ObjectPool<ProjectileImpact> _impactEffectsPool;
+    private ObjectPool<SpellProjectile> projectilePool;
+    private ObjectPool<ProjectileImpact> impactEffectsPool;
 
-    private List<SpellProjectile> _activeProjectiles = new List<SpellProjectile>();
+    private List<ProjectileImpact> impactCleanupList = new List<ProjectileImpact>();
+    private List<SpellProjectile> projectileCleanupList = new List<SpellProjectile>();
 
-    private Transform _currentSpawnTransform;
-    private Vector3? _currentSpawnPosition;
-    private Collision _latestCollision;
+    private Transform currentSpawnTransform;
+    private Vector3? currentSpawnPosition;
+    private Collision latestCollision;
+    //private Transform latestImpactedProjectile;
+    //private float latestScaler;
 
-    private LayerMask _projectileLayer;
+    private LayerMask projectileLayer;
 
     private void Awake()
     {
-        _projectilePool = new ObjectPool<SpellProjectile>(createFunc: OnInstantiateProjectile, actionOnGet: OnGetProjectile, actionOnRelease: OnReturnProjectileToPool, maxSize: PoolSize, actionOnDestroy: OnDestroyProjectile);
-        _impactEffectsPool = new ObjectPool<ProjectileImpact>(createFunc: OnInstantiateImpact, actionOnGet: OnGetEffect, actionOnRelease: OnReturnImpactToPool, maxSize: PoolSize, actionOnDestroy: OnDestroyEffect);
+        projectilePool = new ObjectPool<SpellProjectile>(createFunc: OnInstantiateProjectile, actionOnGet: OnGetProjectile, actionOnRelease: OnReturnProjectileToPool, maxSize: PoolSize, actionOnDestroy: OnDestroyProjectile);
+        impactEffectsPool = new ObjectPool<ProjectileImpact>(createFunc: OnInstantiateImpact, actionOnGet: OnGetEffect, actionOnRelease: OnReturnImpactToPool, maxSize: PoolSize, actionOnDestroy: OnDestroyEffect);
         
-        _projectileLayer = LayerMask.NameToLayer(ProjectileLayer);
+        projectileLayer = LayerMask.NameToLayer(ProjectileLayer);
     }
-    #region Object Pool Related Methods
+    private void OnDisable()
+    {
+        projectilePool.Dispose();
+
+        projectileCleanupList.ForEach(proj => Destroy(proj.gameObject));
+
+        impactEffectsPool.Dispose();
+
+        impactCleanupList.ForEach(impact => Destroy(impact.gameObject));
+        
+    }
+    #region Projectile Pool Related Methods
     private SpellProjectile OnInstantiateProjectile()
     {
         return Instantiate(ProjectilePrefab);
@@ -51,60 +69,67 @@ public class ProjectileShooter : MonoBehaviour
     }
     private void OnGetProjectile(SpellProjectile projectile)
     {
-        if (_currentSpawnPosition != null)
-            projectile.transform.position = (Vector3)_currentSpawnPosition;
-        if (_currentSpawnTransform)
+        if (currentSpawnPosition != null)
+            projectile.transform.position = (Vector3)currentSpawnPosition;
+        if (currentSpawnTransform)
         {
-            projectile.transform.SetPositionAndRotation(_currentSpawnTransform.position, _currentSpawnTransform.rotation);
-            projectile.transform.parent = _currentSpawnTransform;
+            projectile.transform.SetPositionAndRotation(currentSpawnTransform.position, currentSpawnTransform.rotation);
+            projectile.transform.parent = currentSpawnTransform;
         }
 
-        projectile.SetPool(_projectilePool);
+        projectile.SetPool(projectilePool);
         projectile.SetShooter(this);
+        projectile.SetLayers(NonCollidableLayers);
 
-        projectile.released = false;
-
+        projectile.transform.localScale = Vector3.one;
         projectile.gameObject.SetActive(true);
 
+        //Set all every part of the projectile, and its children, to the specified ProjectileLayer
         var children = projectile.gameObject.GetComponentsInChildren<Transform>();
         foreach (Transform item in children)
         {
-            item.gameObject.layer = _projectileLayer;
+            item.gameObject.layer = projectileLayer;
         }
 
-        projectile.gameObject.layer = _projectileLayer;
+        projectile.gameObject.layer = projectileLayer;
 
-        _activeProjectiles.Add(projectile);
+        activeProjectiles.Insert(0, projectile);
+
+        projectileCleanupList.Insert(0, projectile);
     }
     private void OnDestroyProjectile(SpellProjectile projectile)
     {
-        _activeProjectiles.Remove(projectile);
-        Destroy(projectile.gameObject);
+        if (projectile.gameObject)
+        {
+            Destroy(projectile.gameObject);
+            activeProjectiles.Remove(projectile);
+            projectileCleanupList.Remove(projectile);
+        }
     }
 
     public void SpawnProjectile(Vector3 spawnPosition)
     {
-        _currentSpawnPosition = spawnPosition;
+        currentSpawnPosition = spawnPosition;
 
-        latestInstantiatedObject = _projectilePool.Get();
+        latestInstantiatedObject = projectilePool.Get().gameObject;
         latestInstantiatedObjectRB = latestInstantiatedObject.GetComponent<Rigidbody>();
 
         latestInstantiatedObjectRB.velocity = Vector3.zero;
 
-        _currentSpawnPosition = null;
+        currentSpawnPosition = null;
     }
     public void SpawnProjectile(Transform spawnParent)
     {
-        _currentSpawnTransform = spawnParent;
+        currentSpawnTransform = spawnParent;
 
-        latestInstantiatedObject = _projectilePool.Get();
+        latestInstantiatedObject = projectilePool.Get().gameObject;
         latestInstantiatedObjectRB = latestInstantiatedObject.GetComponent<Rigidbody>();
 
         latestInstantiatedObjectRB.velocity = Vector3.zero;
 
         latestInstantiatedObjectRB.isKinematic = true;
 
-        _currentSpawnTransform = null;
+        currentSpawnTransform = null;
     }
     #endregion
     #region Impact effect pool related things
@@ -118,36 +143,49 @@ public class ProjectileShooter : MonoBehaviour
     }
     private void OnGetEffect(ProjectileImpact effect)
     {
-        effect.transform.SetPositionAndRotation(_latestCollision.GetContact(0).point, Quaternion.LookRotation(Vector3.up, _latestCollision.GetContact(0).normal));
+        effect.transform.position = latestCollision.GetContact(0).point;
 
-        effect.SetPool(_impactEffectsPool);
+        effect.transform.up = latestCollision.GetContact(0).normal;
+
+        effect.SetPool(impactEffectsPool);
+
+        //effect.SetScale(latestImpactedProjectile.transform.localScale.magnitude * latestScaler);
 
         effect.gameObject.SetActive(true);
+
+        effect.FinishedLoading();
+
+        impactCleanupList.Insert(0, effect);
     }
     private void OnDestroyEffect(ProjectileImpact effect)
     {
-        Destroy(effect.gameObject);
-    }
-    public void SpawnImpact(Collision col)
-    {
-        _latestCollision = col;
-
-        _impactEffectsPool.Get();
-
-        _latestCollision = null;
-    }
-    #endregion
-    private void OnDisable()
-    {
-        if (_projectilePool != null)
+        if (effect.gameObject)
         {
-            _projectilePool.Dispose(); 
+            Destroy(effect.gameObject);
+            impactCleanupList.Remove(effect);
         }
     }
+    public void SpawnImpact(Collision col, Transform spawningProjectile, float scaler)
+    {
+        if (ImpactFXPrefab)
+        {
+            latestCollision = col;
+            //latestImpactedProjectile = spawningProjectile;
+            //latestScaler = scaler;
+
+            impactEffectsPool.Get();
+
+            latestCollision = null;
+            //latestImpactedProjectile = null;
+            //latestScaler = 1; 
+        }
+    }
+    #endregion
+    
     
     public void LaunchAllProjectiles(Vector3 firingDirection, float speedModifier)
     {
-        foreach (SpellProjectile projectile in _activeProjectiles)
+        foreach (SpellProjectile projectile in activeProjectiles)
         {
             Vector3 fullLaunchVector = firingDirection;
             if(_spreadAmount > 0)
@@ -158,14 +196,42 @@ public class ProjectileShooter : MonoBehaviour
             }
 
             projectile.Shoot(fullLaunchVector * speedModifier);
+            projectile.SetDamage(_damageAmount, _damageTyping);
         }
-        _activeProjectiles.Clear();
+        activeProjectiles.Clear();
     }
+    public void LaunchSingleProjectile(Vector3 firingDirection, float speedModifier, SpellProjectile projectileToFire)
+    {
+        if (activeProjectiles.Contains(projectileToFire))
+        {
+            Vector3 fullLaunchVector = firingDirection;
+            if (_spreadAmount > 0)
+            {
+                var calcSpread = _spreadAmount / 360;
+                fullLaunchVector += new Vector3(Random.Range(-calcSpread, calcSpread), Random.Range(-calcSpread, calcSpread), Random.Range(-calcSpread, calcSpread));
+                fullLaunchVector.Normalize();
+            }
+            projectileToFire.Shoot(fullLaunchVector * speedModifier);
+            projectileToFire.SetDamage(_damageAmount, _damageTyping);
 
-    
+            activeProjectiles.Remove(projectileToFire);
+        }
+    }
+    public void DespawnAllProjectiles()
+    {
+        activeProjectiles.ForEach(proj => projectilePool.Release(proj));
+        activeProjectiles.Clear();
+        latestInstantiatedObject = null;
+        latestInstantiatedObjectRB = null;
+    }
 
     public void SetSpread(float newSpread)
     {
         _spreadAmount = newSpread;
+    }
+    public void SetDamage(float damage, DamageType type)
+    {
+        _damageAmount = damage;
+        _damageTyping = type;
     }
 }

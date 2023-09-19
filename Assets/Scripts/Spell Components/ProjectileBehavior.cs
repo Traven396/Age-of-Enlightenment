@@ -179,16 +179,3 @@ public class ProjectileBehavior : MonoBehaviour
         Destroy(gameObject, lifeTime);
     }
 }
-
-public enum DamageType{
-    Fire,
-    Water,
-    Lightning,
-    Ice,
-    Earth,
-    Air,
-    Force,
-    Metal,
-    Plant,
-    Physical
-}

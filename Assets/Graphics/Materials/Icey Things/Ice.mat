@@ -43,12 +43,12 @@ Material:
     m_Ints: []
     m_Floats:
     - _Fresnel_Power: 2
-    - _Metallic: 0.308
+    - _Metallic: 0.494
     - _Normals: 1.45
     - _QueueControl: 0
     - _QueueOffset: 0
     - _RefractionAmount: 0.18
-    - _Smoothness: 0.8
+    - _Smoothness: 0.6
     m_Colors:
     - _Fresel_Color: {r: 3.732132, g: 3.732132, b: 3.732132, a: 1}
     - _Ice_Color: {r: 1.1657066, g: 1.9162419, b: 2.721694, a: 0.61960787}

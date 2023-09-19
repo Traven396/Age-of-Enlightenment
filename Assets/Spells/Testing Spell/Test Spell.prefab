@@ -1,0 +1,83 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &1828691079866191935
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 124015592678238827}
+  - component: {fileID: -766879807116620247}
+  - component: {fileID: 321015164020485548}
+  m_Layer: 0
+  m_Name: Test Spell
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &124015592678238827
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1828691079866191935}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &-766879807116620247
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1828691079866191935}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a24a22ef8f142384495424f7563dc05f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  currentHand: 0
+  playerRb: {fileID: 0}
+  playerPhys: {fileID: 0}
+  circleHolder: {fileID: 0}
+  spellCircle: {fileID: 0}
+  _palmLocation: {fileID: 0}
+  _backOfHandLocation: {fileID: 0}
+  _handLocation: {fileID: 0}
+  _playerLocation: {fileID: 0}
+  _targetManager: {fileID: 0}
+  _gestureManager: {fileID: 0}
+  _visualsManager: {fileID: 0}
+  triggerPressedValue: 0
+  gripPressedValue: 0
+  spreadAmount: 0
+  Damage: 10
+  Typing: 4
+--- !u!114 &321015164020485548
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1828691079866191935}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 759f587e3edf4f54d92497dba193951f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ProjectilePrefab: {fileID: 5015056723296380341, guid: b9287d0acc66cdf46996c51d44e51662, type: 3}
+  ImpactFXPrefab: {fileID: 6744568624071243051, guid: 9f8294365636b444282ec8e04de8c673, type: 3}
+  PoolSize: 5
+  ProjectileLayer: PlayerProjectile
+  NonCollidableLayers:
+    serializedVersion: 2
+    m_Bits: 2056
