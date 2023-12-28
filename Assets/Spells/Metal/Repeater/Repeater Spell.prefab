@@ -1,0 +1,62 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &6697046781499885885
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1694288757127375747}
+  - component: {fileID: -5463740820779278690}
+  m_Layer: 0
+  m_Name: Repeater Spell
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1694288757127375747
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6697046781499885885}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &-5463740820779278690
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6697046781499885885}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d3c861926df1db34a908fb63e2a9b916, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  currentHand: 0
+  playerRb: {fileID: 0}
+  playerPhys: {fileID: 0}
+  circleHolder: {fileID: 0}
+  spellCircle: {fileID: 0}
+  _palmLocation: {fileID: 0}
+  _backOfHandLocation: {fileID: 0}
+  _handLocation: {fileID: 0}
+  _playerLocation: {fileID: 0}
+  _targetManager: {fileID: 0}
+  _gestureManager: {fileID: 0}
+  _visualsManager: {fileID: 0}
+  triggerPressedValue: 0
+  gripPressedValue: 0
+  LaunchForce: 10
+  BladePrefab: {fileID: 1047652487721888495, guid: 6e1776b663f9a6a46900ae55469883c5, type: 3}

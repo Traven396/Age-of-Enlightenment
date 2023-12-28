@@ -7,9 +7,9 @@ public class ProjectileShooter : MonoBehaviour
 {
     //Settings that are set in the inspector, not by code
     [SerializeField] private SpellProjectile ProjectilePrefab;
-    [SerializeField] private ProjectileImpact ImpactFXPrefab;
+    [SerializeField] private SpellImpact ImpactFXPrefab;
     [SerializeField] private int PoolSize = 5;
-    [SerializeField] private string ProjectileLayer = "PlayerProjectile";
+    
     [SerializeField] private LayerMask NonCollidableLayers;
     //Things that are read by code, but should never be changed outside this script
     public GameObject latestInstantiatedObject { get; private set; }
@@ -23,26 +23,31 @@ public class ProjectileShooter : MonoBehaviour
     [Min(0)]
     private float _damageAmount = 0;
     private DamageType _damageTyping;
-        
+
+
+    private string ProjectileLayer = "PlayerProjectile";
+
     //Settings and references required for function by this script alone
     private ObjectPool<SpellProjectile> projectilePool;
-    private ObjectPool<ProjectileImpact> impactEffectsPool;
+    private ObjectPool<SpellImpact> impactEffectsPool;
 
-    private List<ProjectileImpact> impactCleanupList = new List<ProjectileImpact>();
+    private List<SpellImpact> impactCleanupList = new List<SpellImpact>();
     private List<SpellProjectile> projectileCleanupList = new List<SpellProjectile>();
 
     private Transform currentSpawnTransform;
     private Vector3? currentSpawnPosition;
+    private Quaternion? currentSpawnRotation;
+
     private Collision latestCollision;
     //private Transform latestImpactedProjectile;
-    //private float latestScaler;
+    private float latestScaler;
 
     private LayerMask projectileLayer;
 
     private void Awake()
     {
         projectilePool = new ObjectPool<SpellProjectile>(createFunc: OnInstantiateProjectile, actionOnGet: OnGetProjectile, actionOnRelease: OnReturnProjectileToPool, maxSize: PoolSize, actionOnDestroy: OnDestroyProjectile);
-        impactEffectsPool = new ObjectPool<ProjectileImpact>(createFunc: OnInstantiateImpact, actionOnGet: OnGetEffect, actionOnRelease: OnReturnImpactToPool, maxSize: PoolSize, actionOnDestroy: OnDestroyEffect);
+        impactEffectsPool = new ObjectPool<SpellImpact>(createFunc: OnInstantiateImpact, actionOnGet: OnGetEffect, actionOnRelease: OnReturnImpactToPool, maxSize: PoolSize, actionOnDestroy: OnDestroyEffect);
         
         projectileLayer = LayerMask.NameToLayer(ProjectileLayer);
     }
@@ -60,7 +65,14 @@ public class ProjectileShooter : MonoBehaviour
     #region Projectile Pool Related Methods
     private SpellProjectile OnInstantiateProjectile()
     {
-        return Instantiate(ProjectilePrefab);
+        if (currentSpawnPosition != null && currentSpawnRotation != null)
+            return Instantiate(ProjectilePrefab, (Vector3)currentSpawnPosition, (Quaternion)currentSpawnRotation);
+        else if (currentSpawnTransform != null)
+            return Instantiate(ProjectilePrefab, currentSpawnTransform);
+        else if (currentSpawnPosition != null)
+            return Instantiate(ProjectilePrefab, (Vector3)currentSpawnPosition, Quaternion.identity);
+        else
+            return Instantiate(ProjectilePrefab);
     }
     private void OnReturnProjectileToPool(SpellProjectile projectile)
     {
@@ -71,6 +83,8 @@ public class ProjectileShooter : MonoBehaviour
     {
         if (currentSpawnPosition != null)
             projectile.transform.position = (Vector3)currentSpawnPosition;
+        if (currentSpawnRotation != null)
+            projectile.transform.rotation = (Quaternion)currentSpawnRotation;
         if (currentSpawnTransform)
         {
             projectile.transform.SetPositionAndRotation(currentSpawnTransform.position, currentSpawnTransform.rotation);
@@ -118,6 +132,19 @@ public class ProjectileShooter : MonoBehaviour
 
         currentSpawnPosition = null;
     }
+    public void SpawnProjectile(Vector3 spawnPosition, Quaternion spawnRotation)
+    {
+        currentSpawnPosition = spawnPosition;
+        currentSpawnRotation = spawnRotation;
+
+        latestInstantiatedObject = projectilePool.Get().gameObject;
+        latestInstantiatedObjectRB = latestInstantiatedObject.GetComponent<Rigidbody>();
+
+        latestInstantiatedObjectRB.velocity = Vector3.zero;
+
+        currentSpawnPosition = null;
+        currentSpawnRotation = null;
+    }
     public void SpawnProjectile(Transform spawnParent)
     {
         currentSpawnTransform = spawnParent;
@@ -133,15 +160,15 @@ public class ProjectileShooter : MonoBehaviour
     }
     #endregion
     #region Impact effect pool related things
-    private ProjectileImpact OnInstantiateImpact()
+    private SpellImpact OnInstantiateImpact()
     {
         return Instantiate(ImpactFXPrefab);
     }
-    private void OnReturnImpactToPool(ProjectileImpact effect)
+    private void OnReturnImpactToPool(SpellImpact effect)
     {
         effect.gameObject.SetActive(false);
     }
-    private void OnGetEffect(ProjectileImpact effect)
+    private void OnGetEffect(SpellImpact effect)
     {
         effect.transform.position = latestCollision.GetContact(0).point;
 
@@ -149,7 +176,7 @@ public class ProjectileShooter : MonoBehaviour
 
         effect.SetPool(impactEffectsPool);
 
-        //effect.SetScale(latestImpactedProjectile.transform.localScale.magnitude * latestScaler);
+        effect.SetScale(latestScaler);
 
         effect.gameObject.SetActive(true);
 
@@ -157,7 +184,7 @@ public class ProjectileShooter : MonoBehaviour
 
         impactCleanupList.Insert(0, effect);
     }
-    private void OnDestroyEffect(ProjectileImpact effect)
+    private void OnDestroyEffect(SpellImpact effect)
     {
         if (effect.gameObject)
         {
@@ -171,13 +198,13 @@ public class ProjectileShooter : MonoBehaviour
         {
             latestCollision = col;
             //latestImpactedProjectile = spawningProjectile;
-            //latestScaler = scaler;
+            latestScaler = scaler;
 
             impactEffectsPool.Get();
 
             latestCollision = null;
             //latestImpactedProjectile = null;
-            //latestScaler = 1; 
+            latestScaler = 1; 
         }
     }
     #endregion
@@ -221,8 +248,6 @@ public class ProjectileShooter : MonoBehaviour
     {
         activeProjectiles.ForEach(proj => projectilePool.Release(proj));
         activeProjectiles.Clear();
-        latestInstantiatedObject = null;
-        latestInstantiatedObjectRB = null;
     }
 
     public void SetSpread(float newSpread)
@@ -233,5 +258,13 @@ public class ProjectileShooter : MonoBehaviour
     {
         _damageAmount = damage;
         _damageTyping = type;
+    }
+    public LayerMask GetNonCollidableLayers()
+    {
+        return NonCollidableLayers;
+    }
+    public (DamageType returnedTyping, float returnedAmount) GetDamageAndTyping()
+    {
+        return (_damageTyping, _damageAmount);
     }
 }

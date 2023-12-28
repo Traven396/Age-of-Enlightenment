@@ -2303,7 +2303,7 @@ MonoBehaviour:
   - spellDisplayIcon: {fileID: 21300000, guid: cf2855fb18a21fa45ae954e84f9f4a2e, type: 3}
     spellName: Firebolt
     spellCouple:
-      spellMechanics: {fileID: 1967907942461160733, guid: a6c5168b6cbe6994a895b4219eaa724d, type: 3}
+      spellMechanics: {fileID: 1967907942461160733, guid: 03519f14517160e48aee77bc692862d4, type: 3}
       spellCircle: {fileID: 776886629064782777, guid: 4ece181df3095f245b552d27b3004688, type: 3}
       RightAnimationController: {fileID: 22100000, guid: ed9562a03f610e748b91024be417fcd0, type: 2}
       LeftAnimationController: {fileID: 22100000, guid: e16dd7d0f4d1edd47b5c569500af58bb, type: 2}
@@ -2315,6 +2315,17 @@ MonoBehaviour:
     spellName: Blazing Halo
     spellCouple:
       spellMechanics: {fileID: 3263991770448784775, guid: 06f2e7877dffe9c47bb994e3fddb51f2, type: 3}
+      spellCircle: {fileID: 776886629064782777, guid: db7fa8fa9388a9849bfae950feac882d, type: 3}
+      RightAnimationController: {fileID: 0}
+      LeftAnimationController: {fileID: 0}
+    spellDescription: A passive spell that once turned on causes small fireballs
+      to appear above your head like a halo. When you get close to enemies, they
+      will automatically launch towards them, and then regenerate after a few seconds
+    school: 0
+  - spellDisplayIcon: {fileID: 21300000, guid: dd3885098198d104888439be4c590aba, type: 3}
+    spellName: Burning Halo
+    spellCouple:
+      spellMechanics: {fileID: 1828691079866191935, guid: f150ef3e9dd48ea4f9de22765ab4d450, type: 3}
       spellCircle: {fileID: 776886629064782777, guid: db7fa8fa9388a9849bfae950feac882d, type: 3}
       RightAnimationController: {fileID: 0}
       LeftAnimationController: {fileID: 0}
@@ -2412,6 +2423,19 @@ MonoBehaviour:
       Release the trigger to launch
       it '
     school: 4
+  - spellDisplayIcon: {fileID: 21300000, guid: 2bccd332882fcd14b9e4c377e432c587, type: 3}
+    spellName: Permafrost Arrow
+    spellCouple:
+      spellMechanics: {fileID: 8734080438495235114, guid: f9e9cf60e81d54f44b394bb101d0e001, type: 3}
+      spellCircle: {fileID: 7044319267907947110, guid: 6ad7a276f54bf84469f31f098b7b4567, type: 3}
+      RightAnimationController: {fileID: 0}
+      LeftAnimationController: {fileID: 0}
+    spellDescription: 'BADA BING BADA BOOM
+
+
+
+      ITS A NEW SPELL FINALLY'
+    school: 4
   knownLightningSpells:
   - spellDisplayIcon: {fileID: 21300000, guid: 2456dd2824f5ec540830760922f5bac6, type: 3}
     spellName: Smite
@@ -2427,8 +2451,27 @@ MonoBehaviour:
 
       After a second, lightning will strike the targetted area'
     school: 5
-  knownMetalSpells: []
-  knownPlantSpells: []
+  knownMetalSpells:
+  - spellDisplayIcon: {fileID: 21300000, guid: b11f9c52da2945740b5078d84177a9ab, type: 3}
+    spellName: Repeater
+    spellCouple:
+      spellMechanics: {fileID: 6697046781499885885, guid: 27d1d5e60bcb0d54ea2d0707925b0aa9, type: 3}
+      spellCircle: {fileID: 6178175572713552658, guid: 69c7225f8f5d7114d9ac2eb247d39133, type: 3}
+      RightAnimationController: {fileID: 0}
+      LeftAnimationController: {fileID: 0}
+    spellDescription: Shoot out small blades and then call them back. Booyah
+    school: 7
+  knownPlantSpells:
+  - spellDisplayIcon: {fileID: 21300000, guid: c3aab7237df394c4890e647a4ae580ea, type: 3}
+    spellName: Nettle Burst
+    spellCouple:
+      spellMechanics: {fileID: 5799212011349518442, guid: b100f2d1bbb020e4abdcbbe24c3ff729, type: 3}
+      spellCircle: {fileID: 7719594908596017238, guid: 01e2b35041dcf544f82426492e95ab5c, type: 3}
+      RightAnimationController: {fileID: 0}
+      LeftAnimationController: {fileID: 0}
+    spellDescription: Shoots out the seeds. They hit things. Requires a charge up
+      before firing
+    school: 6
   knownAstralSpells:
   - spellDisplayIcon: {fileID: 21300000, guid: 3638fcac3952b374f96167d7c8a735ae, type: 3}
     spellName: Catapult

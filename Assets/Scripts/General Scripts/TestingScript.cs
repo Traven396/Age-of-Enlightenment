@@ -5,14 +5,10 @@ using UnityEditor;
 using UnityEngine.UI;
 using UnityEngine.XR.OpenXR;
 
-public class TestingScript : MonoBehaviour
+public class TestingScript : MonoBehaviour, IEntity
 {
-    private void Start()
+    public void ApplyMotion(Vector3 force, ForceMode forceMode)
     {
-        for (int i = 0; i < 10; i++)
-        {
-            Debug.Log("In Loop");
-        }
-        Debug.Log("Out of loop");
+        Debug.Log("Bruh. How did you get this error?");
     }
 }

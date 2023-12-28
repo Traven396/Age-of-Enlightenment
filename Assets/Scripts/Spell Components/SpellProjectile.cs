@@ -9,8 +9,11 @@ public class SpellProjectile : MonoBehaviour
 {
     [SerializeField] private float LifeTime = 3;
     [SerializeField] private float HitEffectScaler = 1;
+    [SerializeField] private bool PointTowardsMotion = false;
     [SerializeField] private GameObject BodyParent;
     [SerializeField] private GameObject TrailParent;
+    [Space(8)]
+    [SerializeField] private bool DebugMode = false;
 
     private ObjectPool<SpellProjectile> _pool;
     private Rigidbody _rb;
@@ -19,7 +22,8 @@ public class SpellProjectile : MonoBehaviour
     private float _damageAmount;
     private DamageType _damageTyping;
 
-    private ParticleSystem[] trails;
+    private ParticleSystem[] particleSystemTrails;
+    private TrailRenderer[] trailRenderTrails;
 
     private float minimumExtent;
     private float partialExtent;
@@ -28,21 +32,35 @@ public class SpellProjectile : MonoBehaviour
     private Collider selfCollider;
 
     private bool alreadyDestroyed;
-    private float trailDurations;
+    private float particleTrailDurations;
+    private float trailRenderDurations = 0;
 
     //Anything that should fire only once on the initial spawn should be put in here
     private void Awake()
     {
         _rb = GetComponent<Rigidbody>();
-        trails = TrailParent.GetComponentsInChildren<ParticleSystem>();
+        if (TrailParent)
+        {
+            
+            
+            particleSystemTrails = TrailParent.GetComponentsInChildren<ParticleSystem>();
 
+            if (particleSystemTrails.Length > 0)
+                particleTrailDurations = particleSystemTrails.Max(ps => ps.main.duration + ps.main.startLifetime.constantMax); 
+            
+            trailRenderTrails = TrailParent.GetComponentsInChildren<TrailRenderer>();
+
+            if (trailRenderTrails.Length > 0)
+                trailRenderDurations = trailRenderTrails.Max(tr => tr.time); 
+            
+        }
         selfCollider = GetComponent<Collider>();
         if (!selfCollider)
         {
             selfCollider = GetComponentInChildren<Collider>();
         }
 
-        trailDurations = trails.Max(ps => ps.main.duration + ps.main.startLifetime.constantMax);
+        
 
         minimumExtent = Mathf.Min(Mathf.Min(selfCollider.bounds.extents.x, selfCollider.bounds.extents.y), selfCollider.bounds.extents.z);
         partialExtent = minimumExtent * (1.0f - .1f);
@@ -53,11 +71,20 @@ public class SpellProjectile : MonoBehaviour
     {
         BodyParent.SetActive(true);
 
-        trails.ToList().ForEach(ps => ps.Play(true));
+        if (TrailParent)
+        {
+            if(particleSystemTrails.Length > 0)
+                particleSystemTrails.ToList().ForEach(ps => ps.Play(true));
+            if(trailRenderTrails.Length > 0)
+                trailRenderTrails.ToList().ForEach(tr => tr.emitting = true);
+        }
 
         _rb.detectCollisions = true;
 
         alreadyDestroyed = false;
+
+        if (DebugMode)
+            Debug.Log("Spawned at " + transform.position + " in the world");
     }
     
     public void Shoot(Vector3 launchVector)
@@ -80,12 +107,27 @@ public class SpellProjectile : MonoBehaviour
         _rb.detectCollisions = false;
         _rb.isKinematic = true;
 
-        trails.ToList().ForEach(ps => ps.Stop(true, ParticleSystemStopBehavior.StopEmitting));
-        Invoke(nameof(DestroyTrails), trailDurations);
-
+        if (TrailParent)
+        {
+            if(particleSystemTrails.Length > 0)
+                particleSystemTrails.ToList().ForEach(ps => ps.Stop(true, ParticleSystemStopBehavior.StopEmitting));
+            
+            Invoke(nameof(DestroyTrails), particleTrailDurations + trailRenderDurations);
+        }
+        else
+        {
+            ReleaseProjectile();
+        }
         alreadyDestroyed = true;
     }
     private void DestroyTrails()
+    {
+        if(trailRenderTrails.Length > 0)
+            trailRenderTrails.ToList().ForEach(tr => tr.emitting = false);
+
+        ReleaseProjectile();
+    }
+    private void ReleaseProjectile()
     {
         _pool.Release(this);
     }
@@ -93,6 +135,8 @@ public class SpellProjectile : MonoBehaviour
     {
         if (!alreadyDestroyed)
         {
+            if (DebugMode)
+                Debug.Log(collision.gameObject.name);
             DestroyBody();
             _shooter.SpawnImpact(collision, transform, HitEffectScaler);
             if (collision.gameObject.TryGetComponent(out IDamageable target))
@@ -107,12 +151,19 @@ public class SpellProjectile : MonoBehaviour
         if (!_rb.isKinematic)
         {
             Vector3 movementThisStep = _rb.position - previousPosition;
+
+            
             float movementSqrMagnitude = movementThisStep.sqrMagnitude;
 
             if (movementSqrMagnitude > sqrMinimumExtent)
             {
                 float movementMagnitude = Mathf.Sqrt(movementSqrMagnitude);
                 RaycastHit hitInfo;
+
+                //Point in the direction the rigidbody just moved.
+                if (PointTowardsMotion)
+                    BodyParent.transform.rotation = Quaternion.LookRotation(movementThisStep);
+
 
                 //check for obstructions we might have missed 
                 if (Physics.Raycast(previousPosition, movementThisStep, out hitInfo, movementMagnitude, ~_nonCollidableLayers))
@@ -139,6 +190,11 @@ public class SpellProjectile : MonoBehaviour
         _damageAmount = newAmount;
         _damageTyping = newType;
     }
+    public ProjectileShooter GetShooter()
+    {
+        return _shooter;
+    }
+
 }
 public enum DamageType
 {

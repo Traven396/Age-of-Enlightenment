@@ -5,16 +5,50 @@ using UnityEngine;
 public class ConstantSpin : MonoBehaviour
 {
     public float rotationSpeed = 1;
-    public string rotationAxis = "z";
-    // Update is called once per frame
-    private void Start()
+    private enum XYZ
     {
-        Rotate();
+        X,
+        Y,
+        Z
     }
-    private void Rotate()
+    [SerializeField] private XYZ RotationAxis;
+    private void Update()
     {
-        iTween.RotateBy(this.gameObject, iTween.Hash(rotationAxis, rotationSpeed, "time", 10, "looptype", iTween.LoopType.loop, 
-                                                      "space", Space.Self,
-                                                      "easetype", iTween.EaseType.linear)); 
+        switch (RotationAxis)
+        {
+            case XYZ.X:
+                transform.Rotate(Vector3.right * rotationSpeed * Time.deltaTime, Space.Self);
+                break;
+            case XYZ.Y:
+                transform.Rotate(Vector3.up * rotationSpeed * Time.deltaTime, Space.Self);
+                break;
+            case XYZ.Z:
+                transform.Rotate(Vector3.forward * rotationSpeed * Time.deltaTime, Space.Self);
+                break;
+        }
+
+    }
+
+    public void SetSpeed(float newRotationSpeed)
+    {
+        rotationSpeed = newRotationSpeed;
+    }
+    public void SetNewAxis(string XYZ)
+    {
+        switch (XYZ) {
+            case "X":
+                RotationAxis = ConstantSpin.XYZ.X;
+                break;
+            case "Y":
+                RotationAxis = ConstantSpin.XYZ.Y;
+                break;
+            case "Z":
+                RotationAxis = ConstantSpin.XYZ.Z;
+                break;
+            default:
+                Debug.Log("Invalid axis. What da heck");
+                break;
+        }
+        
     }
 }
