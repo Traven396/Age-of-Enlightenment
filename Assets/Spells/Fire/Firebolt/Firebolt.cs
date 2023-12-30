@@ -190,8 +190,8 @@ public class Firebolt : SpellBlueprint
     {
         if (velocityFrames != null)
         {
-            Vector3 velocityAverage = HelpfulScript.GetVectorAverage(velocityFrames) * 1.6f;
-            Vector3 angularVelocityAverage = HelpfulScript.GetVectorAverage(angularVelocityFrames);
+            Vector3 velocityAverage = HandyHelperScript.GetVectorAverage(velocityFrames) * 1.6f;
+            Vector3 angularVelocityAverage = HandyHelperScript.GetVectorAverage(angularVelocityFrames);
             if (velocityAverage != null && angularVelocityAverage != null)
             {
                 _applyMotion.ChangeMotion(_bigFireboltSpawn.instantiatedObject.transform, velocityAverage, angularVelocityAverage);

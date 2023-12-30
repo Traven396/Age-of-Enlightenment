@@ -102,7 +102,7 @@ namespace AgeOfEnlightenment.StabbingPhysics
             if (tipCheck)
                 return true;
 
-            var point = HelpfulScript.FindNearestPointOnLine(_tip.position, _base.position, StabEntryPosition);
+            var point = HandyHelperScript.FindNearestPointOnLine(_tip.position, _base.position, StabEntryPosition);
             var line = StabEntryPosition - point;
             if (line.sqrMagnitude > StabberObject.Settings.PerpendicularThreshold * StabberObject.Settings.PerpendicularThreshold)
             {

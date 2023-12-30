@@ -58,5 +58,5 @@ MonoBehaviour:
   _visualsManager: {fileID: 0}
   triggerPressedValue: 0
   gripPressedValue: 0
-  LaunchForce: 10
+  LaunchForce: 25
   BladePrefab: {fileID: 1047652487721888495, guid: 6e1776b663f9a6a46900ae55469883c5, type: 3}

@@ -106,6 +106,11 @@ namespace AgeOfEnlightenment.StabbingPhysics
                 if (currentTracker.StabbableObject)
                     StabbedStabbables.Remove(currentTracker.StabbableObject);
             }
+
+            if(_stabTrackers.Count == 0 && Rigidbody.useGravity == false)
+            {
+                Rigidbody.useGravity = true;
+            }
         }
 
         private void OnCollisionEnter(Collision collision)
@@ -215,9 +220,8 @@ namespace AgeOfEnlightenment.StabbingPhysics
                 var stabTracker = new StabReference(this, stabbableReference, targetsSettings, joint, stabbedGameObject, stabInstanceDirection, Tip, stabbedColliders);
 
                 _stabTrackers.Add(stabTracker);
-
+                Rigidbody.useGravity = false;
                 //Fire the start event here
-                Debug.Log("I " + gameObject.name + " just stabbed " + stabbedGameObject.name);
             }
         }
 
@@ -226,7 +230,7 @@ namespace AgeOfEnlightenment.StabbingPhysics
             var joint = Rigidbody.gameObject.AddComponent<ConfigurableJoint>();
             joint.autoConfigureConnectedAnchor = false;
             joint.axis = bladeLineLocal.normalized;
-            joint.secondaryAxis = HelpfulScript.OrthogonalVector(joint.axis);
+            joint.secondaryAxis = HandyHelperScript.OrthogonalVector(joint.axis);
 
             joint.projectionAngle = JointProjectionAngle;
             joint.projectionDistance = JointProjectionDistance;
@@ -277,6 +281,29 @@ namespace AgeOfEnlightenment.StabbingPhysics
                         Physics.IgnoreCollision(stabberCollider, stabbedCollider, ignore);
                 }
             }
+        }
+
+        public void ForceUnstab()
+        {
+            foreach (var tracker in _stabTrackers)
+            {
+                Destroy(tracker.Joint);
+                _cleanupTrackers.Add(tracker);
+                IgnoreCollisions(tracker.StabbedColliders, false);
+            }
+
+            for (var i = 0; i < _cleanupTrackers.Count; i++)
+            {
+                var tracker = _cleanupTrackers[i];
+                _stabTrackers.Remove(tracker);
+                StabbedObjects.Remove(tracker.StabbedObject);
+                if (tracker.StabbableObject)
+                {
+                    StabbedStabbables.Remove(tracker.StabbableObject);
+                }
+            }
+
+            _cleanupTrackers.Clear();
         }
     } 
 }
