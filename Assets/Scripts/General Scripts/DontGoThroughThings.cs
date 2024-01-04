@@ -6,6 +6,8 @@ public class DontGoThroughThings : MonoBehaviour
 {
     public LayerMask _nonCollidableLayers;
 
+    private bool Enabled = true;
+
     private Rigidbody _rb;
     private float minimumExtent;
     private float partialExtent;
@@ -32,26 +34,36 @@ public class DontGoThroughThings : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (!_rb.isKinematic)
+        if (Enabled)
         {
-            Vector3 movementThisStep = _rb.position - previousPosition;
-
-
-            float movementSqrMagnitude = movementThisStep.sqrMagnitude;
-
-            if (movementSqrMagnitude > sqrMinimumExtent)
+            if (!_rb.isKinematic)
             {
-                float movementMagnitude = Mathf.Sqrt(movementSqrMagnitude);
-                RaycastHit hitInfo;
+                Vector3 movementThisStep = _rb.position - previousPosition;
 
-                //check for obstructions we might have missed 
-                if (Physics.Raycast(previousPosition, movementThisStep, out hitInfo, movementMagnitude, ~_nonCollidableLayers))
+
+                float movementSqrMagnitude = movementThisStep.sqrMagnitude;
+
+                if (movementSqrMagnitude > sqrMinimumExtent)
                 {
-                    _rb.position = hitInfo.point - (movementThisStep / movementMagnitude) * partialExtent;
-                }
-            }
+                    float movementMagnitude = Mathf.Sqrt(movementSqrMagnitude);
+                    RaycastHit hitInfo;
 
-            previousPosition = _rb.position;
+                    //check for obstructions we might have missed 
+                    if (Physics.Raycast(previousPosition, movementThisStep, out hitInfo, movementMagnitude, ~_nonCollidableLayers))
+                    {
+                        _rb.position = hitInfo.point - (movementThisStep / movementMagnitude) * partialExtent;
+                    }
+                }
+
+                previousPosition = _rb.position;
+            } 
         }
+    }
+
+    public void ChangeEnabled(bool newStatus)
+    {
+        Enabled = newStatus;
+        if(_rb)
+        previousPosition = _rb.position;
     }
 }

@@ -5,7 +5,13 @@ using AgeOfEnlightenment.StabbingPhysics;
 
 public class RepeaterBlade : MonoBehaviour
 {
+    public float RecallSpeed = 5;
+    public float LaunchSpeed = 5f;
+    public float SnapDistance = 1;
+
+
     StabbingObject _selfStabber;
+    DontGoThroughThings _selfPhaser;
     List<Collider> _allSelfColliders;
     public Rigidbody rb { get; private set; }
 
@@ -19,23 +25,72 @@ public class RepeaterBlade : MonoBehaviour
 
         _selfStabber = GetComponent<StabbingObject>();
 
+        _selfPhaser = GetComponent<DontGoThroughThings>();
+        _selfPhaser.ChangeEnabled(false);
+
         _allSelfColliders.AddRange(GetComponents<Collider>());
         _allSelfColliders.AddRange(GetComponentsInChildren<Collider>());
 
         rb = GetComponent<Rigidbody>();
     }
-
-    public void RecallBlade()
+    private void Update()
     {
-        _allSelfColliders.ForEach(col => col.enabled = false);
-        _selfStabber.ForceUnstab();
+        //Debug.Log(recallPoint.position);
+    }
+
+    private void FixedUpdate()
+    {
+        if (recalling)
+        {
+            Vector3 recallVector = (recallPoint.position - transform.position);
+            rb.AddForce(recallVector.normalized * RecallSpeed, ForceMode.Acceleration);
+
+            if (recallVector.sqrMagnitude <= SnapDistance * SnapDistance)
+            {
+                recalling = false;
+                rb.isKinematic = true;
+                _selfPhaser.ChangeEnabled(false);
+                transform.parent = recallPoint;
+                transform.position = recallPoint.position;
+                transform.rotation = recallPoint.rotation;
+            }
+        }
+    }
+
+    public void StartRecallBlade()
+    {
+        if (!recalling)
+        {
+            _allSelfColliders.ForEach(col => col.enabled = false);
+            _selfStabber.ForceUnstab();
+            rb.useGravity = false;
+        }
 
         recalling = true;
     }
 
+    public void StopRecallBlade()
+    {
+        if (recalling)
+        {
+            _allSelfColliders.ForEach(col => col.enabled = true);
+            rb.useGravity = true;
+        }
+
+        recalling = false;
+    }
+
     public void Launch()
     {
+        transform.parent = null;
 
+
+        rb.isKinematic = false;
+
+
+
+        rb.AddForce(transform.forward * LaunchSpeed, ForceMode.VelocityChange);
+        _selfPhaser.ChangeEnabled(true);
         launched = true;
     }
 }

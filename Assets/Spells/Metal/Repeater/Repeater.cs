@@ -8,7 +8,7 @@ public class Repeater : SpellBlueprint
     [SerializeField] private GameObject BladePrefab;
 
 
-    private List<RepeaterBlade> Blades = new List<RepeaterBlade>();
+    private List<RepeaterBlade> Blades = new List<RepeaterBlade>(3);
     private Transform[] _bladePositions = new Transform[3];
 
     int counter = 0;
@@ -51,26 +51,43 @@ public class Repeater : SpellBlueprint
     {
         base.TriggerPress();
 
-        if (!gripPressed)
+        if (allBladesSpawned)
         {
-            //if (Blades.Count < 3)
-            //{
-            //    //Blades.Add(Instantiate(BladePrefab, _handLocation.TransformPoint(Vector3.up * .1f), _handLocation.rotation).GetComponent<RepeaterBlade>());
-            //    //Blades[counter].gameObject.GetComponent<Rigidbody>().AddForce(_handLocation.transform.forward * LaunchForce, ForceMode.VelocityChange);
-
-            //    //StartCoroutine(SingleBladeSpawn(counter));
-            //    counter++;
-            //} 
+            if (gripPressed)
+            {
+                foreach (RepeaterBlade blade in Blades)
+                {
+                    if (blade.launched)
+                    {
+                        blade.StartRecallBlade();
+                    }
+                }
+            } 
+        }
+    }
+    public override void TriggerRelease()
+    {
+        base.TriggerRelease();
+        if (gripPressed)
+        {
+            Blades.ForEach(blade => blade.StopRecallBlade());
         }
         else
         {
-            
+            if (allBladesSpawned)
+            {
+                Blades[counter].Launch();
+                counter++;
+                if (counter >= Blades.Capacity)
+                    counter = 0;
+            }
         }
     }
 
-    public override void GripPress()
+    public override void GripRelease()
     {
-        base.GripPress();
+        base.GripRelease();
+        Blades.ForEach(blade => blade.StopRecallBlade());
     }
     IEnumerator SingleBladeSpawn(int bladeCounter)
     {
