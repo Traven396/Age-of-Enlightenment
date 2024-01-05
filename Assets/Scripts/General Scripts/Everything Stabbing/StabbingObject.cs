@@ -103,14 +103,23 @@ namespace AgeOfEnlightenment.StabbingPhysics
                 _stabTrackers.Remove(currentTracker);
                 StabbedObjects.Remove(currentTracker.StabbedObject);
 
+                if (_stabTrackers.Count == 0)
+                {
+                    Rigidbody.useGravity = true;
+                }
+
                 if (currentTracker.StabbableObject)
                     StabbedStabbables.Remove(currentTracker.StabbableObject);
             }
 
-            if(_stabTrackers.Count == 0 && Rigidbody.useGravity == false)
-            {
-                Rigidbody.useGravity = true;
-            }
+            //if(_stabTrackers.Count == 0 && Rigidbody.useGravity == false)
+            //{
+            //    Rigidbody.useGravity = true;
+            //}
+
+            CleanupList();
+
+            _cleanupTrackers.Clear();
         }
 
         private void OnCollisionEnter(Collision collision)
@@ -295,8 +304,15 @@ namespace AgeOfEnlightenment.StabbingPhysics
             for (var i = 0; i < _cleanupTrackers.Count; i++)
             {
                 var tracker = _cleanupTrackers[i];
+
                 _stabTrackers.Remove(tracker);
                 StabbedObjects.Remove(tracker.StabbedObject);
+
+                if (_stabTrackers.Count == 0)
+                {
+                    Rigidbody.useGravity = true;
+                }
+
                 if (tracker.StabbableObject)
                 {
                     StabbedStabbables.Remove(tracker.StabbableObject);
@@ -304,6 +320,23 @@ namespace AgeOfEnlightenment.StabbingPhysics
             }
 
             _cleanupTrackers.Clear();
+        }
+
+        private void CleanupList()
+        {
+            var cleanable = false;
+            foreach (var currentStab in StabbedStabbables)
+            {
+                if (!currentStab)
+                {
+                    cleanable = true;
+                }
+            }
+
+            if (cleanable)
+            {
+                StabbedStabbables.RemoveAll(e => !e);
+            }
         }
     } 
 }

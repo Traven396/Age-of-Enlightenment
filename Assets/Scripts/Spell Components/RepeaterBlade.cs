@@ -15,8 +15,8 @@ public class RepeaterBlade : MonoBehaviour
     List<Collider> _allSelfColliders;
     public Rigidbody rb { get; private set; }
 
-    public bool recalling { get; private set; } = false;
-    public bool launched { get; private set; } = false;
+    [SerializeField] public bool recalling  = false;
+    [SerializeField] public bool launched  = false;
     [HideInInspector] public Transform recallPoint;
 
     private void Awake()
@@ -43,16 +43,20 @@ public class RepeaterBlade : MonoBehaviour
         if (recalling)
         {
             Vector3 recallVector = (recallPoint.position - transform.position);
-            rb.AddForce(recallVector.normalized * RecallSpeed, ForceMode.Acceleration);
+            rb.AddForce(recallVector.normalized * RecallSpeed * (Vector3.Distance(recallPoint.position, transform.position) / 2), ForceMode.Acceleration);
 
             if (recallVector.sqrMagnitude <= SnapDistance * SnapDistance)
             {
-                recalling = false;
+                StopRecallBlade();
+
+                launched = false;
+
                 rb.isKinematic = true;
+
                 _selfPhaser.ChangeEnabled(false);
+
                 transform.parent = recallPoint;
-                transform.position = recallPoint.position;
-                transform.rotation = recallPoint.rotation;
+                transform.SetPositionAndRotation(recallPoint.position, recallPoint.rotation);
             }
         }
     }
@@ -62,7 +66,9 @@ public class RepeaterBlade : MonoBehaviour
         if (!recalling)
         {
             _allSelfColliders.ForEach(col => col.enabled = false);
+
             _selfStabber.ForceUnstab();
+
             rb.useGravity = false;
         }
 
@@ -83,7 +89,7 @@ public class RepeaterBlade : MonoBehaviour
     public void Launch()
     {
         transform.parent = null;
-
+        StopRecallBlade();
 
         rb.isKinematic = false;
 
