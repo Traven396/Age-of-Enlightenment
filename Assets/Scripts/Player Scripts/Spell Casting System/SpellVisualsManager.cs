@@ -19,6 +19,11 @@ public class SpellVisualsManager : MonoBehaviour
     public Animator leftHandController;
     public Animator rightHandController;
 
+    [Space(20f)]
+    [Header("Reticles")]
+    public Reticle leftReticle;
+    public Reticle rightReticle;
+
     private GameObject currentLeftCircle;
     private GameObject currentRightCircle;
 
@@ -95,6 +100,24 @@ public class SpellVisualsManager : MonoBehaviour
             {
                 iTween.MoveUpdate(currentRightCircle, rightCircleHolder.transform.position, .1f);
             }
+        }
+    }
+
+    public void ToggleReticle(LeftRight whichHand, bool disableOrEnable)
+    {
+        if(whichHand == LeftRight.Left)
+        {
+            if (!disableOrEnable)
+                leftReticle.Hide();
+            else
+                leftReticle.Show();
+        }
+        else
+        {
+            if (disableOrEnable)
+                rightReticle.Show();
+            else
+                rightReticle.Hide();
         }
     }
 

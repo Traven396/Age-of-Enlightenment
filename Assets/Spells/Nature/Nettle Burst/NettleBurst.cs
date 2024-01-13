@@ -7,6 +7,7 @@ public class NettleBurst : SpellBlueprint
     [SerializeField] private float ChargeTime = 2.5f;
     [SerializeField] private float FiringCooldown = 0.4f;
     [SerializeField] private float LaunchSpeed = 10f;
+    [SerializeField] private float Damage = 3;
     [SerializeField] private int ManaCostPerShot = 3;
 
     private float currentCharge = 0;
@@ -18,12 +19,14 @@ public class NettleBurst : SpellBlueprint
     private void Awake()
     {
         _shooter = GetComponent<ProjectileShooter>();
+        _shooter.SetDamage(Damage, DamageType.Nature);
     }
+
     public override void TriggerPress()
     {
         base.TriggerPress();
 
-
+        _visualsManager.ToggleReticle(currentHand, true);
     }
     public override void TriggerHold()
     {
@@ -31,11 +34,11 @@ public class NettleBurst : SpellBlueprint
 
         if (currentHand == 0)
         {
-            iTween.RotateUpdate(spellCircle, (circleHolder.transform.rotation * Quaternion.Euler(-90, 0, 0)).eulerAngles, .4f);
+            iTween.RotateUpdate(spellCircle, (_handLocation.transform.rotation * Quaternion.Euler(-90, 0, 0)).eulerAngles, .4f);
         }
         else
         {
-            iTween.RotateUpdate(spellCircle, (circleHolder.transform.rotation * Quaternion.Euler(90, 0, 0)).eulerAngles, .4f);
+            iTween.RotateUpdate(spellCircle, (_handLocation.transform.rotation * Quaternion.Euler(90, 0, 0)).eulerAngles, .4f);
         }
         iTween.MoveUpdate(spellCircle, circleHolder.transform.TransformPoint(new Vector3(0, -.05f, .25f)), .4f);
 
@@ -61,6 +64,7 @@ public class NettleBurst : SpellBlueprint
         currentlyShooting = false;
 
         StopCoroutine(nameof(MachineGun));
+        _visualsManager.ToggleReticle(currentHand, false);
     }
 
     private void Update()
@@ -80,7 +84,7 @@ public class NettleBurst : SpellBlueprint
                 Player.Instance.SubtractMana(ManaCostPerShot);
 
                 _shooter.SpawnProjectile(spellCircle.transform.position);
-                _shooter.LaunchAllProjectiles(spellCircle.transform.up, LaunchSpeed); 
+                _shooter.LaunchAllProjectiles(_handLocation.forward, LaunchSpeed); 
             }
 
             yield return new WaitForSeconds(FiringCooldown); 

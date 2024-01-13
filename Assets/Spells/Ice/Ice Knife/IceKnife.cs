@@ -30,16 +30,17 @@ public class IceKnife : SpellBlueprint
         base.GripPress();
         
         iTween.ScaleTo(spellCircle, Vector3.one * .5f, .7f);
+        _visualsManager.ToggleReticle(currentHand, true);
     }
     public override void GripHold()
     {
         if (currentHand == 0)
         {
-            iTween.RotateUpdate(spellCircle, (circleHolder.transform.rotation * Quaternion.Euler(-90, 0, 0)).eulerAngles, .4f);
+            iTween.RotateUpdate(spellCircle, (_handLocation.transform.rotation * Quaternion.Euler(-90, 0, 0)).eulerAngles, .4f);
         }
         else
         {
-            iTween.RotateUpdate(spellCircle, (circleHolder.transform.rotation * Quaternion.Euler(90, 0, 0)).eulerAngles, .4f);
+            iTween.RotateUpdate(spellCircle, (_handLocation.transform.rotation * Quaternion.Euler(90, 0, 0)).eulerAngles, .4f);
         }
         iTween.MoveUpdate(spellCircle, circleHolder.transform.TransformPoint(new Vector3(0, .05f, .1f)), .1f);
     }
@@ -51,6 +52,7 @@ public class IceKnife : SpellBlueprint
         {
             shooter.DespawnAllProjectiles();
         }
+        _visualsManager.ToggleReticle(currentHand, false);
     }
     public override void TriggerPress()
     {
@@ -86,7 +88,7 @@ public class IceKnife : SpellBlueprint
         if (gripPressed && shooter.latestInstantiatedObject)
         {
             shooter.SetDamage(Damage * shooter.latestInstantiatedObject.transform.localScale.z, ProjectileDamageType);
-            shooter.LaunchAllProjectiles(circleHolder.transform.forward, LaunchSpeed);
+            shooter.LaunchAllProjectiles(_handLocation.forward, LaunchSpeed);
         }
     }
 }

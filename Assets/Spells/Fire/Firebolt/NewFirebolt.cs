@@ -58,6 +58,8 @@ public class NewFirebolt : SpellBlueprint
         if (_bigFireboltSpawn.latestInstantiatedObject && _bigFireboltSpawn.latestInstantiatedObject.transform.parent == _palmLocation)
             _bigFireboltSpawn.DespawnAllProjectiles();
         iTween.ScaleTo(spellCircle, Vector3.one * .3f, .1f);
+
+        _visualsManager.ToggleReticle(currentHand, true);
     }
     public override void GripHold()
     {
@@ -76,7 +78,7 @@ public class NewFirebolt : SpellBlueprint
     {
         base.GripRelease();
         iTween.ScaleTo(spellCircle, Vector3.one, .1f);
-
+        _visualsManager.ToggleReticle(currentHand, false);
     }
     public override void TriggerPress()
     {
@@ -158,7 +160,7 @@ public class NewFirebolt : SpellBlueprint
         }
         else
         {
-            _smallFireboltSpawn.LaunchAllProjectiles(spellCircle.transform.up, smallLaunchSpeed);
+            _smallFireboltSpawn.LaunchAllProjectiles(_handLocation.forward, smallLaunchSpeed);
         }
     }
     public override void OnDeselect()

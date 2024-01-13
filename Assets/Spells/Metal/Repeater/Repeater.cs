@@ -36,7 +36,7 @@ public class Repeater : SpellBlueprint
         _bladePositions[2].localRotation = Quaternion.Euler(0, 90, -30);
 
         StartCoroutine(TripleBladeSpawn());
-        
+        _visualsManager.ToggleReticle(currentHand, true);
     }
 
     public override void OnDeselect()
@@ -46,6 +46,8 @@ public class Repeater : SpellBlueprint
         {
             Destroy(_bladePositions[i].gameObject);
         }
+
+        _visualsManager.ToggleReticle(currentHand, false);
     }
     public override void TriggerPress()
     {
