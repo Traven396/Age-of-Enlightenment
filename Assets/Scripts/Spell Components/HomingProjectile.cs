@@ -34,8 +34,6 @@ public class HomingProjectile : MonoBehaviour
         {
             if (potentialTargets.Count != 0)
             {
-                //var homingVector = (potentialTargets[0].position - _rb.position).normalized * (HomingStrength + (sqrSearchDistance - (potentialTargets[0].position - _rb.position).sqrMagnitude));
-                //var homingVector = ((potentialTargets[0].position - _rb.position).normalized * HomingStrength) / (potentialTargets[0].position - _rb.position).magnitude;
                 var homingVector = (potentialTargets[0].position - _rb.position).normalized * HomingStrength;
 
                 //if ((potentialTargets[0].position - _rb.position).sqrMagnitude <= sqrSearchDistance / 3)
@@ -44,7 +42,7 @@ public class HomingProjectile : MonoBehaviour
                 //    homingVector *= 5;
                 //}
 
-                _rb.AddForce(homingVector, ForceMode.Acceleration);
+                _rb.AddForce(homingVector, ForceMode.Impulse);
 
             } 
         }

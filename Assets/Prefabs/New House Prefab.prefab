@@ -3448,7 +3448,7 @@ GameObject:
   - component: {fileID: 1770899586159070352}
   m_Layer: 0
   m_Name: New House Prefab
-  m_TagString: Untagged
+  m_TagString: Obstacle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

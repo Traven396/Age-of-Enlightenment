@@ -79,13 +79,17 @@ PrefabInstance:
         Either way the enemy dies
       objectReference: {fileID: 0}
     - target: {fileID: 7344509594335940998, guid: b2bd0de9cf65ae849b68979895acd991, type: 3}
+      propertyPath: GrantedSpell.spellDisplayIcon
+      value: 
+      objectReference: {fileID: 21300000, guid: a415b103668b41d46b62a66b8a8c1671, type: 3}
+    - target: {fileID: 7344509594335940998, guid: b2bd0de9cf65ae849b68979895acd991, type: 3}
       propertyPath: GrantedSpell.spellCouple.spellCircle
       value: 
       objectReference: {fileID: 776886629064782777, guid: 4ece181df3095f245b552d27b3004688, type: 3}
     - target: {fileID: 7344509594335940998, guid: b2bd0de9cf65ae849b68979895acd991, type: 3}
       propertyPath: GrantedSpell.spellCouple.spellMechanics
       value: 
-      objectReference: {fileID: 1967907942461160733, guid: a6c5168b6cbe6994a895b4219eaa724d, type: 3}
+      objectReference: {fileID: 423785962594555604, guid: f6312bd187b607e46b4ed2f7c3375e80, type: 3}
     - target: {fileID: 7344509594335940998, guid: b2bd0de9cf65ae849b68979895acd991, type: 3}
       propertyPath: GrantedSpell.spellCouple.LeftAnimationController
       value: 

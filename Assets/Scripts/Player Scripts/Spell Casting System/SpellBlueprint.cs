@@ -62,10 +62,8 @@ public abstract class SpellBlueprint : MonoBehaviour
     }
     #endregion
 
-    public virtual void OnDeselect()
-    {
-
-    }
+    public virtual void OnDeselect() { }
+    public virtual void OnSelect() { }
     private void Start()
     {
         spellCircle = circleHolder.transform.GetChild(circleHolder.transform.childCount - 1).gameObject;

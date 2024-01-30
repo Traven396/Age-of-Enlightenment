@@ -14944,7 +14944,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 256
   SearchRadius: 7
-  HomingStrength: 25
+  HomingStrength: 10
   RequireLineOfSight: 0
 --- !u!1 &9186497799271925148
 GameObject:

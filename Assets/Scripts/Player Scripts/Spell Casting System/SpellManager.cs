@@ -9,17 +9,15 @@ using UnityEngine.XR;
 
 public class SpellManager : MonoBehaviour
 {
-
-    private SpellVisualsManager _visualsManager;
     public SpellHotbarManager _hotbarManager { get; private set; }
 
     //All left hand stuff
-    [SerializeField] private GameObject leftSpell;
+    [SerializeField] private GameObject leftSpellGO;
     private GameObject _spawnedLeftSpell;
     private SpellBlueprint _spawnedLeftBlueprint;
 
     //All right hand stuff
-    [SerializeField] private GameObject rightSpell;
+    [SerializeField] private GameObject rightSpellGO;
     private GameObject _spawnedRightSpell;
     private SpellBlueprint _spawnedRightBlueprint;
 
@@ -40,39 +38,43 @@ public class SpellManager : MonoBehaviour
     {
         DespawnSpell(LeftRight.Right);
 
-        rightSpell = spellToBe.spellMechanics;
+        rightSpellGO = spellToBe.spellMechanics;
 
         SpawnSpell(LeftRight.Right);
 
         RightSpellSwap.Invoke(new SpellSwapCallbackContext(_spawnedRightSpell, _spawnedRightBlueprint, spellToBe.RightAnimationController, spellToBe.spellCircle));
+
+        _spawnedRightBlueprint.OnSelect();
     }
 
     public void ChangeLeftSpell(CoreSpellComponents spellToBe)
     {
         DespawnSpell(LeftRight.Left);
 
-        leftSpell = spellToBe.spellMechanics;
+        leftSpellGO = spellToBe.spellMechanics;
 
         SpawnSpell(LeftRight.Left);
 
         LeftSpellSwap.Invoke(new SpellSwapCallbackContext(_spawnedLeftSpell, _spawnedLeftBlueprint, spellToBe.LeftAnimationController, spellToBe.spellCircle));
+
+        _spawnedLeftBlueprint.OnSelect();
     }
 
     private void SpawnSpell(LeftRight side)
     {
         if(side == 0)
         {
-            if (leftSpell)
+            if (leftSpellGO)
             {
-                _spawnedLeftSpell = Instantiate(leftSpell, transform);
+                _spawnedLeftSpell = Instantiate(leftSpellGO, transform);
                 _spawnedLeftBlueprint = _spawnedLeftSpell.GetComponent<SpellBlueprint>();
             }
         }
         else
         {
-            if (rightSpell)
+            if (rightSpellGO)
             {
-                _spawnedRightSpell = Instantiate(rightSpell, transform);
+                _spawnedRightSpell = Instantiate(rightSpellGO, transform);
                 _spawnedRightBlueprint = _spawnedRightSpell.GetComponent<SpellBlueprint>();
             }
         }
@@ -112,13 +114,13 @@ public class SpellManager : MonoBehaviour
     public void ClearRightSpell()
     {
         DespawnSpell(LeftRight.Right);
-        rightSpell = null;
+        rightSpellGO = null;
         _spawnedRightBlueprint = null;
     }
     public void ClearLeftSpell()
     {
         DespawnSpell(LeftRight.Left);
-        leftSpell = null;
+        leftSpellGO = null;
         _spawnedLeftBlueprint = null;
     }
 
