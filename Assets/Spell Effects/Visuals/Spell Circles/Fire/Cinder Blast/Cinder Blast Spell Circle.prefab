@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 4544997841193847169}
   - component: {fileID: 6169804415310629608}
   m_Layer: 1
-  m_Name: Cinder Shot Spell Circle
+  m_Name: Cinder Blast Spell Circle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

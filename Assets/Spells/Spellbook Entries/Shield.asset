@@ -1,0 +1,29 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b4ec4eefd918e524eb6ff8b0010ddfe2, type: 3}
+  m_Name: Shield
+  m_EditorClassIdentifier: 
+  Name: Shield
+  SpellDisplayIcon: {fileID: 21300000, guid: 23b57d7324b896840b8586a6d17cd7ad, type: 3}
+  SpellComponents:
+    spellMechanics: {fileID: 6834804205108281816, guid: 95ed91ef08526f54ab91cab38731bb5f, type: 3}
+    spellCircle: {fileID: 6564065835548441453, guid: 7b465e4dd1b62d44fbcde0d4f8db1441, type: 3}
+    RightAnimationController: {fileID: 0}
+    LeftAnimationController: {fileID: 0}
+  SpellDescription: 'Protect yo self fool. By holding grip the shield will enlarge
+    and become physical. Holding it too close to your body will sometimes allow projectiles
+    to hit you still.
+
+
+    Try catching one of the small boxes on it using catapult,
+    or don''t. I''m just a book'
+  School: 8

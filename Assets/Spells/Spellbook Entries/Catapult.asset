@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b4ec4eefd918e524eb6ff8b0010ddfe2, type: 3}
+  m_Name: Catapult
+  m_EditorClassIdentifier: 
+  Name: Catapult
+  SpellDisplayIcon: {fileID: 21300000, guid: 3638fcac3952b374f96167d7c8a735ae, type: 3}
+  SpellComponents:
+    spellMechanics: {fileID: 1199593121343689505, guid: d7aa3db6fa196cc4ab81f19bd343cfb0, type: 3}
+    spellCircle: {fileID: 776886629064782777, guid: 8f6fc34074f88dc4298eda6499a9691e, type: 3}
+    RightAnimationController: {fileID: 0}
+    LeftAnimationController: {fileID: 0}
+  SpellDescription: Holding down trigger will allow you to target specific objects,
+    upon release they will begin floating. While an object is floating you can hold
+    the grip and throw your hand to launch them in that direction.
+  School: 8

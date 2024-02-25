@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b4ec4eefd918e524eb6ff8b0010ddfe2, type: 3}
+  m_Name: Stone's Fury
+  m_EditorClassIdentifier: 
+  Name: Stone's Fury
+  SpellDisplayIcon: {fileID: 21300000, guid: 14637cc31e725de4a85969d80e169c6e, type: 3}
+  SpellComponents:
+    spellMechanics: {fileID: 8833616790026167706, guid: 6a8d1da9637cb834288f001c1e01d5e4, type: 3}
+    spellCircle: {fileID: 776886629064782777, guid: cd12385a9da17fd4dadff7230f7b0bd9, type: 3}
+    RightAnimationController: {fileID: 0}
+    LeftAnimationController: {fileID: 0}
+  SpellDescription: Pressing the trigger will allow you to begin targeting where
+    you would like to punch. Once you are satisfied, press and hold the grip. Then
+    point your palm to the sky, pull up quickly, and watch as your enemies go flying
+    away.
+  School: 1

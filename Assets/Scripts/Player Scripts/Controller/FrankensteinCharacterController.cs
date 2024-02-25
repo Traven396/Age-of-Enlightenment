@@ -160,6 +160,7 @@ public class FrankensteinCharacterController : MonoBehaviour
     //This function must be called every fixed update, in order for the controller to work correctly;
     void ControllerUpdate()
     {
+        Debug.Log("Controller Update");
         //Check if mover is grounded;
         mover.CheckForGround();
 
@@ -218,6 +219,7 @@ public class FrankensteinCharacterController : MonoBehaviour
         _velocity += Vector3.ProjectOnPlane(cameraTransform.right, tr.up).normalized * inputVector.x;
         _velocity += Vector3.ProjectOnPlane(cameraTransform.forward, tr.up).normalized * inputVector.y;
 
+        Debug.Log("Velocity: " + inputVector);
 
         //If necessary, clamp movement vector to magnitude of 1f;
         if (_velocity.magnitude > 1f)

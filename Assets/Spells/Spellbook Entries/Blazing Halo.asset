@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b4ec4eefd918e524eb6ff8b0010ddfe2, type: 3}
+  m_Name: Blazing Halo
+  m_EditorClassIdentifier: 
+  Name: Blazing Halo
+  SpellDisplayIcon: {fileID: 21300000, guid: dd3885098198d104888439be4c590aba, type: 3}
+  SpellComponents:
+    spellMechanics: {fileID: 3263991770448784775, guid: 06f2e7877dffe9c47bb994e3fddb51f2, type: 3}
+    spellCircle: {fileID: 776886629064782777, guid: db7fa8fa9388a9849bfae950feac882d, type: 3}
+    RightAnimationController: {fileID: 0}
+    LeftAnimationController: {fileID: 0}
+  SpellDescription: A passive spell that once turned on causes small fireballs to
+    appear above your head like a halo. When you get close to enemies, they will
+    automatically launch towards them, and then regenerate after a few seconds
+  School: 0
