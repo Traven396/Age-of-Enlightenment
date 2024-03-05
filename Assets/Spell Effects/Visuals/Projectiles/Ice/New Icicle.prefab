@@ -208,8 +208,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   LifeTime: 5
   HitEffectScaler: 1
+  PointTowardsMotion: 0
   BodyParent: {fileID: 176446355381302250}
   TrailParent: {fileID: 5488433407916649162}
+  DebugMode: 0
 --- !u!1 &5488433407916649162
 GameObject:
   m_ObjectHideFlags: 0

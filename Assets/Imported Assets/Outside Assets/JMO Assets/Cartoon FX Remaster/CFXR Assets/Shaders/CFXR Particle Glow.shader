@@ -84,8 +84,6 @@ Shader "Cartoon FX/Remaster/Particle Procedural Glow"
 
 			// --------------------------------
 
-			#include "CFXR_SETTINGS.cginc"
-
 			// --------------------------------
 
 			CBUFFER_START(UnityPerMaterial)

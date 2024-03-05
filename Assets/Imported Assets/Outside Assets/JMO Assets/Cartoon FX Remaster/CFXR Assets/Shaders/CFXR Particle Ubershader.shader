@@ -195,7 +195,7 @@ Shader "Cartoon FX/Remaster/Particle Ubershader"
 			#include "AutoLight.cginc"
 			
 			#if CFXR_URP
-				#include "CFXR_URP.cginc"
+				
 			#else
 				#include "UnityLightingCommon.cginc"
 			#endif
