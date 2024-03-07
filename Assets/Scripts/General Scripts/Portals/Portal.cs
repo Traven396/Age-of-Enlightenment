@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.XR;
 
 [RequireComponent(typeof(BoxCollider))]
 public class Portal : MonoBehaviour
@@ -13,6 +14,8 @@ public class Portal : MonoBehaviour
     private List<PortalableObject> portalObjects = new List<PortalableObject>();
     public bool IsActive = false;
     private Collider wallCollider;
+
+  
 
     private void Update()
     {
