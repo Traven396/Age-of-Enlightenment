@@ -6,6 +6,13 @@ using UnityEngine;
 public static class HandyHelperScript
 {
     #region Methods
+
+    public static bool VisibleFromCamera(Renderer renderer, Camera camera)
+    {
+        Plane[] frustumPlanes = GeometryUtility.CalculateFrustumPlanes(camera);
+        return GeometryUtility.TestPlanesAABB(frustumPlanes, renderer.bounds);
+    }
+
     public static float GetAngleConversion(float angle)
     {
         float newAngle = angle;

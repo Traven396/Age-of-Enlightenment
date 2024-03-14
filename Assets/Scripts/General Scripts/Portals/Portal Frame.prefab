@@ -178,7 +178,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1401640276405919345}
   - component: {fileID: 1077458586}
-  - component: {fileID: 2964851440924277501}
   m_Layer: 0
   m_Name: Portal Collider
   m_TagString: Untagged
@@ -214,18 +213,3 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1.5, y: 2.8, z: 33}
   m_Center: {x: 0, y: 1.3851215, z: 0}
---- !u!114 &2964851440924277501
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5018789743662357323}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bd6d2b31112f1e54c9b20cf9b65b151e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  <DestinationPortal>k__BackingField: {fileID: 0}
-  PortalRenderer: {fileID: 7570684973234867306}
-  IsActive: 1

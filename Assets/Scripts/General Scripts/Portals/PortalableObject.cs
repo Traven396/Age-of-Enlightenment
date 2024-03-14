@@ -63,7 +63,7 @@ public class PortalableObject : MonoBehaviour
 
         if (cloneObject)
         {
-            if (cloneObject.activeSelf && inPortal.IsActive && outPortal.IsActive)
+            if (cloneObject.activeSelf && inPortal.Active && outPortal.Active)
             {
                 var inTransform = inPortal.transform;
                 var outTransform = outPortal.transform;
@@ -85,12 +85,11 @@ public class PortalableObject : MonoBehaviour
         }
     }
 
-    public void SetIsInPortal(Portal inPortal, Portal outPortal, Collider wallCollider)
+    public void SetIsInPortal(Portal inPortal, Portal outPortal)
     {
         this.inPortal = inPortal;
         this.outPortal = outPortal;
 
-        //Physics.IgnoreCollision(collider, wallCollider);
 
         if(cloneObject)
             cloneObject.SetActive(false);
@@ -98,9 +97,8 @@ public class PortalableObject : MonoBehaviour
         ++inPortalCount;
     }
 
-    public void ExitPortal(Collider wallCollider)
+    public void ExitPortal()
     {
-        //Physics.IgnoreCollision(collider, wallCollider, false);
         --inPortalCount;
 
         if (inPortalCount == 0 && cloneObject)
