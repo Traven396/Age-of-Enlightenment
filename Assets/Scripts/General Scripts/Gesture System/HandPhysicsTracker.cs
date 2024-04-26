@@ -1,15 +1,27 @@
-using System;
-using UnityEngine;
-
-namespace Unity.Labs.SuperScience
+namespace AgeOfEnlightenment.GestureDetection
 {
-    /// <summary>
-    /// Object that can estimate a smoothed velocity and acceleration (linear and angular)
-    /// from discrete pose (position and rotation) values
-    /// </summary>
-    [Serializable]
-    public class NewVelocityManager
+    using System.Collections;
+    using System.Collections.Generic;
+    using UnityEngine;
+
+    //This is not a system that I created, but it does do everything that I need.
+    //The OG source is from https://github.com/Unity-Technologies/SuperScience/tree/main/Runtime/PhysicsTracker
+    //They have a ton of good stuff
+    public class HandPhysicsTracker
     {
+        public Transform SelfHandTransform { get; private set; }
+        private bool leftHand = false;
+
+        public HandPhysicsTracker(Transform handTransform)
+        {
+            SelfHandTransform = handTransform;
+        }
+
+        public HandPhysicsTracker(Transform handTransform, bool flipXForLeftHand)
+        {
+            SelfHandTransform = handTransform;
+            leftHand = flipXForLeftHand;
+        }
         /// <summary>
         /// The time period that the physics values are averaged over
         /// </summary>
@@ -114,8 +126,18 @@ namespace Unity.Labs.SuperScience
         // Output data
         public float Speed { get; private set; }
         public float AccelerationStrength { get; private set; } // This value can be negative, for deceleration
+        /// <summary>
+        /// The direction the object is currently moving. This is a normalized vector
+        /// </summary>
         public Vector3 Direction { get; private set; }
         public Vector3 Velocity { get; private set; }
+        //This is a read-only value for how the hand is moving in reference to itself
+        //This is what most things will be checked against, since we want to know what direction the hand is moving
+        //This is a better replacement for the DotProdX Y and Z from the previous versions.
+        public Vector3 SelfSpaceVelocity => leftHand ? new Vector3(-SelfHandTransform.InverseTransformVector(Velocity).x, SelfHandTransform.InverseTransformVector(Velocity).y, SelfHandTransform.InverseTransformVector(Velocity).z) : SelfHandTransform.InverseTransformVector(Velocity);
+        //This is how the hand is moving in reference to the head. This can give us a sense of left and right depending on which direction the player is looking
+        //This does fail if you try to perform the actions on a different side than in front of you, but that kinda makes sense tbh
+        public Vector3 ViewSpaceVelocity => Camera.main.transform.InverseTransformVector(Velocity);
         public Vector3 Acceleration { get; private set; }
 
         public float AngularSpeed { get; private set; }
@@ -325,4 +347,5 @@ namespace Unity.Labs.SuperScience
             m_Samples[m_CurrentSampleIndex] = new Sample();
         }
     }
+
 }
