@@ -16,6 +16,7 @@ public class ConsoleLogger : MonoBehaviour
     {
         //selfText.text = logString;
         //Or Append the log to the old one
-        selfText.text = logString + "\r\n";
+        if(type != LogType.Warning)
+            selfText.text = logString + "\r\n";
     }
 }

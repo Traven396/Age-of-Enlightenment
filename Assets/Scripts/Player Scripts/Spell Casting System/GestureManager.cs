@@ -6,7 +6,8 @@ using UnityEngine.InputSystem;
 public class GestureManager : MonoBehaviour
 {
     public Rigidbody bodyRb;
-    public bool displayInChat = false;
+    public bool displayVelocity = false;
+    public bool displayAngularVelocity = false;
     public bool LeftHand = false;
 
     private Vector3 prevPos;
@@ -16,13 +17,17 @@ public class GestureManager : MonoBehaviour
     public float dotProdY { get; private set; }
     public float dotProdZ { get; private set; }
 
+
     public Vector3 rightVectorSafe { get; private set; }
 
     public float angX { get; private set; }
     public float angY { get; private set; }
     public float angZ { get; private set; }
     private Quaternion previousRotation;
+    private Quaternion previousLocalRotation;
     public Vector3 angularVel { get; private set; }
+    public Vector3 localAngularVel { get; private set; }
+
     public float angularDotX { get; private set; }
     public float angularDotY { get; private set; }
     public float angularDotZ { get; private set; }
@@ -31,7 +36,7 @@ public class GestureManager : MonoBehaviour
 
     private void Update()
     {
-        if (displayInChat)
+        if (displayVelocity && displayAngularVelocity)
         {
             Debug.Log("Current Velocity: " + currVel + "\n"
                 + "DotProdX: " + dotProdX.ToString("#.0") + "\n"
@@ -44,17 +49,44 @@ public class GestureManager : MonoBehaviour
                 + "DotAngX: " + angularDotX.ToString("#.0") + "\n"
                 + "DotAngY: " + angularDotY.ToString("#.0") + "\n"
                 + "DotAngZ: " + angularDotZ.ToString("#.0") + "\n");
+        } else if (displayAngularVelocity && !displayVelocity)
+        {
+            Debug.Log("Angular Velocity: " + localAngularVel + "\n"
+                + "AngX: " + angX.ToString("#.0") + "\n"
+                + "AngY: " + angY.ToString("#.0") + "\n"
+                + "AngZ: " + angZ.ToString("#.0") + "\n"
+                + "DotAngX: " + angularDotX.ToString("#.0") + "\n"
+                + "DotAngY: " + angularDotY.ToString("#.0") + "\n"
+                + "DotAngZ: " + angularDotZ.ToString("#.0") + "\n");
+        } else if(displayVelocity && !displayAngularVelocity)
+        {
+            Debug.Log("Current Velocity: " + currVel + "\n"
+               + "DotProdX: " + dotProdX.ToString("#.0") + "\n"
+               + "DotProdY: " + dotProdY.ToString("#.0") + "\n"
+               + "DotProdZ: " + dotProdZ.ToString("#.0"));
         }
+
         #region Angular Velocity
         Quaternion deltaRotation = transform.rotation * Quaternion.Inverse(previousRotation);
         previousRotation = transform.rotation;
+        
         deltaRotation.ToAngleAxis(out var angle, out var axis);
         angle *= Mathf.Deg2Rad;
         angularVel = (1.0f / Time.deltaTime) * angle * axis;
 
+        Quaternion localDeltaRotation = transform.localRotation * Quaternion.Inverse(previousLocalRotation);
+        previousLocalRotation = transform.localRotation;
+
+        localDeltaRotation.ToAngleAxis(out var lAngle, out var lAxis);
+        lAngle *= Mathf.Deg2Rad;
+        localAngularVel = (1f / Time.deltaTime) * lAngle * lAxis;
+
         angularDotX = Vector3.Dot(angularVel, transform.right);
         angularDotY = Vector3.Dot(angularVel, transform.up);
         angularDotZ = Vector3.Dot(angularVel, transform.forward);
+
+
+
         #endregion
         #region Regular Velocity
         if (prevPos != null)

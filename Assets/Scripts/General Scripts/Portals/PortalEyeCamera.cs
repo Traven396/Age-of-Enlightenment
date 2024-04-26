@@ -86,8 +86,5 @@ public class PortalEyeCamera : MonoBehaviour
                 headsetInitialized = true;
             } 
         }
-
-        //LeftEyeCamera.CopyFrom(Camera.main);
-        //RightEyeCamera.CopyFrom(Camera.main);
     }
 }
