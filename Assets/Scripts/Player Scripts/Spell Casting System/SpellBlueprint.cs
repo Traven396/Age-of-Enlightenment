@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.InputSystem;
+using AgeOfEnlightenment.GestureDetection;
 
 public abstract class SpellBlueprint : MonoBehaviour
 {
@@ -25,6 +25,7 @@ public abstract class SpellBlueprint : MonoBehaviour
     //Code parameters
     [HideInInspector] public TargetManager _targetManager;
     [HideInInspector] public GestureManager _gestureManager;
+    [HideInInspector] public HandPhysicsTracker _handPhysics;
     [HideInInspector] public SpellVisualsManager _visualsManager;
 
     //Button pressed values

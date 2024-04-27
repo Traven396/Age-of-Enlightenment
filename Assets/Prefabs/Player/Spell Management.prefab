@@ -9,8 +9,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2546794762288433277}
-  - component: {fileID: 3307897553642516171}
   - component: {fileID: 2546794762288433276}
+  - component: {fileID: 3307897553642516171}
   - component: {fileID: 2546794762288433274}
   - component: {fileID: 435378931629056528}
   - component: {fileID: 35419538201059109}
@@ -37,43 +37,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &3307897553642516171
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2546794762288433279}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9cb3e50e4939a9148bd42c1cb252b4bd, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  rightMenuSections:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  leftMenuSections:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  spellSwap:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 2546794762288433276}
-        m_TargetAssemblyTypeName: SpellManager, Assembly-CSharp
-        m_MethodName: NewSpellSwap
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
 --- !u!114 &2546794762288433276
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -86,8 +49,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aa41cd0351325154882d9fabde695e07, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  leftSpell: {fileID: 0}
-  rightSpell: {fileID: 0}
+  leftSpellGO: {fileID: 0}
+  rightSpellGO: {fileID: 0}
   RightSpellSwap:
     m_PersistentCalls:
       m_Calls:
@@ -190,6 +153,43 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &3307897553642516171
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2546794762288433279}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9cb3e50e4939a9148bd42c1cb252b4bd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rightMenuSections:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  leftMenuSections:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  spellSwap:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 2546794762288433276}
+        m_TargetAssemblyTypeName: SpellManager, Assembly-CSharp
+        m_MethodName: NewSpellSwap
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &2546794762288433274
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -203,6 +203,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerRb: {fileID: 0}
+  playerPhys: {fileID: 0}
   leftPalm: {fileID: 0}
   leftBackOfHand: {fileID: 0}
   leftHand: {fileID: 0}
@@ -269,3 +270,5 @@ MonoBehaviour:
   defaultRightController: {fileID: 9100000, guid: 011fededf8deb2f479afbcb453d11410, type: 2}
   leftHandController: {fileID: 0}
   rightHandController: {fileID: 0}
+  leftReticle: {fileID: 0}
+  rightReticle: {fileID: 0}
