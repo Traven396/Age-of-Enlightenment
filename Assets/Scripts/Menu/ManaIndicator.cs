@@ -11,10 +11,10 @@ public class ManaIndicator : MonoBehaviour
 
     private void OnEnable()
     {
-        Player.ManaChanged += UpdateGraphic;
-        Player.MaxManaChanged += UpdateGraphic;
-        Player.ManaChanged += UpdateText;
-        Player.MaxManaChanged += UpdateText;
+        PlayerStats.ManaChanged += UpdateGraphic;
+        PlayerStats.MaxManaChanged += UpdateGraphic;
+        PlayerStats.ManaChanged += UpdateText;
+        PlayerStats.MaxManaChanged += UpdateText;
 
 
     }
@@ -25,20 +25,24 @@ public class ManaIndicator : MonoBehaviour
     }
     private void OnDisable()
     {
-        Player.ManaChanged -= UpdateGraphic;
-        Player.ManaChanged -= UpdateText;
-        Player.ManaChanged -= UpdateText;
-        Player.MaxManaChanged -= UpdateText;
+        PlayerStats.ManaChanged -= UpdateGraphic;
+        PlayerStats.ManaChanged -= UpdateText;
+        PlayerStats.ManaChanged -= UpdateText;
+        PlayerStats.MaxManaChanged -= UpdateText;
     }
 
     void UpdateGraphic()
     {
-        float currentFill = (float)Player.Instance.currentMana / (float)Player.Instance.maximumMana.Value;
-        //iTween.ScaleTo(manaFill, new Vector3(currentFill, currentFill), .5f);
-        manaFill.fillAmount = currentFill;
+
+        if (PlayerSingleton.Instance._Stats._CurrentMana != 0 && PlayerSingleton.Instance._Stats.MaximumManaValue.Value != 0)
+        {
+            float currentFill = (float)PlayerSingleton.Instance._Stats._CurrentMana / (float)PlayerSingleton.Instance._Stats.MaximumManaValue.Value;
+            //iTween.ScaleTo(manaFill, new Vector3(currentFill, currentFill), .5f);
+            manaFill.fillAmount = currentFill; 
+        }
     }
     void UpdateText()
     {
-        manaValue.text = Player.Instance.currentMana + "/" + Player.Instance.maximumMana.Value;
+        manaValue.text = PlayerSingleton.Instance._Stats._CurrentMana + "/" + PlayerSingleton.Instance._Stats.MaximumManaValue.Value;
     }
 }

@@ -15,10 +15,8 @@ MonoBehaviour:
   Name: Terra Blade
   SpellDisplayIcon: {fileID: 21300000, guid: 9406a98d77ad2a24e967025d22647c99, type: 3}
   SpellComponents:
-    spellMechanics: {fileID: 5324684325716610943, guid: 7f04f108da83bac478d5176a703552de, type: 3}
-    spellCircle: {fileID: 776886629064782777, guid: 78a961017297a024aa1fa89f13b3c960, type: 3}
-    RightAnimationController: {fileID: 0}
-    LeftAnimationController: {fileID: 0}
+    SpellMechanics: {fileID: 5324684325716610943, guid: 7f04f108da83bac478d5176a703552de, type: 3}
+    SpellCircle: {fileID: 776886629064782777, guid: 78a961017297a024aa1fa89f13b3c960, type: 3}
   SpellDescription: 'Holding down the grip button and swinging your arm outwards
     will spawn a blade along the back of your hand. Also, if you press trigger you
     can launch the blade as a projectile.

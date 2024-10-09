@@ -6,6 +6,7 @@ using UnityEngine.UI;
 using UnityEngine.XR.OpenXR;
 using UnityEngine.XR;
 using TMPro;
+using FoxheadDev.GestureDetection;
 
 public class TestingScript : MonoBehaviour
 {
@@ -23,6 +24,8 @@ public class TestingScript : MonoBehaviour
     private InputDevice rightHand;
     private InputDevice headset;
     private bool headsetInitialized;
+
+    private Step newStep;
 
     public GameObject leftIndicator, upIndicator, rightIndicator, downIndicator;
 

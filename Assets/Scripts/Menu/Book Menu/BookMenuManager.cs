@@ -60,7 +60,7 @@ public class BookMenuManager : MonoBehaviour
             transform.rotation = handPoint.rotation;
         }
     }
-    private void BookAnimation()
+    public void BookAnimation()
     {
         if (menuCurrentlyActive)
         {

@@ -15,10 +15,8 @@ MonoBehaviour:
   Name: Shield
   SpellDisplayIcon: {fileID: 21300000, guid: 23b57d7324b896840b8586a6d17cd7ad, type: 3}
   SpellComponents:
-    spellMechanics: {fileID: 6834804205108281816, guid: 95ed91ef08526f54ab91cab38731bb5f, type: 3}
-    spellCircle: {fileID: 6564065835548441453, guid: 7b465e4dd1b62d44fbcde0d4f8db1441, type: 3}
-    RightAnimationController: {fileID: 0}
-    LeftAnimationController: {fileID: 0}
+    SpellMechanics: {fileID: 3841412781168158920, guid: 29eba20d7297ad3499b2cad099e09014, type: 3}
+    SpellCircle: {fileID: 776886629064782777, guid: 8c527fa7e926332449296b3ae3380429, type: 3}
   SpellDescription: 'Protect yo self fool. By holding grip the shield will enlarge
     and become physical. Holding it too close to your body will sometimes allow projectiles
     to hit you still.

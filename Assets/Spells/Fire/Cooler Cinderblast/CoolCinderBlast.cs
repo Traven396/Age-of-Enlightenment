@@ -1,12 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using AgeOfEnlightenment.GestureDetection;
+using FoxheadDev.GestureDetection;
 
 public class CoolCinderBlast : SpellBlueprint
 {
     public AudioClip GestureCompleteSound;
     public AudioClip CastCompleteSound;
+    public GameObject secondarySpellCirclePrefab;
 
     private Step _CastingSequence;
     
@@ -14,12 +15,14 @@ public class CoolCinderBlast : SpellBlueprint
     private ProjectileShooter projectileShooter;
 
     private GameObject secondarySpellCircle;
-    
+
     public override void OnSelect()
     {
         base.OnSelect();
 
-        circleAudioSource = spellCircle.GetComponent<AudioSource>();
+        Debug.Log("Selected");
+
+        circleAudioSource = _SpellCircle.GetComponent<AudioSource>();
 
         projectileShooter = GetComponent<ProjectileShooter>();
 
@@ -28,21 +31,22 @@ public class CoolCinderBlast : SpellBlueprint
 
         _CastingSequence = Step.Start();
 
-        _CastingSequence.Then(PremadeGestureLibrary.PushInViewDirection(_handPhysics, ViewSpaceDirection.InwardH))
+        _CastingSequence.Then(PremadeGestureLibrary.PushInViewDirection(_HandPhysicsTracker, ViewSpaceDirection.InwardHoriz))
             .Do(IncreaseCircleSizeFirst, "First circle size increase")
             .After(0.2f)
-            .Then(PremadeGestureLibrary.ReversePushInViewDirection(_handPhysics, ViewSpaceDirection.OutwardH))
+            .Then(PremadeGestureLibrary.ReversePushInViewDirection(_HandPhysicsTracker, ViewSpaceDirection.OutwardHoriz))
             .Do(IncreaseCircleSizeSecond, "Second circle size increase")
             .After(.2f)
-            .Then(PremadeGestureLibrary.PushInViewDirection(_handPhysics, ViewSpaceDirection.Forward))
+            .Then(PremadeGestureLibrary.PushGlobal(_HandPhysicsTracker))
             .Do(FinishCasting, "Final cast");
+
+        
+        //_CastingSequence.Then(YesOrNo).Do()
+
     }
-
-
     public override void GripPress()
     {
         base.GripPress();
-
         _CastingSequence.Reset();
     }
     public override void GripHold()
@@ -50,6 +54,7 @@ public class CoolCinderBlast : SpellBlueprint
         base.GripHold();
 
         _CastingSequence.Update();
+
     }
 
     public override void GripRelease()
@@ -64,34 +69,33 @@ public class CoolCinderBlast : SpellBlueprint
 
         CancelCast();
 
-        if (Player.Instance.currentMana >= 12)
+        if (CheckCurrentMana(12))
         {
             for (int i = 0; i < 5; i++)
             {
-                projectileShooter.SpawnProjectile(_palmLocation);
+                projectileShooter.SpawnProjectile(_PalmTransform);
             }
-            projectileShooter.LaunchAllProjectiles(_palmLocation.forward, 5);
+            projectileShooter.LaunchAllProjectiles(_HandPhysicsTracker.UniveralPalm, 5);
 
-            Player.Instance.SubtractMana(12);
+            PlayerSingleton.Instance.SubtractMana(12);
         }
     }
 
     private void IncreaseCircleSizeFirst()
     {
-        iTween.ScaleAdd(spellCircle, Vector3.one * .4f, .1f);
+        iTween.ScaleAdd(_SpellCircle, Vector3.one * .4f, .1f);
 
-        AudioSource.PlayClipAtPoint(GestureCompleteSound, _handLocation.position);
+        AudioSource.PlayClipAtPoint(GestureCompleteSound, _HandTransform.position);
     }
 
     private void IncreaseCircleSizeSecond()
     {
-        iTween.ScaleAdd(spellCircle, Vector3.one * .4f, .1f);
+        iTween.ScaleAdd(_SpellCircle, Vector3.one * .4f, .1f);
 
-        AudioSource.PlayClipAtPoint(GestureCompleteSound, _handLocation.position);
+        AudioSource.PlayClipAtPoint(GestureCompleteSound, _HandTransform.position);
 
-        secondarySpellCircle = Instantiate(spellCircle, circleHolder.transform.TransformPoint(new(0, .06f, 0)), circleHolder.transform.rotation, circleHolder.transform);
-        iTween.Stop(secondarySpellCircle);
-    
+        secondarySpellCircle = Instantiate(secondarySpellCirclePrefab, _CircleHolderTransform.transform.TransformPoint(new(0, .06f, 0)), _CircleHolderTransform.transform.rotation, _CircleHolderTransform.transform);
+        iTween.Stop(secondarySpellCirclePrefab);
     }
 
     private void CancelCast()
@@ -99,6 +103,6 @@ public class CoolCinderBlast : SpellBlueprint
         if(secondarySpellCircle)
             Destroy(secondarySpellCircle);
 
-        iTween.ScaleTo(spellCircle, Vector3.one, .3f);
+        iTween.ScaleTo(_SpellCircle, Vector3.one, .3f);
     }
 }

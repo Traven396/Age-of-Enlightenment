@@ -15,9 +15,7 @@ MonoBehaviour:
   Name: Nettle Burst
   SpellDisplayIcon: {fileID: 21300000, guid: c3aab7237df394c4890e647a4ae580ea, type: 3}
   SpellComponents:
-    spellMechanics: {fileID: 5799212011349518442, guid: b100f2d1bbb020e4abdcbbe24c3ff729, type: 3}
-    spellCircle: {fileID: 7719594908596017238, guid: 01e2b35041dcf544f82426492e95ab5c, type: 3}
-    RightAnimationController: {fileID: 0}
-    LeftAnimationController: {fileID: 0}
-  SpellDescription: 
+    SpellMechanics: {fileID: 5799212011349518442, guid: b100f2d1bbb020e4abdcbbe24c3ff729, type: 3}
+    SpellCircle: {fileID: 7719594908596017238, guid: 01e2b35041dcf544f82426492e95ab5c, type: 3}
+  SpellDescription: It shoots seeds. Whoop de doo
   School: 6

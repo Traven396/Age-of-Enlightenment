@@ -13,8 +13,8 @@ public class ShieldSpell : SpellBlueprint
 
     private void Start()
     {
-        shieldMesh = circleHolder.GetComponentInChildren<MeshCollider>().gameObject;
-        spellCircle = circleHolder.transform.GetChild(circleHolder.transform.childCount - 1).gameObject;
+        shieldMesh = _CircleHolderTransform.GetComponentInChildren<MeshCollider>().gameObject;
+        _SpellCircle = _CircleHolderTransform.transform.GetChild(_CircleHolderTransform.transform.childCount - 1).gameObject;
 
         manaDrainMod = new StatModifier(-manaDrainCost, StatModType.Flat, this);
     }
@@ -25,7 +25,7 @@ public class ShieldSpell : SpellBlueprint
         if (Player.Instance.currentMana >= initialManaCost)
         {
             shieldMesh.SetActive(true);
-            iTween.ScaleTo(spellCircle, Vector3.one * 4, 1);
+            iTween.ScaleTo(_SpellCircle, Vector3.one * 4, 1);
 
             Player.Instance.AddManaRegenModifier(manaDrainMod);
         }
@@ -51,7 +51,7 @@ public class ShieldSpell : SpellBlueprint
         if (shieldMesh.activeInHierarchy)
         {
             shieldMesh.SetActive(false);
-            iTween.ScaleTo(spellCircle, Vector3.one, 1);
+            iTween.ScaleTo(_SpellCircle, Vector3.one, 1);
 
             Player.Instance.RemoveManaRegenModifier(manaDrainMod); 
         }

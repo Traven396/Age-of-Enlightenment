@@ -21,10 +21,10 @@ public class StepOfTheWind : SpellBlueprint
 
     private void Start()
     {
-        spellCircle = circleHolder.transform.GetChild(circleHolder.transform.childCount - 1).gameObject;
+        _SpellCircle = _CircleHolderTransform.transform.GetChild(_CircleHolderTransform.transform.childCount - 1).gameObject;
         if (Player.Instance._PassiveManager.QueryEtherealSpell(MOVEMENT_MODIFIER_NAME))
         {
-            iTween.ScaleTo(spellCircle, Vector3.one * 1.5f, .2f);
+            iTween.ScaleTo(_SpellCircle, Vector3.one * 1.5f, .2f);
         }
 
         MaxManaMod = new StatModifier(-_maxManaCost, StatModType.Flat);
@@ -45,14 +45,14 @@ public class StepOfTheWind : SpellBlueprint
                 //Player.Instance._PassiveManager.AddEtherealSpell(MOVEMENT_MODIFIER_NAME, MovementMod, Player.Instance.movementSpeed);
                 Player.Instance.AddMaximumManaModifier(MaxManaMod);
 
-                iTween.ScaleTo(spellCircle, Vector3.one * 1.5f, .2f);
+                iTween.ScaleTo(_SpellCircle, Vector3.one * 1.5f, .2f);
             }
             else
             {
                 //Player.Instance._PassiveManager.RemoveEtherealSpell(MOVEMENT_MODIFIER_NAME);
                 Player.Instance.RemoveMaxiumumManaModifier(MaxManaMod);
 
-                iTween.ScaleTo(spellCircle, Vector3.one, .2f);
+                iTween.ScaleTo(_SpellCircle, Vector3.one, .2f);
             }
             validTriggerPress = false;
         }

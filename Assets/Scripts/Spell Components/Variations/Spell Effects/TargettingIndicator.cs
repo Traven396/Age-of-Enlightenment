@@ -11,7 +11,7 @@ public class TargettingIndicator : MonoBehaviour
     public bool readyToCast = true;
 
     private GameObject spellCircle;
-    private GameObject circleHolder;
+    private Transform circleHolder;
     private SpellVisualsManager _visualsManager;
     private LeftRight currentHand;
 
@@ -19,9 +19,9 @@ public class TargettingIndicator : MonoBehaviour
 
     public void SetupReferences(SpellBlueprint spell)
     {
-        spellCircle = spell.spellCircle;
-        circleHolder = spell.circleHolder;
-        _visualsManager = spell._visualsManager;
+        spellCircle = spell._SpellCircle;
+        circleHolder = spell._CircleHolderTransform;
+        _visualsManager = spell._VisualsManager;
         currentHand = spell.currentHand;
     }
     //Method called on loop, moving the spell circle to the new RaycastHit position

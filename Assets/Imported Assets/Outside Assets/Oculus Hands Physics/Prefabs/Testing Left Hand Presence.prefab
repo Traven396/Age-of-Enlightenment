@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3621981467535291324}
   - component: {fileID: 3621981467535291327}
-  m_Layer: 6
+  m_Layer: 3
   m_Name: Testing Left Hand Presence
   m_TagString: Untagged
   m_Icon: {fileID: 0}

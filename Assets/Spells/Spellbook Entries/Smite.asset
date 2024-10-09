@@ -15,10 +15,8 @@ MonoBehaviour:
   Name: Smite
   SpellDisplayIcon: {fileID: 21300000, guid: 2456dd2824f5ec540830760922f5bac6, type: 3}
   SpellComponents:
-    spellMechanics: {fileID: 209610345538036072, guid: 52b307628d1dd2540ab466186f0103d1, type: 3}
-    spellCircle: {fileID: 8702230245120405995, guid: 7526b9a0643da834c8f86a1e777c4dfe, type: 3}
-    RightAnimationController: {fileID: 0}
-    LeftAnimationController: {fileID: 0}
+    SpellMechanics: {fileID: 209610345538036072, guid: 52b307628d1dd2540ab466186f0103d1, type: 3}
+    SpellCircle: {fileID: 8702230245120405995, guid: 7526b9a0643da834c8f86a1e777c4dfe, type: 3}
   SpellDescription: 'By holding trigger you can begin targetting when pointing at
     the ground. When you want to choose a location hold the grip and swing your hand
     down

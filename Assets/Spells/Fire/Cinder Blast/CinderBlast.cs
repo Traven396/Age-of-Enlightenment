@@ -29,37 +29,37 @@ public class CinderBlast : SpellBlueprint
         _shooter.SetDamage(DamageAmount, ProjectileTyping);
         _shooter.SetSpread(SpreadAmount);
 
-        spellCircle = circleHolder.transform.GetChild(circleHolder.transform.childCount - 1).gameObject;
-        spellSoundSource = spellCircle.GetComponent<AudioSource>();
+        _SpellCircle = _CircleHolderTransform.transform.GetChild(_CircleHolderTransform.transform.childCount - 1).gameObject;
+        spellSoundSource = _SpellCircle.GetComponent<AudioSource>();
     }
     public override void TriggerPress()
     {
         base.TriggerPress();
         _charge.ResetCharge();
         _charge.StartCharging();
-        iTween.ScaleTo(spellCircle, Vector3.one * 1.4f, 4.5f);
+        iTween.ScaleTo(_SpellCircle, Vector3.one * 1.4f, 4.5f);
     }
     public override void TriggerRelease()
     {
         base.TriggerRelease();
         if(_charge.GetCurrentCharge() >= RequiredCharge)
         {
-            if (Player.Instance.currentMana >= ManaCost)
+            if (CheckCurrentMana(ManaCost))
             {
                 for (int i = 0; i < NumOfProjectiles; i++)
                 {
-                    _shooter.SpawnProjectile(_palmLocation);
+                    _shooter.SpawnProjectile(_PalmTransform);
                 }
-                _shooter.LaunchAllProjectiles(_palmLocation.forward, LaunchSpeed);
+                _shooter.LaunchAllProjectiles(_PalmTransform.forward, LaunchSpeed);
 
                 spellSoundSource.pitch = Random.Range(0.85f, .95f);
                 spellSoundSource.Play();
 
-                Player.Instance.SubtractMana(ManaCost);
+                PlayerSingleton.Instance.SubtractMana(ManaCost);
             }
         }
         _charge.StopCharging();
         
-        iTween.ScaleTo(spellCircle, Vector3.one, .5f);
+        iTween.ScaleTo(_SpellCircle, Vector3.one, .5f);
     }
 }

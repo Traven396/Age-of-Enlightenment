@@ -15,10 +15,8 @@ MonoBehaviour:
   Name: Blazing Halo
   SpellDisplayIcon: {fileID: 21300000, guid: dd3885098198d104888439be4c590aba, type: 3}
   SpellComponents:
-    spellMechanics: {fileID: 3263991770448784775, guid: 06f2e7877dffe9c47bb994e3fddb51f2, type: 3}
-    spellCircle: {fileID: 776886629064782777, guid: db7fa8fa9388a9849bfae950feac882d, type: 3}
-    RightAnimationController: {fileID: 0}
-    LeftAnimationController: {fileID: 0}
+    SpellMechanics: {fileID: 3263991770448784775, guid: 06f2e7877dffe9c47bb994e3fddb51f2, type: 3}
+    SpellCircle: {fileID: 776886629064782777, guid: db7fa8fa9388a9849bfae950feac882d, type: 3}
   SpellDescription: A passive spell that once turned on causes small fireballs to
     appear above your head like a halo. When you get close to enemies, they will
     automatically launch towards them, and then regenerate after a few seconds

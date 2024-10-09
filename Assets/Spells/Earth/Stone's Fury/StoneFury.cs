@@ -29,7 +29,7 @@ public class StoneFury : SpellBlueprint
     {
         if (!triggerPressed)
         {
-            _visualsManager.ReturnCircleToHolder(currentHand);
+            _VisualsManager.ReturnCircleToHolder(currentHand);
         }
     }
     public override void TriggerPress()
@@ -44,7 +44,7 @@ public class StoneFury : SpellBlueprint
     {
         base.TriggerHold();
 
-        hit = _targetManager.RaycastFromHandToGround(currentHand, maxDistance);
+        hit = _TargetManager.RaycastFromHandToGround(currentHand, maxDistance);
 
         _targetter.TargetMove(hit);
     }
@@ -70,15 +70,18 @@ public class StoneFury : SpellBlueprint
         
         if (!performed)
         {
-            if (_requiredGesture.GesturePerformed(_gestureManager, out Vector3 direction) && _targetter.readyToCast)
+            if (_requiredGesture.GesturePerformed(_HandPhysicsTracker, out Vector3 direction) && _targetter.readyToCast)
             {
-                _objectSpawn.Cast(spellCircle.transform);
+                if (CheckCurrentMana(manaCost))
+                {
+                    _objectSpawn.Cast(_SpellCircle.transform);
 
-                _objectSpawn.instantiatedObject.GetComponent<SummonedObjectBehavior>().BeginLifeCycle();
+                    _objectSpawn.instantiatedObject.GetComponent<SummonedObjectBehavior>().BeginLifeCycle();
 
-                Player.Instance.SubtractMana(manaCost);
-                    
-                performed = true;
+                    PlayerSingleton.Instance.SubtractMana(manaCost);
+
+                    performed = true; 
+                }
             }
         }
     }

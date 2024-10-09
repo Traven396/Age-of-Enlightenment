@@ -43,15 +43,15 @@ public class RevampedFirebolt : SpellBlueprint
 
     public override void OnSelect()
     {
-        _spellCircleAudioSource = spellCircle.GetComponent<AudioSource>();
+        _spellCircleAudioSource = _SpellCircle.GetComponent<AudioSource>();
 
-        centerOfMass = _handLocation.transform.position;
+        centerOfMass = _HandTransform.transform.position;
     }
     private void Update()
     {
         if (!gripPressed)
         {
-            _visualsManager.ReturnCircleToHolder(currentHand);
+            _VisualsManager.ReturnCircleToHolder(currentHand);
         }
     }
     private void FixedUpdate()
@@ -63,11 +63,11 @@ public class RevampedFirebolt : SpellBlueprint
         base.TriggerPress();
         if (!inSecondaryFire)
         {
-            PrimaryShooter.SpawnProjectile(_palmLocation);
+            PrimaryShooter.SpawnProjectile(_PalmTransform);
         }
         else
         {
-            SecondaryShooter.SpawnProjectile(spellCircle.transform);
+            SecondaryShooter.SpawnProjectile(_SpellCircle.transform);
         }
         
     }
@@ -76,10 +76,10 @@ public class RevampedFirebolt : SpellBlueprint
         base.TriggerRelease();
         if (!inSecondaryFire)
         {
-            if (_requiredGesture.GesturePerformed(_gestureManager, out _))
+            if (_requiredGesture.GesturePerformed(_HandPhysicsTracker, out _))
             {
-                PrimaryShooter.latestInstantiatedObject.GetComponent<ControllableProjectile>().SetController(_gestureManager);
-                PrimaryShooter.LaunchAllProjectiles(_palmLocation.forward, PrimaryLaunchSpeed);
+                PrimaryShooter.latestInstantiatedObject.GetComponent<ControllableProjectile>().SetController(_GestureManager);
+                PrimaryShooter.LaunchAllProjectiles(_PalmTransform.forward, PrimaryLaunchSpeed);
                 AddVelocity();
             }
             else
@@ -93,7 +93,7 @@ public class RevampedFirebolt : SpellBlueprint
         }
         else
         {
-            SecondaryShooter.LaunchAllProjectiles(_handLocation.forward, SecondaryLaunchSpeed);
+            SecondaryShooter.LaunchAllProjectiles(_HandTransform.forward, SecondaryLaunchSpeed);
         }
     }
 
@@ -101,10 +101,10 @@ public class RevampedFirebolt : SpellBlueprint
     {
         base.GripPress();
 
-        _visualsManager.SetRotationOffset(Vector3.right * 90, currentHand);
-        _visualsManager.SetPositionOffset(new Vector3(-.025f, -.012f, .26f), currentHand);
+        _VisualsManager.SetRotationOffset(Vector3.right * 90, currentHand);
+        _VisualsManager.SetPositionOffset(new Vector3(-.025f, -.012f, .26f), currentHand);
 
-        iTween.ScaleTo(spellCircle, Vector3.one * .3f, .6f);
+        iTween.ScaleTo(_SpellCircle, Vector3.one * .3f, .6f);
 
         ChangeFiringMode(true);
     }
@@ -112,10 +112,10 @@ public class RevampedFirebolt : SpellBlueprint
     {
         base.GripRelease();
 
-        _visualsManager.ResetRotationOffset(currentHand);
-        _visualsManager.ResetRotationOffset(currentHand);
+        _VisualsManager.ResetRotationOffset(currentHand);
+        _VisualsManager.ResetRotationOffset(currentHand);
 
-        iTween.ScaleTo(spellCircle, Vector3.one, .6f);
+        iTween.ScaleTo(_SpellCircle, Vector3.one, .6f);
 
         ChangeFiringMode(false);
     }
@@ -130,7 +130,7 @@ public class RevampedFirebolt : SpellBlueprint
             }
             else
             {
-                if (PrimaryShooter.latestInstantiatedObject && PrimaryShooter.latestInstantiatedObject.transform.parent == _palmLocation)
+                if (PrimaryShooter.latestInstantiatedObject && PrimaryShooter.latestInstantiatedObject.transform.parent == _PalmTransform)
                     PrimaryShooter.DespawnAllProjectiles();
                 inSecondaryFire = true;
             }
@@ -143,7 +143,7 @@ public class RevampedFirebolt : SpellBlueprint
             }
             else
             {
-                if (SecondaryShooter.latestInstantiatedObject && SecondaryShooter.latestInstantiatedObject.transform.parent == spellCircle.transform)
+                if (SecondaryShooter.latestInstantiatedObject && SecondaryShooter.latestInstantiatedObject.transform.parent == _SpellCircle.transform)
                     SecondaryShooter.DespawnAllProjectiles();
                 inSecondaryFire = false;
             }
@@ -153,7 +153,7 @@ public class RevampedFirebolt : SpellBlueprint
     #region Velocity Things
     void CalculateOffset()
     {
-        Vector3 relPos = _palmLocation.position - transform.position;
+        Vector3 relPos = _PalmTransform.position - transform.position;
         relPos = Quaternion.Inverse(transform.rotation) * relPos;
         objectGrabOffset = relPos;
     }
@@ -168,8 +168,8 @@ public class RevampedFirebolt : SpellBlueprint
             {
                 currentVelocityFrameStep = 0;
             }
-            velocityFrames[currentVelocityFrameStep] = _gestureManager.currVel;
-            angularVelocityFrames[currentVelocityFrameStep] = _gestureManager.angularVel;
+            velocityFrames[currentVelocityFrameStep] = _HandPhysicsTracker.Velocity;
+            angularVelocityFrames[currentVelocityFrameStep] = _HandPhysicsTracker.AngularVelocity;
 
         }
     }

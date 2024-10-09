@@ -10,8 +10,8 @@ public class HealthIndicator : MonoBehaviour
 
     private void OnEnable()
     {
-        Player.HealthChanged += UpdateGraphic;
-        Player.HealthChanged += UpdateText;
+        PlayerStats.HealthChanged += UpdateGraphic;
+        PlayerStats.HealthChanged += UpdateText;
 
 
     }
@@ -22,18 +22,18 @@ public class HealthIndicator : MonoBehaviour
     }
     private void OnDisable()
     {
-        Player.ManaChanged -= UpdateGraphic;
-        Player.ManaChanged -= UpdateText;
+        PlayerStats.ManaChanged -= UpdateGraphic;
+        PlayerStats.ManaChanged -= UpdateText;
     }
 
     void UpdateGraphic()
     {
-        float currentFill = (float)Player.Instance.currentHealth / (float)Player.Instance.maximumHealth.Value;
+        float currentFill = (float)PlayerSingleton.Instance._Stats._CurrentHealth / (float)PlayerSingleton.Instance._Stats.MaximumHealthValue.Value;
         iTween.ScaleTo(healthFill, new Vector3(currentFill, currentFill), .5f);
         //manaFill.transform.localScale = new Vector3(currentFill, currentFill);
     }
     void UpdateText()
     {
-        healthValue.text = Player.Instance.currentHealth + "/" + Player.Instance.maximumHealth.Value;
+        healthValue.text = PlayerSingleton.Instance._Stats._CurrentHealth + "/" + PlayerSingleton.Instance._Stats.MaximumHealthValue.Value;
     }
 }

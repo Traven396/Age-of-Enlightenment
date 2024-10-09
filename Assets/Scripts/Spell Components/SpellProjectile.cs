@@ -166,7 +166,7 @@ public class SpellProjectile : MonoBehaviour
 
 
                 //check for obstructions we might have missed 
-                if (Physics.Raycast(previousPosition, movementThisStep, out hitInfo, movementMagnitude, ~_nonCollidableLayers))
+                if (Physics.Raycast(previousPosition, movementThisStep, out hitInfo, movementMagnitude, ~_nonCollidableLayers, QueryTriggerInteraction.Ignore))
                     _rb.position = hitInfo.point - (movementThisStep / movementMagnitude) * partialExtent;
             }
 

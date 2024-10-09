@@ -26,21 +26,21 @@ public class NettleBurst : SpellBlueprint
     {
         base.TriggerPress();
 
-        _visualsManager.ToggleReticle(currentHand, true);
+        _VisualsManager.ToggleReticle(currentHand, true);
     }
     public override void TriggerHold()
     {
         base.TriggerHold();
-
+        Debug.Log("We Holding");
         if (currentHand == 0)
         {
-            iTween.RotateUpdate(spellCircle, (_handLocation.transform.rotation * Quaternion.Euler(-90, 0, 0)).eulerAngles, .4f);
+            iTween.RotateUpdate(_SpellCircle, (_HandTransform.transform.rotation * Quaternion.Euler(-90, 0, 0)).eulerAngles, .4f);
         }
         else
         {
-            iTween.RotateUpdate(spellCircle, (_handLocation.transform.rotation * Quaternion.Euler(90, 0, 0)).eulerAngles, .4f);
+            iTween.RotateUpdate(_SpellCircle, (_HandTransform.transform.rotation * Quaternion.Euler(90, 0, 0)).eulerAngles, .4f);
         }
-        iTween.MoveUpdate(spellCircle, circleHolder.transform.TransformPoint(new Vector3(0, -.05f, .25f)), .4f);
+        iTween.MoveUpdate(_SpellCircle, _CircleHolderTransform.transform.TransformPoint(new Vector3(0, -.05f, .25f)), .4f);
 
         if (currentCharge < ChargeTime)
         {
@@ -64,14 +64,14 @@ public class NettleBurst : SpellBlueprint
         currentlyShooting = false;
 
         StopCoroutine(nameof(MachineGun));
-        _visualsManager.ToggleReticle(currentHand, false);
+        _VisualsManager.ToggleReticle(currentHand, false);
     }
 
     private void Update()
     {
         if (!triggerPressed)
         {
-            _visualsManager.ReturnCircleToHolder(currentHand);
+            _VisualsManager.ReturnCircleToHolder(currentHand);
         }
     }
 
@@ -79,12 +79,12 @@ public class NettleBurst : SpellBlueprint
     {   
         while (true)
         {
-            if (Player.Instance.currentMana >= ManaCostPerShot)
+            if (CheckCurrentMana(ManaCostPerShot))
             {
-                Player.Instance.SubtractMana(ManaCostPerShot);
+                PlayerSingleton.Instance._Stats.SubtractMana(ManaCostPerShot);
 
-                _shooter.SpawnProjectile(spellCircle.transform.position);
-                _shooter.LaunchAllProjectiles(_handLocation.forward, LaunchSpeed); 
+                _shooter.SpawnProjectile(_SpellCircle.transform.position);
+                _shooter.LaunchAllProjectiles(_HandTransform.forward, LaunchSpeed); 
             }
 
             yield return new WaitForSeconds(FiringCooldown); 

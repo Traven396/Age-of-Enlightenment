@@ -106,7 +106,7 @@ public class SpellInputManager : MonoBehaviour
     {
         if (whichHand == 0)
         {
-            if (Physics.Raycast(currentLeftSpell._handLocation.position, currentLeftSpell._handLocation.forward, 6, UIMASK, QueryTriggerInteraction.Collide))
+            if (Physics.Raycast(currentLeftSpell._HandTransform.position, currentLeftSpell._HandTransform.forward, 6, UIMASK, QueryTriggerInteraction.Collide))
             {
                 return false;
             }
@@ -117,7 +117,7 @@ public class SpellInputManager : MonoBehaviour
         }
         else
         {
-            if (Physics.Raycast(currentRightSpell._handLocation.position, currentRightSpell._handLocation.forward, 6, UIMASK, QueryTriggerInteraction.Collide))
+            if (Physics.Raycast(currentRightSpell._HandTransform.position, currentRightSpell._HandTransform.forward, 6, UIMASK, QueryTriggerInteraction.Collide))
             {
                 return false;
             }

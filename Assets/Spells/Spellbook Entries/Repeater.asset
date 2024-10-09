@@ -15,10 +15,8 @@ MonoBehaviour:
   Name: Repeater
   SpellDisplayIcon: {fileID: 21300000, guid: b11f9c52da2945740b5078d84177a9ab, type: 3}
   SpellComponents:
-    spellMechanics: {fileID: 6697046781499885885, guid: 27d1d5e60bcb0d54ea2d0707925b0aa9, type: 3}
-    spellCircle: {fileID: 6178175572713552658, guid: 69c7225f8f5d7114d9ac2eb247d39133, type: 3}
-    RightAnimationController: {fileID: 0}
-    LeftAnimationController: {fileID: 0}
+    SpellMechanics: {fileID: 6697046781499885885, guid: 27d1d5e60bcb0d54ea2d0707925b0aa9, type: 3}
+    SpellCircle: {fileID: 6178175572713552658, guid: 69c7225f8f5d7114d9ac2eb247d39133, type: 3}
   SpellDescription: "Upon selecting this spell it will create three knives along
     the back of your hand. By pressing trigger you may launch them. \n\nAfter they
     have been fired, you may hold both grip and trigger to recall them to the back

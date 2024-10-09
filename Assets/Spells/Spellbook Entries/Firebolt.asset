@@ -15,10 +15,8 @@ MonoBehaviour:
   Name: Firebolt
   SpellDisplayIcon: {fileID: 21300000, guid: cf2855fb18a21fa45ae954e84f9f4a2e, type: 3}
   SpellComponents:
-    spellMechanics: {fileID: 423785962594555604, guid: f6312bd187b607e46b4ed2f7c3375e80, type: 3}
-    spellCircle: {fileID: 776886629064782777, guid: 4ece181df3095f245b552d27b3004688, type: 3}
-    RightAnimationController: {fileID: 22100000, guid: ed9562a03f610e748b91024be417fcd0, type: 2}
-    LeftAnimationController: {fileID: 22100000, guid: e16dd7d0f4d1edd47b5c569500af58bb, type: 2}
+    SpellMechanics: {fileID: 423785962594555604, guid: f6312bd187b607e46b4ed2f7c3375e80, type: 3}
+    SpellCircle: {fileID: 776886629064782777, guid: 4ece181df3095f245b552d27b3004688, type: 3}
   SpellDescription: FIRE! By holding the trigger you can charge a thrown explosive
     projectile. But by holding down grip you can launch smaller, faster fire bursts
     instead. Either way the enemy dies

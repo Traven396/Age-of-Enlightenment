@@ -1,8 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using AgeOfEnlightenment.GestureDetection;
-
+using FoxheadDev.GestureDetection;
+using AgeOfEnlightenment.PlayerController;
 public abstract class SpellBlueprint : MonoBehaviour
 {
     protected bool triggerPressed = false;
@@ -11,22 +11,23 @@ public abstract class SpellBlueprint : MonoBehaviour
     [HideInInspector] public LeftRight currentHand;
 
     //Physical world parameters
-    [HideInInspector] public Rigidbody playerRb;
+    [HideInInspector] public Rigidbody _PlayerRb;
     [HideInInspector] public FrankensteinCharacterController playerPhys;
-    [HideInInspector] public GameObject circleHolder;
-    [HideInInspector] public GameObject spellCircle;
+    [HideInInspector] public PlayerMotionController _MotionController;
+    [HideInInspector] public Transform _CircleHolderTransform;
+    [HideInInspector] public GameObject _SpellCircle;
 
     //Location parameters
-    [HideInInspector] public Transform _palmLocation;
-    [HideInInspector] public Transform _backOfHandLocation;
-    [HideInInspector] public Transform _handLocation;
-    [HideInInspector] public Transform _playerLocation;
+    [HideInInspector] public Transform _PalmTransform;
+    [HideInInspector] public Transform _BackOfHandTransform;
+    [HideInInspector] public Transform _HandTransform;
+    [HideInInspector] public Transform _PlayerTransform;
 
     //Code parameters
-    [HideInInspector] public TargetManager _targetManager;
-    [HideInInspector] public GestureManager _gestureManager;
-    [HideInInspector] public HandPhysicsTracker _handPhysics;
-    [HideInInspector] public SpellVisualsManager _visualsManager;
+    [HideInInspector] public TargetManager _TargetManager;
+    [HideInInspector] public GestureManager _GestureManager;
+    [HideInInspector] public HandPhysicsTracker _HandPhysicsTracker;
+    [HideInInspector] public SpellVisualsManager _VisualsManager;
 
     //Button pressed values
     [HideInInspector] public float triggerPressedValue;
@@ -67,19 +68,14 @@ public abstract class SpellBlueprint : MonoBehaviour
     public virtual void OnSelect() { }
     private void Start()
     {
-        spellCircle = circleHolder.transform.GetChild(circleHolder.transform.childCount - 1).gameObject;
+        _SpellCircle = _CircleHolderTransform.transform.GetChild(_CircleHolderTransform.transform.childCount - 1).gameObject;
     }
-}
 
-public enum SpellSchool
-{
-    Pyrokinesis,
-    Geomancy,
-    Tempestia,
-    Hydromorphy,
-    Frostweaving,
-    Voltcraft,
-    Druidic,
-    Metallurgy,
-    Astral
+    protected bool CheckCurrentMana(int manaCost)
+    {
+        if (PlayerSingleton.Instance._Stats._CurrentMana >= manaCost)
+            return true;
+        else
+            return false;
+    }
 }

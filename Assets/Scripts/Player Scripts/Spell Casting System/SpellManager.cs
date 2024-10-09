@@ -5,149 +5,125 @@ using UnityEngine.Events;
 using UnityEngine.InputSystem;
 using UnityEngine.XR;
 
-[RequireComponent(typeof(SpellVisualsManager))]
-
-public class SpellManager : MonoBehaviour
+namespace AgeOfEnlightenment.Player
 {
-    public SpellHotbarManager _hotbarManager { get; private set; }
 
-    //All left hand stuff
-    [SerializeField] private GameObject leftSpellGO;
-    private GameObject _spawnedLeftSpell;
-    private SpellBlueprint _spawnedLeftBlueprint;
-
-    //All right hand stuff
-    [SerializeField] private GameObject rightSpellGO;
-    private GameObject _spawnedRightSpell;
-    private SpellBlueprint _spawnedRightBlueprint;
-
-    public UnityEvent<SpellSwapCallbackContext> RightSpellSwap, LeftSpellSwap;
-
-    private void Start()
+    public class SpellManager : MonoBehaviour
     {
-        _hotbarManager = GetComponent<SpellHotbarManager>();
-    }
-    public void NewSpellSwap(CoreSpellComponents spellToBe, LeftRight whichHand)
-    {
-        if (whichHand == 0)
-            ChangeLeftSpell(spellToBe);
-        else
-            ChangeRightSpell(spellToBe);
-    }
-    public void ChangeRightSpell(CoreSpellComponents spellToBe)
-    {
-        DespawnSpell(LeftRight.Right);
+        //All left hand stuff
+        [SerializeField] private GameObject _LeftSpellGO;
+        private GameObject SpawnedLeftSpell;
+        [HideInInspector] public SpellBlueprint SpawnedLeftBlueprint { get; private set; }
 
-        rightSpellGO = spellToBe.spellMechanics;
+        //All right hand stuff
+        [SerializeField] private GameObject _RightSpellGO;
+        private GameObject SpawnedRightSpell;
+        [HideInInspector] public SpellBlueprint SpawnedRightBlueprint { get; private set; }
 
-        SpawnSpell(LeftRight.Right);
+        public UnityEvent<SpellSwapCallbackContext> RightSpellSwap, LeftSpellSwap;
 
-        RightSpellSwap.Invoke(new SpellSwapCallbackContext(_spawnedRightSpell, _spawnedRightBlueprint, spellToBe.RightAnimationController, spellToBe.spellCircle));
-
-        _spawnedRightBlueprint.OnSelect();
-    }
-
-    public void ChangeLeftSpell(CoreSpellComponents spellToBe)
-    {
-        DespawnSpell(LeftRight.Left);
-
-        leftSpellGO = spellToBe.spellMechanics;
-
-        SpawnSpell(LeftRight.Left);
-
-        LeftSpellSwap.Invoke(new SpellSwapCallbackContext(_spawnedLeftSpell, _spawnedLeftBlueprint, spellToBe.LeftAnimationController, spellToBe.spellCircle));
-
-        _spawnedLeftBlueprint.OnSelect();
-    }
-
-    private void SpawnSpell(LeftRight side)
-    {
-        if(side == 0)
+        public void NewSpellSwap(CoreSpellComponents spellToBe, LeftRight whichHand)
         {
-            if (leftSpellGO)
+            if (whichHand == 0)
+                ChangeLeftSpell(spellToBe);
+            else
+                ChangeRightSpell(spellToBe);
+        }
+        public void ChangeRightSpell(CoreSpellComponents spellToBe)
+        {
+            DespawnSpell(LeftRight.Right);
+
+            _RightSpellGO = spellToBe.SpellMechanics;
+
+            SpawnSpell(LeftRight.Right);
+
+            SpawnedRightBlueprint.currentHand = LeftRight.Right;
+
+            RightSpellSwap.Invoke(new SpellSwapCallbackContext(SpawnedRightSpell, SpawnedRightBlueprint, spellToBe.SpellCircle));
+
+            //Fire the selection event for the spell. This is for setting up initial things in the spell before any other events fire
+            SpawnedRightBlueprint.OnSelect();
+        }
+
+        public void ChangeLeftSpell(CoreSpellComponents spellToBe)
+        {
+            DespawnSpell(LeftRight.Left);
+
+            _LeftSpellGO = spellToBe.SpellMechanics;
+
+            SpawnSpell(LeftRight.Left);
+
+            SpawnedLeftBlueprint.currentHand = LeftRight.Left;
+
+            LeftSpellSwap.Invoke(new SpellSwapCallbackContext(SpawnedLeftSpell, SpawnedLeftBlueprint, spellToBe.SpellCircle));
+
+            SpawnedLeftBlueprint.OnSelect();
+        }
+
+        private void SpawnSpell(LeftRight side)
+        {
+            if (side == 0)
             {
-                _spawnedLeftSpell = Instantiate(leftSpellGO, transform);
-                _spawnedLeftBlueprint = _spawnedLeftSpell.GetComponent<SpellBlueprint>();
+                if (_LeftSpellGO)
+                {
+                    SpawnedLeftSpell = Instantiate(_LeftSpellGO, transform);
+                    SpawnedLeftBlueprint = SpawnedLeftSpell.GetComponent<SpellBlueprint>();
+                }
+            }
+            else
+            {
+                if (_RightSpellGO)
+                {
+                    SpawnedRightSpell = Instantiate(_RightSpellGO, transform);
+                    SpawnedRightBlueprint = SpawnedRightSpell.GetComponent<SpellBlueprint>();
+                }
             }
         }
-        else
+
+        private void DespawnSpell(LeftRight side)
         {
-            if (rightSpellGO)
+            if (side == 0)
             {
-                _spawnedRightSpell = Instantiate(rightSpellGO, transform);
-                _spawnedRightBlueprint = _spawnedRightSpell.GetComponent<SpellBlueprint>();
+                if (SpawnedLeftSpell)
+                {
+                    SpawnedLeftBlueprint.OnDeselect();
+
+                    Destroy(SpawnedLeftSpell);
+
+                    SpawnedLeftBlueprint = null;
+
+                    LeftSpellSwap.Invoke(new SpellSwapCallbackContext());
+
+                }
+            }
+            else
+            {
+                if (SpawnedRightSpell)
+                {
+                    SpawnedRightBlueprint.OnDeselect();
+
+                    Destroy(SpawnedRightSpell);
+
+                    SpawnedRightBlueprint = null;
+
+                    RightSpellSwap.Invoke(new SpellSwapCallbackContext());
+                }
             }
         }
-    }
 
-    private void DespawnSpell(LeftRight side)
-    {
-        if(side == 0)
+        public void ClearRightSpell()
         {
-            if (_spawnedLeftSpell)
-            {
-                _spawnedLeftBlueprint.OnDeselect();
-
-                Destroy(_spawnedLeftSpell);
-
-                _spawnedLeftBlueprint = null;
-
-                LeftSpellSwap.Invoke(new SpellSwapCallbackContext());
-
-            }
+            DespawnSpell(LeftRight.Right);
+            _RightSpellGO = null;
+            SpawnedRightBlueprint = null;
         }
-        else
+        public void ClearLeftSpell()
         {
-            if (_spawnedRightSpell)
-            {
-                _spawnedRightBlueprint.OnDeselect();
-
-                Destroy(_spawnedRightSpell);
-
-                _spawnedRightBlueprint = null;
-
-                RightSpellSwap.Invoke(new SpellSwapCallbackContext());
-            }
+            DespawnSpell(LeftRight.Left);
+            _LeftSpellGO = null;
+            SpawnedLeftBlueprint = null;
         }
-    }
 
-    public void ClearRightSpell()
-    {
-        DespawnSpell(LeftRight.Right);
-        rightSpellGO = null;
-        _spawnedRightBlueprint = null;
-    }
-    public void ClearLeftSpell()
-    {
-        DespawnSpell(LeftRight.Left);
-        leftSpellGO = null;
-        _spawnedLeftBlueprint = null;
-    }
-
+    } 
 }
-public enum LeftRight
-{
-    Left,
-    Right
-}
-public class SpellSwapCallbackContext{
-    public GameObject spawnedSelf;
-    public SpellBlueprint spawnedScript;
-    public AnimatorOverrideController newAnimator;
-    public GameObject circle;
 
-    public SpellSwapCallbackContext(GameObject newSelf, SpellBlueprint newScript, AnimatorOverrideController newerAnimator, GameObject theCircle)
-    {
-        spawnedSelf = newSelf;
-        spawnedScript = newScript;
-        newAnimator = newerAnimator;
-        circle = theCircle;
-    }
-    public SpellSwapCallbackContext()
-    {
-        spawnedScript = null;
-        spawnedSelf = null;
-        newAnimator = null;
-        circle = null;
-    }
-}

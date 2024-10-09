@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace AgeOfEnlightenment.Spellbook
+namespace AgeOfEnlightenment.Player
 {
     [CreateAssetMenu(menuName = "Spellbook/Spellbook Entry")]
     public class SpellbookEntry : ScriptableObject
@@ -18,18 +18,13 @@ namespace AgeOfEnlightenment.Spellbook
     [Serializable]
     public class CoreSpellComponents
     {
-        public GameObject spellMechanics;
-        public GameObject spellCircle;
+        public GameObject SpellMechanics;
+        public GameObject SpellCircle;
 
-        public AnimatorOverrideController RightAnimationController;
-        public AnimatorOverrideController LeftAnimationController;
-
-        public CoreSpellComponents(GameObject newMechanics, GameObject newCircle, AnimatorOverrideController newRight, AnimatorOverrideController newLeft)
+        public CoreSpellComponents(GameObject newMechanics, GameObject newCircle)
         {
-            spellCircle = newCircle;
-            spellMechanics = newMechanics;
-            RightAnimationController = newRight;
-            LeftAnimationController = newLeft;
+            SpellCircle = newCircle;
+            SpellMechanics = newMechanics;
         }
     } 
 }

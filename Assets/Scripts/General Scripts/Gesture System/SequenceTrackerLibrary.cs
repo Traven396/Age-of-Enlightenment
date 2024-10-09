@@ -9,7 +9,7 @@ using UnityEngine;
 //Def check out Lyneca's mods for Blade and Sorcery. They are amazing
 
 //Also here is a link to a tutorial on how to use it better https://hackmd.io/@lyneca/gesture-engine
-namespace AgeOfEnlightenment.GestureDetection { 
+namespace FoxheadDev.GestureDetection { 
 
     using NamedConditionSet = Tuple<string, Func<bool>[]>;
     using NamedCondition = Tuple<string, Func<bool>>;

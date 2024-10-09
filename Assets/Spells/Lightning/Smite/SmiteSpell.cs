@@ -27,7 +27,7 @@ public class SmiteSpell : SpellBlueprint
     {
         if (!triggerPressed)
         {
-            _visualsManager.ReturnCircleToHolder(currentHand);
+            _VisualsManager.ReturnCircleToHolder(currentHand);
         }
     }
     public override void TriggerPress()
@@ -42,7 +42,7 @@ public class SmiteSpell : SpellBlueprint
     {
         base.TriggerHold();
 
-        hit = _targetManager.RaycastFromHandToGround(currentHand, maxDistance);
+        hit = _TargetManager.RaycastFromHandToGround(currentHand, maxDistance);
 
         _targetter.TargetMove(hit);
     }
@@ -76,15 +76,15 @@ public class SmiteSpell : SpellBlueprint
     {
         if (!swungDownPerformed)
         {
-            if(_swingDown.GesturePerformed(_gestureManager, out Vector3 direction) && Player.Instance.currentMana >= ManaCost)
+            if(_swingDown.GesturePerformed(_HandPhysicsTracker, out Vector3 direction) && CheckCurrentMana(ManaCost))
             {
-                _objectSpawn.Cast(spellCircle.transform);
+                _objectSpawn.Cast(_SpellCircle.transform);
 
                 _objectSpawn.instantiatedObject.GetComponent<SummonedObjectBehavior>().BeginLifeCycle();
 
                 swungDownPerformed = true;
 
-                Player.Instance.SubtractMana(ManaCost);
+                PlayerSingleton.Instance.SubtractMana(ManaCost);
             }
         }
     }

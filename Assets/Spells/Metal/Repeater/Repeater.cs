@@ -18,25 +18,25 @@ public class Repeater : SpellBlueprint
     {
         _bladePositions[0] = new GameObject("position1").transform;
 
-        _bladePositions[0].parent = _palmLocation;
-        _bladePositions[0].position = _palmLocation.TransformPoint( new Vector3(0, 0, -0.12f));
+        _bladePositions[0].parent = _PalmTransform;
+        _bladePositions[0].position = _PalmTransform.TransformPoint( new Vector3(0, 0, -0.12f));
         _bladePositions[0].localRotation = Quaternion.Euler(0, 90, 0);
 
         _bladePositions[1] = new GameObject("position2").transform;
 
-        _bladePositions[1].parent = _palmLocation;
-        _bladePositions[1].position = _palmLocation.TransformPoint(new Vector3(0, .045f, -0.1f));
+        _bladePositions[1].parent = _PalmTransform;
+        _bladePositions[1].position = _PalmTransform.TransformPoint(new Vector3(0, .045f, -0.1f));
         _bladePositions[1].localRotation = Quaternion.Euler(0, 90, 30);
         
 
         _bladePositions[2] = new GameObject("position3").transform;
 
-        _bladePositions[2].parent = _palmLocation;
-        _bladePositions[2].position = _palmLocation.TransformPoint(new Vector3(0, -.045f, -0.1f));
+        _bladePositions[2].parent = _PalmTransform;
+        _bladePositions[2].position = _PalmTransform.TransformPoint(new Vector3(0, -.045f, -0.1f));
         _bladePositions[2].localRotation = Quaternion.Euler(0, 90, -30);
 
         StartCoroutine(TripleBladeSpawn());
-        _visualsManager.ToggleReticle(currentHand, true);
+        _VisualsManager.ToggleReticle(currentHand, true);
     }
 
     public override void OnDeselect()
@@ -47,7 +47,7 @@ public class Repeater : SpellBlueprint
             Destroy(_bladePositions[i].gameObject);
         }
 
-        _visualsManager.ToggleReticle(currentHand, false);
+        _VisualsManager.ToggleReticle(currentHand, false);
     }
     public override void TriggerPress()
     {

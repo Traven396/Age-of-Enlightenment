@@ -26,13 +26,12 @@ public class TargetManager : MonoBehaviour
     {
         if (ctx.spawnedScript != null)
         {
-            ctx.spawnedScript._targetManager = this; 
+            ctx.spawnedScript._TargetManager = this; 
         }
     }
 
     private void Start()
     {
-
         ignoreLayers = ~(ignoreLayers);
         groundLayer = ~LayerMask.NameToLayer("Ground");
     }

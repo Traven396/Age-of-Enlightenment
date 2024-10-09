@@ -73,7 +73,7 @@ public class Catapult : SpellBlueprint
     
     public override void TriggerHold()
     {
-        currentTargettedEntity = _targetManager.GetClosestTeleTarget(currentHand, raycastDistance, sphereRadius);
+        currentTargettedEntity = _TargetManager.GetClosestTeleTarget(currentHand, raycastDistance, sphereRadius);
     }
     public override void TriggerRelease()
     {
@@ -82,11 +82,11 @@ public class Catapult : SpellBlueprint
         {
             if (!selectedObjects.Contains(currentTargettedEntity))
             {
-                if (Player.Instance.currentMana >= manaCost)
+                if (CheckCurrentMana(manaCost))
                 {
                     selectedObjects.Add(currentTargettedEntity);
                     StartCoroutine(FloatingSelection(currentTargettedEntity));
-                    Player.Instance.SubtractMana(manaCost);
+                    PlayerSingleton.Instance.SubtractMana(manaCost);
                 }
             }
         }
@@ -95,7 +95,7 @@ public class Catapult : SpellBlueprint
 
     public override void GripHold()
     {
-        if (selectedObjects.Count != 0 && gesture.GesturePerformed(_gestureManager, out Vector3 direction))
+        if (selectedObjects.Count != 0 && gesture.GesturePerformed(_HandPhysicsTracker, out Vector3 direction))
         {
             foreach (TargettableEntity targetable in selectedObjects)
             {

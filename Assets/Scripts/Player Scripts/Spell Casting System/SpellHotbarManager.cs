@@ -5,8 +5,6 @@ using UnityEngine.Events;
 
 public class SpellHotbarManager : MonoBehaviour
 {
-    private SpellManager _spellManager;
-
     private CoreSpellComponents[] rightHandHotbar = new CoreSpellComponents[4];
     public GameObject[] rightMenuSections = new GameObject[4];
     private GameObject[] spawnedRightCircles = new GameObject[4];
@@ -16,11 +14,6 @@ public class SpellHotbarManager : MonoBehaviour
     private GameObject[] spawnedLeftCircles = new GameObject[4];
 
     public UnityEvent<CoreSpellComponents, LeftRight> spellSwap;
-
-    private void Start()
-    {
-        _spellManager = GetComponent<SpellManager>();
-    }
 
     public void ChangeRightSpell(int index)
     {
@@ -38,7 +31,7 @@ public class SpellHotbarManager : MonoBehaviour
         }
         rightHandHotbar[index] = spellToBe;
         if(spellToBe != null)
-            spawnedRightCircles[index] = Instantiate(spellToBe.spellCircle, rightMenuSections[index].transform);
+            spawnedRightCircles[index] = Instantiate(spellToBe.SpellCircle, rightMenuSections[index].transform);
     }
 
     public void ChangeLeftSpell(int index)
@@ -58,7 +51,7 @@ public class SpellHotbarManager : MonoBehaviour
         }
         leftHandHotbar[index] = spellToBe;
         if(spellToBe != null)
-            spawnedLeftCircles[index] = Instantiate(spellToBe.spellCircle, leftMenuSections[index].transform);
+            spawnedLeftCircles[index] = Instantiate(spellToBe.SpellCircle, leftMenuSections[index].transform);
     }
 
     public void ClearLeftHotbar()

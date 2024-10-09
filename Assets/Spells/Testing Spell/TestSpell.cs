@@ -18,11 +18,11 @@ public class TestSpell : SpellBlueprint
     public override void GripPress()
     {
         base.GripPress();
-        _shooter.SpawnProjectile(_palmLocation);
+        _shooter.SpawnProjectile(_PalmTransform);
     }
     public override void GripRelease()
     {
         base.GripRelease();
-        _shooter.LaunchAllProjectiles(_handLocation.forward, 10);
+        _shooter.LaunchAllProjectiles(_HandTransform.forward, 10);
     }
 }

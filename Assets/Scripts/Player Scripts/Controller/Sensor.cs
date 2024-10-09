@@ -121,10 +121,9 @@ using System.Collections.Generic;
 		//Cast a single ray into '_direction' from '_origin';
 		private void CastRay(Vector3 _origin, Vector3 _direction)
 		{
-			RaycastHit _hit;
-			hasDetectedHit = Physics.Raycast(_origin, _direction, out _hit, castLength, layermask, QueryTriggerInteraction.Ignore);
+        hasDetectedHit = Physics.Raycast(_origin, _direction, out RaycastHit _hit, castLength, layermask, QueryTriggerInteraction.Ignore);
 
-			if(hasDetectedHit)
+        if (hasDetectedHit)
 			{
 				hitPosition = _hit.point;
 				hitNormal = _hit.normal;

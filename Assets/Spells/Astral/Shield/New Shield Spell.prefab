@@ -1,0 +1,64 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &3841412781168158920
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1908808135366551454}
+  - component: {fileID: 5761028517979910579}
+  m_Layer: 0
+  m_Name: New Shield Spell
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1908808135366551454
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3841412781168158920}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &5761028517979910579
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3841412781168158920}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a52b7f37ec1334d4baf22e934fdb6507, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  currentHand: 0
+  playerRb: {fileID: 0}
+  playerPhys: {fileID: 0}
+  circleHolder: {fileID: 0}
+  spellCircle: {fileID: 0}
+  _palmLocation: {fileID: 0}
+  _backOfHandLocation: {fileID: 0}
+  _handLocation: {fileID: 0}
+  _playerLocation: {fileID: 0}
+  _targetManager: {fileID: 0}
+  _gestureManager: {fileID: 0}
+  _visualsManager: {fileID: 0}
+  triggerPressedValue: 0
+  gripPressedValue: 0
+  ShieldEffectPrefab: {fileID: 1378108666484583888, guid: e9c0ed768017dd84e8ab582bad2d325e, type: 3}
+  StepCompleteSound: {fileID: 8300000, guid: f08ce2b0c20924bfe844560b4770fe5a, type: 3}
+  CastCompleteSound: {fileID: 8300000, guid: 84ba7827488e06a44aea087ee4bac1c2, type: 3}
+  ShieldDissapearSound: {fileID: 8300000, guid: c710eb31d8979984891bc5a801670934, type: 3}

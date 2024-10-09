@@ -15,10 +15,8 @@ MonoBehaviour:
   Name: Cinder Blast
   SpellDisplayIcon: {fileID: 21300000, guid: 04dd4fcda4762f549a5c78ffde8a8a0a, type: 3}
   SpellComponents:
-    spellMechanics: {fileID: 6613508436935529948, guid: e566a2abba6fca94cbef1e8ba2ca41ce, type: 3}
-    spellCircle: {fileID: 776886629064782777, guid: 00d0cc5c01193c14fae359ce9a78e381, type: 3}
-    RightAnimationController: {fileID: 0}
-    LeftAnimationController: {fileID: 0}
+    SpellMechanics: {fileID: 6613508436935529948, guid: e566a2abba6fca94cbef1e8ba2ca41ce, type: 3}
+    SpellCircle: {fileID: 776886629064782777, guid: 00d0cc5c01193c14fae359ce9a78e381, type: 3}
   SpellDescription: Charge up the blast by holding down the trigger. Once the spell
     circle stops growing, release the button to launch out a shotgun blast of ashes
   School: 0

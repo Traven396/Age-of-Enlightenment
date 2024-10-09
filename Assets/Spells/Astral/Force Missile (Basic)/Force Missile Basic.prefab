@@ -1,0 +1,80 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &3195652177752359340
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4162889502321054151}
+  - component: {fileID: -2181337655005563027}
+  - component: {fileID: 3564842527926327938}
+  m_Layer: 0
+  m_Name: Force Missile Basic
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4162889502321054151
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3195652177752359340}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &-2181337655005563027
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3195652177752359340}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7ca6becc030bf964c9885363efacb93e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  currentHand: 0
+  playerRb: {fileID: 0}
+  playerPhys: {fileID: 0}
+  circleHolder: {fileID: 0}
+  spellCircle: {fileID: 0}
+  _palmLocation: {fileID: 0}
+  _backOfHandLocation: {fileID: 0}
+  _handLocation: {fileID: 0}
+  _playerLocation: {fileID: 0}
+  _targetManager: {fileID: 0}
+  _gestureManager: {fileID: 0}
+  _visualsManager: {fileID: 0}
+  triggerPressedValue: 0
+  gripPressedValue: 0
+  ShootSoundClip: {fileID: 8300000, guid: c3203ed354cef0f40ab57e66636762c1, type: 3}
+--- !u!114 &3564842527926327938
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3195652177752359340}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 759f587e3edf4f54d92497dba193951f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ProjectilePrefab: {fileID: 481448609083196781, guid: 7c557085a13e00348991ff488d25cac1, type: 3}
+  ImpactFXPrefab: {fileID: 0}
+  PoolSize: 5
+  NonCollidableLayers:
+    serializedVersion: 2
+    m_Bits: 0

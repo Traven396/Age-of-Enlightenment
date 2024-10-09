@@ -1,4 +1,4 @@
-namespace AgeOfEnlightenment.GestureDetection
+namespace FoxheadDev.GestureDetection
 {
     using System.Collections;
     using System.Collections.Generic;
@@ -32,33 +32,35 @@ namespace AgeOfEnlightenment.GestureDetection
         private void Start()
         {
             _LeftHandPhysicsTracker = new HandPhysicsTracker(LeftHandTransform, PlayerBody, true);
-            _RightHandPhysicsTracker = new HandPhysicsTracker(RightHandTransform, PlayerBody);
+            _RightHandPhysicsTracker = new HandPhysicsTracker(RightHandTransform, PlayerBody, false);
+
+            _LeftHandPhysicsTracker.SetOtherHand(_RightHandPhysicsTracker);
+            _RightHandPhysicsTracker.SetOtherHand(_LeftHandPhysicsTracker);
 
             //We first reset both of them to 0 so we know where their starting positions are
             _LeftHandPhysicsTracker.Reset(LeftHandTransform.position, LeftHandTransform.rotation, Vector3.zero, Vector3.zero);
             _RightHandPhysicsTracker.Reset(RightHandTransform.position, RightHandTransform.rotation, Vector3.zero, Vector3.zero);
 
-            //testingStep = Step.Start(TestingMethod);
-            //testingStep.Then(PremadeGestureLibrary.Push(_RightHandPhysicsTracker, AxisDirection.Left))
-            //    .Then(PremadeGestureLibrary.ReversePush(_RightHandPhysicsTracker, AxisDirection.Right))
-            //    .Then(PremadeGestureLibrary.Punch(_RightHandPhysicsTracker, AxisDirection.Forward))
-            //    .Do(FinalMethod, "Finishing Touches");
+            //testingStep = Step.Start();
+
+            //testingStep.Then(PremadeGestureLibrary.PushInViewDirection(_RightHandPhysicsTracker, ViewSpaceDirection.InwardHoriz));
+
+            //testingStep.Then(PremadeGestureLibrary.PunchInViewDirection(_RightHandPhysicsTracker, ViewSpaceDirection.Forward)).Do(() => Debug.Log("Forward"));
+            //testingStep.Then(PremadeGestureLibrary.ReversePunchInViewDirection(_RightHandPhysicsTracker, ViewSpaceDirection.Back)).Do(() => Debug.Log("Backward"));
         }
 
         public void NewLeftSpell(SpellSwapCallbackContext ctx)
         {
             if (ctx.spawnedScript)
             {
-                ctx.spawnedScript._handPhysics = _LeftHandPhysicsTracker;
-
-                Debug.Log(ctx.spawnedScript._handPhysics);
+                ctx.spawnedScript._HandPhysicsTracker = _LeftHandPhysicsTracker;
             }
         }
         public void NewRightSpell(SpellSwapCallbackContext ctx)
         {
             if (ctx.spawnedScript)
             {
-                ctx.spawnedScript._handPhysics = _RightHandPhysicsTracker;
+                ctx.spawnedScript._HandPhysicsTracker = _RightHandPhysicsTracker;
             }
         }
 
@@ -76,20 +78,20 @@ namespace AgeOfEnlightenment.GestureDetection
                     OutputMessage += "Left Hand: \n " +
                         "\tWorld Velocity - " + _LeftHandPhysicsTracker.Velocity + "\n" +
                         "\tSelf Space Velocity - " + _LeftHandPhysicsTracker.SelfSpaceVelocity + "\n" +
-                        "\tView Space Velocity - " + _LeftHandPhysicsTracker.ViewSpaceVelocity + "\n" +
-                        "\tFinger Velocity - " + _LeftHandPhysicsTracker.FingerLinearVelocity + "\n\n" +
+                        "\tView Space Velocity - " + _LeftHandPhysicsTracker.ViewSpaceVelocity + "\n\n" +
                         "\tAngular Velocity - " + _LeftHandPhysicsTracker.AngularVelocity + "\n" +
-                        "\tFinger Angular Velocity - " + _LeftHandPhysicsTracker.FingerAngularVelocity + "\n";
+                        "\tSelf Space Angular Velocity - " + _LeftHandPhysicsTracker.SelfSpaceAngularVelocity + "\n" +
+                        "\tView Space Angular Velocity - " + _LeftHandPhysicsTracker.ViewSpaceAngularVelocity + "\n";
                 }
                 if (DisplayRightHandValues)
                 {
                     OutputMessage += "Right Hand: \n " +
                         "\tWorld Velocity - " + _RightHandPhysicsTracker.Velocity + "\n" +
                         "\tSelf Space Velocity - " + _RightHandPhysicsTracker.SelfSpaceVelocity + "\n" +
-                        "\tView Space Velocity - " + _RightHandPhysicsTracker.ViewSpaceVelocity + "\n" +
-                        "\tFinger Velocity - " + _RightHandPhysicsTracker.FingerLinearVelocity + "\n\n" +
+                        "\tView Space Velocity - " + _RightHandPhysicsTracker.ViewSpaceVelocity + "\n\n" +
                         "\tAngular Velocity - " + _RightHandPhysicsTracker.AngularVelocity + "\n" +
-                        "\tFinger Angular Velocity - " + _RightHandPhysicsTracker.FingerAngularVelocity;
+                        "\tSelf Space Angular Velocity - " + _RightHandPhysicsTracker.SelfSpaceAngularVelocity + "\n" +
+                        "\tView Space Angular Velocity" + _RightHandPhysicsTracker.ViewSpaceAngularVelocity;
                 }
 
                 if (DebugOutputText)

@@ -239,7 +239,7 @@ MonoBehaviour:
   _portalCamera: {fileID: 0}
   _destinationPortal: {fileID: 0}
   recursionLimit: 1
-  Active: 1
+  Active: 0
 --- !u!1 &5661822820858858196
 GameObject:
   m_ObjectHideFlags: 0

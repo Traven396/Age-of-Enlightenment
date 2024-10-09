@@ -29,22 +29,22 @@ public class PermafrostArrow : SpellBlueprint
     {
         if (!triggerPressed)
         {
-            _visualsManager.ReturnCircleToHolder(currentHand);
+            _VisualsManager.ReturnCircleToHolder(currentHand);
         }
     }
 
     public override void TriggerPress()
     {
         base.TriggerPress();
-        iTween.ScaleTo(spellCircle, iTween.Hash("x", .8f, "z", .8f, "time", 1));
+        iTween.ScaleTo(_SpellCircle, iTween.Hash("x", .8f, "z", .8f, "time", 1));
         if(!orientationObject)
         {
             orientationObject = new GameObject("Orientation");
         }
         orientationObject.SetActive(true);
-        orientationObject.transform.parent = _handLocation;
-        orientationObject.transform.position = _handLocation.position + (_handLocation.forward * .07f);
-        orientationObject.transform.rotation = _handLocation.transform.rotation;
+        orientationObject.transform.parent = _HandTransform;
+        orientationObject.transform.position = _HandTransform.position + (_HandTransform.forward * .07f);
+        orientationObject.transform.rotation = _HandTransform.transform.rotation;
         StartCoroutine(nameof(CircleSpawnCoroutine));
     }
     public override void TriggerHold()
@@ -56,7 +56,7 @@ public class PermafrostArrow : SpellBlueprint
     public override void TriggerRelease()
     {
         base.TriggerRelease();
-        iTween.ScaleTo(spellCircle, iTween.Hash("x", 1f, "z", 1f, "time", 1));
+        iTween.ScaleTo(_SpellCircle, iTween.Hash("x", 1f, "z", 1f, "time", 1));
         StopCoroutine(nameof(CircleSpawnCoroutine));
 
         foreach (GameObject circle in spawnedPotentialProjectiles)
@@ -80,9 +80,9 @@ public class PermafrostArrow : SpellBlueprint
             if (!bigCircleSpinning && spawnedPotentialProjectiles.Count > 1)
                 SpinBigCircle();
 
-            if (Player.Instance.currentMana >= manaCost)
+            if (CheckCurrentMana(manaCost))
             {
-                Player.Instance.SubtractMana(manaCost);
+                PlayerSingleton.Instance.SubtractMana(manaCost);
 
                 spawnedPotentialProjectiles.Add(Instantiate(targetingCirclePrefab, orientationObject.transform.position, orientationObject.transform.rotation, orientationObject.transform));
 

@@ -39,46 +39,46 @@ public class NewFirebolt : SpellBlueprint
     }
     private void Start()
     {
-        spellCircle = circleHolder.transform.GetChild(circleHolder.transform.childCount - 1).gameObject;
+        _SpellCircle = _CircleHolderTransform.transform.GetChild(_CircleHolderTransform.transform.childCount - 1).gameObject;
 
-        spellCircleAudioSource = spellCircle.GetComponent<AudioSource>();
+        spellCircleAudioSource = _SpellCircle.GetComponent<AudioSource>();
 
-        centerOfMass = _handLocation.transform.position;
+        centerOfMass = _HandTransform.transform.position;
     }
     private void Update()
     {
         if (!gripPressed)
         {
-            _visualsManager.ReturnCircleToHolder(currentHand);
+            _VisualsManager.ReturnCircleToHolder(currentHand);
         }
     }
     public override void GripPress()
     {
         base.GripPress();
-        if (_bigFireboltSpawn.latestInstantiatedObject && _bigFireboltSpawn.latestInstantiatedObject.transform.parent == _palmLocation)
+        if (_bigFireboltSpawn.latestInstantiatedObject && _bigFireboltSpawn.latestInstantiatedObject.transform.parent == _PalmTransform)
             _bigFireboltSpawn.DespawnAllProjectiles();
-        iTween.ScaleTo(spellCircle, Vector3.one * .3f, .1f);
+        iTween.ScaleTo(_SpellCircle, Vector3.one * .3f, .1f);
 
-        _visualsManager.ToggleReticle(currentHand, true);
+        _VisualsManager.ToggleReticle(currentHand, true);
     }
     public override void GripHold()
     {
         if (currentHand == 0)
         {
-            iTween.RotateUpdate(spellCircle, (circleHolder.transform.rotation * Quaternion.Euler(-90, 0, 0)).eulerAngles, .4f);
-            iTween.MoveUpdate(spellCircle, circleHolder.transform.position + circleHolder.transform.TransformDirection(new Vector3(-.01f, -0.02f, .2f)), .1f);
+            iTween.RotateUpdate(_SpellCircle, (_CircleHolderTransform.transform.rotation * Quaternion.Euler(-90, 0, 0)).eulerAngles, .4f);
+            iTween.MoveUpdate(_SpellCircle, _CircleHolderTransform.transform.position + _CircleHolderTransform.transform.TransformDirection(new Vector3(-.01f, -0.02f, .2f)), .1f);
         }
         else
         {
-            iTween.RotateUpdate(spellCircle, (circleHolder.transform.rotation * Quaternion.Euler(90, 0, 0)).eulerAngles, .4f);
-            iTween.MoveUpdate(spellCircle, circleHolder.transform.position + circleHolder.transform.TransformDirection(new Vector3(-.025f, -.012f, .2f)), .1f);
+            iTween.RotateUpdate(_SpellCircle, (_CircleHolderTransform.transform.rotation * Quaternion.Euler(90, 0, 0)).eulerAngles, .4f);
+            iTween.MoveUpdate(_SpellCircle, _CircleHolderTransform.transform.position + _CircleHolderTransform.transform.TransformDirection(new Vector3(-.025f, -.012f, .2f)), .1f);
         }      
     }
     public override void GripRelease()
     {
         base.GripRelease();
-        iTween.ScaleTo(spellCircle, Vector3.one, .1f);
-        _visualsManager.ToggleReticle(currentHand, false);
+        iTween.ScaleTo(_SpellCircle, Vector3.one, .1f);
+        _VisualsManager.ToggleReticle(currentHand, false);
     }
     public override void TriggerPress()
     {
@@ -90,7 +90,7 @@ public class NewFirebolt : SpellBlueprint
             {
                 _bigFireboltSpawn.SetDamage(BigFireballDamage, DamageType.Fire);
 
-                _bigFireboltSpawn.SpawnProjectile(_palmLocation);
+                _bigFireboltSpawn.SpawnProjectile(_PalmTransform);
                 iTween.ScaleFrom(_bigFireboltSpawn.latestInstantiatedObject, iTween.Hash("scale", Vector3.zero, 
                                                                                     "time", .2f, 
                                                                                     "oncompletetarget", gameObject, 
@@ -104,7 +104,7 @@ public class NewFirebolt : SpellBlueprint
             {
                 _smallFireboltSpawn.SetDamage(SmallFireballDamage, DamageType.Fire);
 
-                _smallFireboltSpawn.SpawnProjectile(spellCircle.transform);
+                _smallFireboltSpawn.SpawnProjectile(_SpellCircle.transform);
                 spellCircleAudioSource.PlayOneShot(spellCircleAudioSource.clip);
 
                 
@@ -135,14 +135,14 @@ public class NewFirebolt : SpellBlueprint
             {
                 return;
             }
-            if (_requiredGesture.GesturePerformed(_gestureManager, out Vector3 direction))
+            if (_requiredGesture.GesturePerformed(_HandPhysicsTracker, out Vector3 direction))
             {
                 CalculateOffset();
 
-                Vector3 controllerVelocityCross = Vector3.Cross(_gestureManager.angularVel, objectGrabOffset - centerOfMass);
-                Vector3 fullThrow = _gestureManager.currVel + controllerVelocityCross;
+                Vector3 controllerVelocityCross = Vector3.Cross(_GestureManager.angularVel, objectGrabOffset - centerOfMass);
+                Vector3 fullThrow = _GestureManager.currVel + controllerVelocityCross;
 
-                _bigFireboltSpawn.LaunchAllProjectiles(_palmLocation.forward, 0);
+                _bigFireboltSpawn.LaunchAllProjectiles(_PalmTransform.forward, 0);
 
                 //_applyMotion.ChangeMotion(_bigFireboltSpawn.instantiatedObject.transform, fullThrow, _gestureManager.angularVel);
 
@@ -160,7 +160,7 @@ public class NewFirebolt : SpellBlueprint
         }
         else
         {
-            _smallFireboltSpawn.LaunchAllProjectiles(_handLocation.forward, smallLaunchSpeed);
+            _smallFireboltSpawn.LaunchAllProjectiles(_HandTransform.forward, smallLaunchSpeed);
         }
     }
     public override void OnDeselect()
@@ -176,7 +176,7 @@ public class NewFirebolt : SpellBlueprint
     #region Velocity Things
     void CalculateOffset()
     {
-        Vector3 relPos = _palmLocation.position - transform.position;
+        Vector3 relPos = _PalmTransform.position - transform.position;
         relPos = Quaternion.Inverse(transform.rotation) * relPos;
         objectGrabOffset = relPos;
     }
@@ -194,8 +194,8 @@ public class NewFirebolt : SpellBlueprint
             {
                 currentVelocityFrameStep = 0;
             }
-            velocityFrames[currentVelocityFrameStep] = _gestureManager.currVel;
-            angularVelocityFrames[currentVelocityFrameStep] = _gestureManager.angularVel;
+            velocityFrames[currentVelocityFrameStep] = _GestureManager.currVel;
+            angularVelocityFrames[currentVelocityFrameStep] = _GestureManager.angularVel;
 
         }
     }

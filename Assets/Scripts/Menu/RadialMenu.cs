@@ -12,10 +12,6 @@ public class RadialMenu : MonoBehaviour
     public float minimumDistance = .1f;
     public UnityEvent NoSelection = new UnityEvent();
     public AudioClip invokeSound;
-    [Header("Inputs")]
-    public InputActionReference spawnButton;
-
-
 
     private RadialSection[] radialSections;
     private GameObject player;
@@ -24,8 +20,8 @@ public class RadialMenu : MonoBehaviour
     private Vector3 currentVector;
     private void Start()
     {
-        spawnButton.action.started += ShowMenu;
-        spawnButton.action.canceled += HideMenu;
+        //spawnButton.action.started += ShowMenu;
+        //spawnButton.action.canceled += HideMenu;
 
         player = Camera.main.gameObject;
 
@@ -35,8 +31,8 @@ public class RadialMenu : MonoBehaviour
     }
     private void OnDestroy()
     {
-        spawnButton.action.started -= ShowMenu;
-        spawnButton.action.canceled -= HideMenu;
+        //spawnButton.action.started -= ShowMenu;
+        //spawnButton.action.canceled -= HideMenu;
     }
 
     private void SetupSections()
@@ -115,18 +111,22 @@ public class RadialMenu : MonoBehaviour
             currentSelection.transform.localScale = Vector3.one;
         }
     }
-    private void HideMenu(InputAction.CallbackContext obj)
+    public void HideMenu()
     {
         InvokeSelection();
         gameObject.SetActive(false);
         gameObject.transform.localScale = Vector3.one;
     }
-    private void ShowMenu(InputAction.CallbackContext obj)
+    public void ShowMenu()
     {
         gameObject.transform.position = selectionCursor.position;
 
         Vector3 targetRot = new Vector3(player.transform.position.x, transform.position.y, player.transform.position.z);
         gameObject.transform.LookAt(targetRot);
+
+        //When the radial menu looks at the player the left and right parts of the menu are flipped. So here I flip it around again.
+        //Is this the best way to fix this? No not at all, but it should work
+        gameObject.transform.rotation *= Quaternion.Euler(0, 180, 0);
 
         gameObject.SetActive(true);
 

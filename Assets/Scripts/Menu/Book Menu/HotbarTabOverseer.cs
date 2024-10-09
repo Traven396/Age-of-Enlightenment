@@ -8,7 +8,7 @@ using UnityEngine.UI;
 
 public class HotbarTabOverseer : MonoBehaviour, ITab
 {
-     private SpellListTab _spellTab;
+    private SpellListTab _spellTab;
 
     [Header("UI Components")]
     [SerializeField] private Image arrowGO;
@@ -72,33 +72,4 @@ public class HotbarTabOverseer : MonoBehaviour, ITab
         }
     }
     #endregion
-}
-[Serializable]
-public class FullSpellObject
-{
-    public Sprite spellDisplayIcon;
-    public string spellName;
-    public CoreSpellComponents spellCouple;
-    [TextArea(5, 10)]
-    public string spellDescription;
-    public SpellSchool school;
-
-}
-[Serializable]
-public class CoreSpellComponents
-{
-    public GameObject spellMechanics;
-    public GameObject spellCircle;
-
-    public AnimatorOverrideController RightAnimationController;
-    public AnimatorOverrideController LeftAnimationController;
-
-    public CoreSpellComponents(GameObject newMechanics, GameObject newCircle, AnimatorOverrideController newRight, AnimatorOverrideController newLeft)
-    {
-        spellCircle = newCircle;
-        spellMechanics = newMechanics;
-        RightAnimationController = newRight;
-        LeftAnimationController = newLeft;
-
-    }
 }

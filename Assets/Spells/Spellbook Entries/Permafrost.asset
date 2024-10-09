@@ -15,10 +15,8 @@ MonoBehaviour:
   Name: Permafrost
   SpellDisplayIcon: {fileID: 21300000, guid: 2bccd332882fcd14b9e4c377e432c587, type: 3}
   SpellComponents:
-    spellMechanics: {fileID: 8734080438495235114, guid: f9e9cf60e81d54f44b394bb101d0e001, type: 3}
-    spellCircle: {fileID: 7044319267907947110, guid: 6ad7a276f54bf84469f31f098b7b4567, type: 3}
-    RightAnimationController: {fileID: 0}
-    LeftAnimationController: {fileID: 0}
+    SpellMechanics: {fileID: 8734080438495235114, guid: f9e9cf60e81d54f44b394bb101d0e001, type: 3}
+    SpellCircle: {fileID: 7044319267907947110, guid: 6ad7a276f54bf84469f31f098b7b4567, type: 3}
   SpellDescription: 'By holding trigger you can charge up multiple spells to be launched
     in tandem. The more circles that appear the more that will be launched, with
     a maximum of 5 at a time.

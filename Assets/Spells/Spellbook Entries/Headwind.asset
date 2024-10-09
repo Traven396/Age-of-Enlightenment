@@ -15,10 +15,8 @@ MonoBehaviour:
   Name: Headwind
   SpellDisplayIcon: {fileID: 21300000, guid: 9e5abf9cdb5d3c9488575cebfef9b5bf, type: 3}
   SpellComponents:
-    spellMechanics: {fileID: 5100481798701309517, guid: 380c38a6092b35545bf919fe21feec2d, type: 3}
-    spellCircle: {fileID: 776886629064782777, guid: 17357bdac2637724fb6b852b7c621658, type: 3}
-    RightAnimationController: {fileID: 0}
-    LeftAnimationController: {fileID: 0}
+    SpellMechanics: {fileID: 5100481798701309517, guid: 380c38a6092b35545bf919fe21feec2d, type: 3}
+    SpellCircle: {fileID: 776886629064782777, guid: 17357bdac2637724fb6b852b7c621658, type: 3}
   SpellDescription: 'By pressing and releasing trigger you can increase your passive
     movement speed. This spell will stay active even if you select a different one.
     It will decrease your Max Mana as a cost though.

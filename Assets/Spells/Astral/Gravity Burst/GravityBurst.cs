@@ -30,8 +30,8 @@ public class GravityBurst : SpellBlueprint
         _chargeable = GetComponent<Chargeable>();
         _applyMotion = GetComponent<ApplyMotion>();
 
-        spellCircle = circleHolder.transform.GetChild(circleHolder.transform.childCount - 1).gameObject;
-        spellSound = spellCircle.GetComponent<AudioSource>();
+        _SpellCircle = _CircleHolderTransform.transform.GetChild(_CircleHolderTransform.transform.childCount - 1).gameObject;
+        spellSound = _SpellCircle.GetComponent<AudioSource>();
 
     }
     public override void TriggerPress()
@@ -48,18 +48,18 @@ public class GravityBurst : SpellBlueprint
     {
         base.TriggerHold();
 
-        iTween.ScaleUpdate(spellCircle, Vector3.one * 3, 6);
+        iTween.ScaleUpdate(_SpellCircle, Vector3.one * 3, 6);
 
         if (currentHand == 0)
         {
-            iTween.RotateUpdate(spellCircle, (circleHolder.transform.rotation * Quaternion.Euler(-90, 0, 0)).eulerAngles, .4f);
+            iTween.RotateUpdate(_SpellCircle, (_CircleHolderTransform.transform.rotation * Quaternion.Euler(-90, 0, 0)).eulerAngles, .4f);
         }
         else
         {
             
-            iTween.RotateUpdate(spellCircle, (circleHolder.transform.rotation * Quaternion.Euler(90, 0, 0)).eulerAngles, .4f);
+            iTween.RotateUpdate(_SpellCircle, (_CircleHolderTransform.transform.rotation * Quaternion.Euler(90, 0, 0)).eulerAngles, .4f);
         }
-        iTween.MoveUpdate(spellCircle, circleHolder.transform.position + circleHolder.transform.TransformDirection(new Vector3(0, -.05f, .25f)), .4f);
+        iTween.MoveUpdate(_SpellCircle, _CircleHolderTransform.transform.position + _CircleHolderTransform.transform.TransformDirection(new Vector3(0, -.05f, .25f)), .4f);
     }
     public override void TriggerRelease()
     {
@@ -70,24 +70,24 @@ public class GravityBurst : SpellBlueprint
         {
             int curManaCost = (int)(baseManaCost * _chargeable.GetCurrentCharge()) / 2;
             
-            if (Player.Instance.currentMana >= curManaCost)
+            if (CheckCurrentMana(curManaCost))
             {
                 spellSound.pitch = Random.Range(.35f, .45f);
                 spellSound.Play();
 
-                RaycastHit[] hits = _targetManager.HandSphereCastAll(currentHand, castDistance, sphereRadius);
+                RaycastHit[] hits = _TargetManager.HandSphereCastAll(currentHand, castDistance, sphereRadius);
 
                 foreach (RaycastHit hit in hits)
                 {
                     Rigidbody rb = hit.rigidbody;
                     if (hit.collider.TryGetComponent(out IEntity entity))
                     {
-                        Vector3 forceDirection = (rb.position - _handLocation.position).normalized;
+                        Vector3 forceDirection = (rb.position - _HandTransform.position).normalized;
                         entity.ApplyMotion(forceDirection * _applyMotion.forceMultiplier * _chargeable.GetCurrentCharge(), _applyMotion.forceType);
                     }
                     else if (rb != null)
                     {
-                        Vector3 forceDirection = (rb.position - _handLocation.position).normalized;
+                        Vector3 forceDirection = (rb.position - _HandTransform.position).normalized;
                         _applyMotion.Cast(rb, forceDirection * _chargeable.GetCurrentCharge());
                     }
                     if (hit.collider.TryGetComponent(out IDamageable target))
@@ -97,37 +97,37 @@ public class GravityBurst : SpellBlueprint
                 }
                 StartCoroutine(CirclePushVisuals());
 
-                Player.Instance.SubtractMana(curManaCost);
+                PlayerSingleton.Instance._Stats.SubtractMana(curManaCost);
             }
         }
         else
         {
             visualMotion = true;
         }
-        iTween.ScaleTo(spellCircle, Vector3.one, .5f);
+        iTween.ScaleTo(_SpellCircle, Vector3.one, .5f);
     }
     private void Update()
     {
         if (!triggerPressed && visualMotion)
         {
-            if (Vector3.Distance(spellCircle.transform.position, circleHolder.transform.position) > .005f)
+            if (Vector3.Distance(_SpellCircle.transform.position, _CircleHolderTransform.transform.position) > .005f)
             {
-                iTween.MoveUpdate(spellCircle, circleHolder.transform.position, .4f);
+                iTween.MoveUpdate(_SpellCircle, _CircleHolderTransform.transform.position, .4f);
             }
             else
             {
                 visualMotion = false;
             }
-            if(Quaternion.Angle(spellCircle.transform.rotation, circleHolder.transform.rotation) > .1)
+            if(Quaternion.Angle(_SpellCircle.transform.rotation, _CircleHolderTransform.transform.rotation) > .1)
             {
-                iTween.RotateUpdate(spellCircle, circleHolder.transform.rotation.eulerAngles, .1f);
+                iTween.RotateUpdate(_SpellCircle, _CircleHolderTransform.transform.rotation.eulerAngles, .1f);
             }
         }
     }
 
     IEnumerator CirclePushVisuals()
     {
-        iTween.PunchPosition(spellCircle, new Vector3(0, 0, .1f), .3f);
+        iTween.PunchPosition(_SpellCircle, new Vector3(0, 0, .1f), .3f);
 
         yield return new WaitForSeconds(.5f);
 

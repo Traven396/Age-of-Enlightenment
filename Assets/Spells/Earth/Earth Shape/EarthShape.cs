@@ -41,7 +41,7 @@ public class EarthShape : SpellBlueprint
     {
         if (!triggerPressed)
         {
-            _visualsManager.ReturnCircleToHolder(currentHand);
+            _VisualsManager.ReturnCircleToHolder(currentHand);
         }
         if (timerGoing)
         {
@@ -59,7 +59,7 @@ public class EarthShape : SpellBlueprint
     {
         base.TriggerHold();
 
-        hit = _targetManager.RaycastFromHandToGround(currentHand, _maxDistance);
+        hit = _TargetManager.RaycastFromHandToGround(currentHand, _maxDistance);
 
         Targetter.TargetMove(hit);
     }
@@ -136,7 +136,7 @@ public class EarthShape : SpellBlueprint
                 timerGoing = false;
                 pillarModeActive = true;
 
-                iTween.ScaleTo(spellCircle, Vector3.one * 7.5f, .3f);
+                iTween.ScaleTo(_SpellCircle, Vector3.one * 7.5f, .3f);
             }
 
 
@@ -151,19 +151,19 @@ public class EarthShape : SpellBlueprint
             }
             if (currentSpawnedObjects.Count <= _maxSummonedObjects)
             {
-                if (PullGesture.GesturePerformed(_gestureManager, out Vector3 direction) && !gestureAlreadyPerformed && Targetter.readyToCast)
+                if (PullGesture.GesturePerformed(_HandPhysicsTracker, out Vector3 direction) && !gestureAlreadyPerformed && Targetter.readyToCast)
                 {
-                    if (Vector3.Angle(-_gestureManager.rightVectorSafe.normalized, lastHit.normal.normalized) <= _maxAngle)
+                    if (Vector3.Angle(-_GestureManager.rightVectorSafe.normalized, lastHit.normal.normalized) <= _maxAngle)
                     {
                         timerGoing = false;
 
-                        startPos = _handLocation.position - playerRb.transform.position;
+                        startPos = _HandTransform.position - _PlayerRb.transform.position;
 
                         //Make sure the player cant summon two in one casting
                         gestureAlreadyPerformed = true;
 
                         //Create teh actual pillar
-                        Spawner.Cast(spellCircle.transform);
+                        Spawner.Cast(_SpellCircle.transform);
 
 
 
@@ -187,13 +187,13 @@ public class EarthShape : SpellBlueprint
 
                         spawnedObject.ChangeMaterial(lastHit.transform.GetComponent<Renderer>().material.color);
 
-                        spawnedObject.RotateTowardsPoint(playerInNewWorldSpace, spellCircle.transform.up);
+                        spawnedObject.RotateTowardsPoint(playerInNewWorldSpace, _SpellCircle.transform.up);
 
                         //Add the new pillar to the list
                         currentSpawnedObjects.Add(Spawner.instantiatedObject);
 
                         //Subtract mana from the player
-                        Player.Instance.SubtractMana(_manaCost);
+                        PlayerSingleton.Instance.SubtractMana(_manaCost);
                     }
                 }  
             }
@@ -204,7 +204,7 @@ public class EarthShape : SpellBlueprint
         base.GripHoldFixed();
         if (gestureAlreadyPerformed)
         {
-            var offset = MathF.Round(Vector3.Dot((_handLocation.position - playerRb.transform.position) - startPos, lastHit.normal), 4) * 10;
+            var offset = MathF.Round(Vector3.Dot((_HandTransform.position - _PlayerRb.transform.position) - startPos, lastHit.normal), 4) * 10;
             if(pillarModeActive)
                 offset = Mathf.Clamp(offset, 0, 6.5f);
             else

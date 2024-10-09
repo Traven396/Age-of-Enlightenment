@@ -15,10 +15,8 @@ MonoBehaviour:
   Name: Ice Knife
   SpellDisplayIcon: {fileID: 21300000, guid: f5ab3f534c1138f4786f23cd74103223, type: 3}
   SpellComponents:
-    spellMechanics: {fileID: 3900314875810967446, guid: 855878f5459ed114caa22f397db85310, type: 3}
-    spellCircle: {fileID: 776886629064782777, guid: 64023b342b7887645a1347d15aec6b5d, type: 3}
-    RightAnimationController: {fileID: 0}
-    LeftAnimationController: {fileID: 0}
+    SpellMechanics: {fileID: 3900314875810967446, guid: 855878f5459ed114caa22f397db85310, type: 3}
+    SpellCircle: {fileID: 776886629064782777, guid: 64023b342b7887645a1347d15aec6b5d, type: 3}
   SpellDescription: 'To start aiming the spell hold down the grip button, then by
     holding trigger you can charge the spike on the back of your hand. The longer
     you charge, the stronger it will become.

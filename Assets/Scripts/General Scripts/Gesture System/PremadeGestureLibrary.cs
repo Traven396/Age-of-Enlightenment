@@ -4,12 +4,12 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using UnityEngine;
 
-namespace AgeOfEnlightenment.GestureDetection
+namespace FoxheadDev.GestureDetection
 {
     using NamedConditionSet = Tuple<string, Func<bool>[]>;
     using NamedCondition = Tuple<string, Func<bool>>;
 
-    public static class PremadeGestureLibrary
+    public class PremadeGestureLibrary
     {
 
         /*
@@ -25,9 +25,9 @@ namespace AgeOfEnlightenment.GestureDetection
          *  
          */
         //The consistent velocity threshold to be used over and over
-        const float SmallGestureSpeed = 2f;
-        const float MediumGestureSpeed = 3f;
-        const float LargeGestureSpeed = 4f;
+        public const float SmallGestureSpeed = 2f;
+        public const float MediumGestureSpeed = 3f;
+        public const float LargeGestureSpeed = 4f;
 
         /// <summary>
         /// A motion towards the positive Z axis of the hand. Some directions of this gesture are almost physically impossible, so be aware lol
@@ -45,28 +45,64 @@ namespace AgeOfEnlightenment.GestureDetection
             switch (direction)
             {
                 case ViewSpaceDirection.Left:
-                    gesture = () => playerHand.SelfSpaceVelocity.z >= minVelocity && playerHand.ViewSpaceVelocity.x <= -minVelocity;
+                    gesture = () => playerHand.SelfSpaceVelocity.z >= minVelocity &&
+                    playerHand.ViewSpaceVelocity.x <= -minVelocity &&
+                    playerHand.SelfSpaceVelocity.MostlyZ() &&
+                    playerHand.ViewSpaceVelocity.MostlyX();
                     break;
                 case ViewSpaceDirection.Right:
-                    gesture = () => playerHand.SelfSpaceVelocity.z >= minVelocity && playerHand.ViewSpaceVelocity.x >= minVelocity;
+                    gesture = () => playerHand.SelfSpaceVelocity.z >= minVelocity && 
+                    playerHand.ViewSpaceVelocity.x >= minVelocity &&
+                    playerHand.SelfSpaceVelocity.MostlyZ() &&
+                    playerHand.ViewSpaceVelocity.MostlyX();
                     break;
                 case ViewSpaceDirection.Up:
-                    gesture = () => playerHand.SelfSpaceVelocity.z >= minVelocity && playerHand.ViewSpaceVelocity.y >= minVelocity;
+                    gesture = () => playerHand.SelfSpaceVelocity.z >= minVelocity && 
+                    playerHand.ViewSpaceVelocity.y >= minVelocity &&
+                    playerHand.SelfSpaceVelocity.MostlyZ() &&
+                    playerHand.ViewSpaceVelocity.MostlyY();
                     break;
                 case ViewSpaceDirection.Down:
-                    gesture = () => playerHand.SelfSpaceVelocity.z >= minVelocity && playerHand.ViewSpaceVelocity.y <= -minVelocity;
+                    gesture = () => playerHand.SelfSpaceVelocity.z >= minVelocity && 
+                    playerHand.ViewSpaceVelocity.y <= -minVelocity &&
+                    playerHand.SelfSpaceVelocity.MostlyZ() &&
+                    playerHand.ViewSpaceVelocity.MostlyY();
                     break;
                 case ViewSpaceDirection.Forward:
-                    gesture = () => playerHand.SelfSpaceVelocity.z >= minVelocity && playerHand.ViewSpaceVelocity.z >= minVelocity;
+                    gesture = () => playerHand.SelfSpaceVelocity.z >= minVelocity && 
+                    playerHand.ViewSpaceVelocity.z >= minVelocity &&
+                    playerHand.SelfSpaceVelocity.MostlyZ() &&
+                    playerHand.ViewSpaceVelocity.MostlyZ();
                     break;
                 case ViewSpaceDirection.Back:
-                    gesture = () => playerHand.SelfSpaceVelocity.z >= minVelocity && playerHand.ViewSpaceVelocity.z <= -minVelocity;
+                    gesture = () => playerHand.SelfSpaceVelocity.z >= minVelocity && 
+                    playerHand.ViewSpaceVelocity.z <= -minVelocity &&
+                    playerHand.SelfSpaceVelocity.MostlyZ() &&
+                    playerHand.ViewSpaceVelocity.MostlyZ();
                     break;
-                case ViewSpaceDirection.InwardH:
-                    gesture = () => playerHand.SelfSpaceVelocity.z >= minVelocity && playerHand.leftHand ? playerHand.ViewSpaceVelocity.x >= minVelocity : playerHand.ViewSpaceVelocity.x <= -minVelocity;
+                case ViewSpaceDirection.InwardHoriz:
+                    if(playerHand.LeftHand)
+                        gesture = () => playerHand.SelfSpaceVelocity.z >= minVelocity && 
+                        playerHand.ViewSpaceVelocity.x >= minVelocity &&
+                        playerHand.SelfSpaceVelocity.MostlyZ() &&
+                        playerHand.ViewSpaceVelocity.MostlyX();
+                    else
+                        gesture = () => playerHand.SelfSpaceVelocity.z >= minVelocity &&
+                        playerHand.ViewSpaceVelocity.x >= minVelocity &&
+                        playerHand.SelfSpaceVelocity.MostlyZ() &&
+                        playerHand.ViewSpaceVelocity.MostlyX();
                     break;
-                case ViewSpaceDirection.OutwardH:
-                    gesture = () => playerHand.SelfSpaceVelocity.z >= minVelocity && !playerHand.leftHand ? playerHand.ViewSpaceVelocity.x >= minVelocity : playerHand.ViewSpaceVelocity.x <= -minVelocity;
+                case ViewSpaceDirection.OutwardHoriz:
+                    if (playerHand.LeftHand)
+                        gesture = () => playerHand.SelfSpaceVelocity.z >= minVelocity &&
+                        playerHand.ViewSpaceVelocity.x >= minVelocity &&
+                        playerHand.SelfSpaceVelocity.MostlyZ() &&
+                        playerHand.ViewSpaceVelocity.MostlyX();
+                    else
+                        gesture = () => playerHand.SelfSpaceVelocity.z >= minVelocity &&
+                        playerHand.ViewSpaceVelocity.x <= -minVelocity &&
+                        playerHand.SelfSpaceVelocity.MostlyZ() &&
+                        playerHand.ViewSpaceVelocity.MostlyX();
                     break;
             }
 
@@ -89,28 +125,65 @@ namespace AgeOfEnlightenment.GestureDetection
             switch (direction)
             {
                 case ViewSpaceDirection.Left:
-                    gesture = () => playerHand.SelfSpaceVelocity.z <= -minVelocity && playerHand.ViewSpaceVelocity.x <= -minVelocity;
+                    gesture = () => playerHand.SelfSpaceVelocity.z <= -minVelocity && 
+                    playerHand.ViewSpaceVelocity.x <= -minVelocity &&
+                    playerHand.SelfSpaceVelocity.MostlyZ() &&
+                    playerHand.ViewSpaceVelocity.MostlyX();
                     break;
                 case ViewSpaceDirection.Right:
-                    gesture = () => playerHand.SelfSpaceVelocity.z <= -minVelocity && playerHand.ViewSpaceVelocity.x >= minVelocity;
+                    gesture = () => playerHand.SelfSpaceVelocity.z <= -minVelocity && 
+                    playerHand.ViewSpaceVelocity.x >= minVelocity &&
+                    playerHand.SelfSpaceVelocity.MostlyZ() &&
+                    playerHand.ViewSpaceVelocity.MostlyX();
                     break;
                 case ViewSpaceDirection.Up:
-                    gesture = () => playerHand.SelfSpaceVelocity.z <= -minVelocity && playerHand.ViewSpaceVelocity.y >= minVelocity;
+                    gesture = () => playerHand.SelfSpaceVelocity.z <= -minVelocity && 
+                    playerHand.ViewSpaceVelocity.y >= minVelocity &&
+                    playerHand.SelfSpaceVelocity.MostlyZ() &&
+                    playerHand.ViewSpaceVelocity.MostlyY();
                     break;
                 case ViewSpaceDirection.Down:
-                    gesture = () => playerHand.SelfSpaceVelocity.z <= -minVelocity && playerHand.ViewSpaceVelocity.y <= -minVelocity;
+                    gesture = () => playerHand.SelfSpaceVelocity.z <= -minVelocity && 
+                    playerHand.ViewSpaceVelocity.y <= -minVelocity &&
+                    playerHand.SelfSpaceVelocity.MostlyZ() &&
+                    playerHand.ViewSpaceVelocity.MostlyY();
                     break;
                 case ViewSpaceDirection.Forward:
-                    gesture = () => playerHand.SelfSpaceVelocity.z <= -minVelocity && playerHand.ViewSpaceVelocity.z >= minVelocity;
+                    gesture = () => playerHand.SelfSpaceVelocity.z <= -minVelocity && 
+                    playerHand.ViewSpaceVelocity.z >= minVelocity &&
+                    playerHand.SelfSpaceVelocity.MostlyZ() &&
+                    playerHand.ViewSpaceVelocity.MostlyZ();
                     break;
                 case ViewSpaceDirection.Back:
-                    gesture = () => playerHand.SelfSpaceVelocity.z <= -minVelocity && playerHand.ViewSpaceVelocity.z <= -minVelocity;
+                    gesture = () => playerHand.SelfSpaceVelocity.z <= -minVelocity && 
+                    playerHand.ViewSpaceVelocity.z <= -minVelocity &&
+                    playerHand.SelfSpaceVelocity.MostlyZ() &&
+                    playerHand.ViewSpaceVelocity.MostlyZ();
                     break;
-                case ViewSpaceDirection.InwardH:
-                    gesture = () => playerHand.SelfSpaceVelocity.z <= -minVelocity && playerHand.leftHand ? playerHand.ViewSpaceVelocity.x >= minVelocity : playerHand.ViewSpaceVelocity.x <= -minVelocity;
+                case ViewSpaceDirection.InwardHoriz:
+                    if (playerHand.LeftHand)
+                        gesture = () => playerHand.SelfSpaceVelocity.z <= -minVelocity &&
+                        playerHand.ViewSpaceVelocity.x >= minVelocity &&
+                        playerHand.SelfSpaceVelocity.MostlyZ() &&
+                        playerHand.ViewSpaceVelocity.MostlyX();
+                    else
+                        gesture = () => playerHand.SelfSpaceVelocity.z <= -minVelocity &&
+                        playerHand.ViewSpaceVelocity.x <= -minVelocity &&
+                        playerHand.SelfSpaceVelocity.MostlyZ() &&
+                        playerHand.ViewSpaceVelocity.MostlyX();
+                    
                     break;
-                case ViewSpaceDirection.OutwardH:
-                    gesture = () => playerHand.SelfSpaceVelocity.z <= -minVelocity && !playerHand.leftHand ? playerHand.ViewSpaceVelocity.x >= minVelocity : playerHand.ViewSpaceVelocity.x <= -minVelocity;
+                case ViewSpaceDirection.OutwardHoriz:
+                    if (playerHand.LeftHand)
+                        gesture = () => playerHand.SelfSpaceVelocity.z <= -minVelocity && 
+                        playerHand.ViewSpaceVelocity.x <= -minVelocity &&
+                        playerHand.SelfSpaceVelocity.MostlyZ() &&
+                        playerHand.ViewSpaceVelocity.MostlyX(); 
+                    else
+                        gesture = () => playerHand.SelfSpaceVelocity.z <= -minVelocity && 
+                        playerHand.ViewSpaceVelocity.x >= minVelocity &&
+                        playerHand.SelfSpaceVelocity.MostlyZ() &&
+                        playerHand.ViewSpaceVelocity.MostlyX();
                     break;
             }
 
@@ -133,28 +206,64 @@ namespace AgeOfEnlightenment.GestureDetection
             switch (direction)
             {
                 case ViewSpaceDirection.Left:
-                    gesture = () => playerHand.SelfSpaceVelocity.x <= -minVelocity && playerHand.ViewSpaceVelocity.x <= -minVelocity;
+                    gesture = () => playerHand.SelfSpaceVelocity.x <= -minVelocity && 
+                    playerHand.ViewSpaceVelocity.x <= -minVelocity &&
+                    playerHand.SelfSpaceVelocity.MostlyX() &&
+                    playerHand.ViewSpaceVelocity.MostlyX();
                     break;
                 case ViewSpaceDirection.Right:
-                    gesture = () => playerHand.SelfSpaceVelocity.x <= -minVelocity && playerHand.ViewSpaceVelocity.x >= minVelocity;
+                    gesture = () => playerHand.SelfSpaceVelocity.x <= -minVelocity && 
+                    playerHand.ViewSpaceVelocity.x >= minVelocity &&
+                    playerHand.SelfSpaceVelocity.MostlyX() &&
+                    playerHand.ViewSpaceVelocity.MostlyX();
                     break;
                 case ViewSpaceDirection.Up:
-                    gesture = () => playerHand.SelfSpaceVelocity.x <= -minVelocity && playerHand.ViewSpaceVelocity.y >= minVelocity;
+                    gesture = () => playerHand.SelfSpaceVelocity.x <= -minVelocity && 
+                    playerHand.ViewSpaceVelocity.y >= minVelocity &&
+                    playerHand.SelfSpaceVelocity.MostlyX() &&
+                    playerHand.ViewSpaceVelocity.MostlyY();
                     break;
                 case ViewSpaceDirection.Down:
-                    gesture = () => playerHand.SelfSpaceVelocity.x <= -minVelocity && playerHand.ViewSpaceVelocity.y <= -minVelocity;
+                    gesture = () => playerHand.SelfSpaceVelocity.x <= -minVelocity && 
+                    playerHand.ViewSpaceVelocity.y <= -minVelocity &&
+                    playerHand.SelfSpaceVelocity.MostlyX() &&
+                    playerHand.ViewSpaceVelocity.MostlyY();
                     break;
                 case ViewSpaceDirection.Forward:
-                    gesture = () => playerHand.SelfSpaceVelocity.x <= -minVelocity && playerHand.ViewSpaceVelocity.z >= minVelocity;
+                    gesture = () => playerHand.SelfSpaceVelocity.x <= -minVelocity && 
+                    playerHand.ViewSpaceVelocity.z >= minVelocity &&
+                    playerHand.SelfSpaceVelocity.MostlyX() &&
+                    playerHand.ViewSpaceVelocity.MostlyZ();
                     break;
                 case ViewSpaceDirection.Back:
-                    gesture = () => playerHand.SelfSpaceVelocity.x <= -minVelocity && playerHand.ViewSpaceVelocity.z <= -minVelocity;
+                    gesture = () => playerHand.SelfSpaceVelocity.x <= -minVelocity && 
+                    playerHand.ViewSpaceVelocity.z <= -minVelocity &&
+                    playerHand.SelfSpaceVelocity.MostlyX() &&
+                    playerHand.ViewSpaceVelocity.MostlyZ();
                     break;
-                case ViewSpaceDirection.InwardH:
-                    gesture = () => playerHand.SelfSpaceVelocity.x <= -minVelocity && playerHand.leftHand ? playerHand.ViewSpaceVelocity.x >= minVelocity : playerHand.ViewSpaceVelocity.x <= -minVelocity;
+                case ViewSpaceDirection.InwardHoriz:
+                    if (playerHand.LeftHand)
+                        gesture = () => playerHand.SelfSpaceVelocity.x <= -minVelocity &&
+                        playerHand.ViewSpaceVelocity.x >= minVelocity &&
+                        playerHand.SelfSpaceVelocity.MostlyX() &&
+                        playerHand.ViewSpaceVelocity.MostlyX();
+                    else
+                        gesture = () => playerHand.SelfSpaceVelocity.x <= -minVelocity &&
+                        playerHand.ViewSpaceVelocity.x <= -minVelocity &&
+                        playerHand.SelfSpaceVelocity.MostlyX() &&
+                        playerHand.ViewSpaceVelocity.MostlyX();
                     break;
-                case ViewSpaceDirection.OutwardH:
-                    gesture = () => playerHand.SelfSpaceVelocity.x <= -minVelocity && playerHand.leftHand ? playerHand.ViewSpaceVelocity.x <= -minVelocity : playerHand.ViewSpaceVelocity.x >= minVelocity;
+                case ViewSpaceDirection.OutwardHoriz:
+                    if (playerHand.LeftHand)
+                        gesture = () => playerHand.SelfSpaceVelocity.x <= -minVelocity &&
+                        playerHand.ViewSpaceVelocity.x <= -minVelocity &&
+                        playerHand.SelfSpaceVelocity.MostlyX() &&
+                        playerHand.ViewSpaceVelocity.MostlyX();
+                    else
+                        gesture = () => playerHand.SelfSpaceVelocity.x <= -minVelocity &&
+                        playerHand.ViewSpaceVelocity.x >= minVelocity &&
+                        playerHand.SelfSpaceVelocity.MostlyX() &&
+                        playerHand.ViewSpaceVelocity.MostlyX();
                     break;
             }
 
@@ -179,28 +288,64 @@ namespace AgeOfEnlightenment.GestureDetection
                 // These first two cases on Left and Right have the weird conditional at the end because we are Flipping the X axis so that gestures are universal for each hand
                 //The ? means that if the physics tracker IS the left hand, we use the >= side of it, and if its not the left hand we use the other
                 case ViewSpaceDirection.Left:
-                    gesture = () => playerHand.SelfSpaceVelocity.x >= minVelocity && playerHand.ViewSpaceVelocity.x <= -minVelocity;
+                    gesture = () => playerHand.SelfSpaceVelocity.x >= minVelocity && 
+                    playerHand.ViewSpaceVelocity.x <= -minVelocity &&
+                    playerHand.SelfSpaceVelocity.MostlyX() &&
+                    playerHand.ViewSpaceVelocity.MostlyX();
                     break;
                 case ViewSpaceDirection.Right:
-                    gesture = () => playerHand.SelfSpaceVelocity.x >= minVelocity && playerHand.ViewSpaceVelocity.x >= minVelocity;
+                    gesture = () => playerHand.SelfSpaceVelocity.x >= minVelocity && 
+                    playerHand.ViewSpaceVelocity.x >= minVelocity &&
+                    playerHand.SelfSpaceVelocity.MostlyX() &&
+                    playerHand.ViewSpaceVelocity.MostlyX();
                     break;
                 case ViewSpaceDirection.Up:
-                    gesture = () => playerHand.SelfSpaceVelocity.x >= minVelocity && playerHand.ViewSpaceVelocity.y >= minVelocity;
+                    gesture = () => playerHand.SelfSpaceVelocity.x >= minVelocity && 
+                    playerHand.ViewSpaceVelocity.y >= minVelocity &&
+                    playerHand.SelfSpaceVelocity.MostlyX() &&
+                    playerHand.ViewSpaceVelocity.MostlyY();
                     break;
                 case ViewSpaceDirection.Down:
-                    gesture = () => playerHand.SelfSpaceVelocity.x >= minVelocity && playerHand.ViewSpaceVelocity.y <= -minVelocity;
+                    gesture = () => playerHand.SelfSpaceVelocity.x >= minVelocity && 
+                    playerHand.ViewSpaceVelocity.y <= -minVelocity &&
+                    playerHand.SelfSpaceVelocity.MostlyX() &&
+                    playerHand.ViewSpaceVelocity.MostlyY();
                     break;
                 case ViewSpaceDirection.Forward:
-                    gesture = () => playerHand.SelfSpaceVelocity.x >= minVelocity && playerHand.ViewSpaceVelocity.z >= minVelocity;
+                    gesture = () => playerHand.SelfSpaceVelocity.x >= minVelocity && 
+                    playerHand.ViewSpaceVelocity.z >= minVelocity &&
+                    playerHand.SelfSpaceVelocity.MostlyX() &&
+                    playerHand.ViewSpaceVelocity.MostlyZ();
                     break;
                 case ViewSpaceDirection.Back:
-                    gesture = () => playerHand.SelfSpaceVelocity.x >= minVelocity && playerHand.ViewSpaceVelocity.z <= -minVelocity;
+                    gesture = () => playerHand.SelfSpaceVelocity.x >= minVelocity && 
+                    playerHand.ViewSpaceVelocity.z <= -minVelocity &&
+                    playerHand.SelfSpaceVelocity.MostlyX() &&
+                    playerHand.ViewSpaceVelocity.MostlyZ();
                     break;
-                case ViewSpaceDirection.InwardH:
-                    gesture = () => playerHand.SelfSpaceVelocity.x >= minVelocity && playerHand.leftHand ? playerHand.ViewSpaceVelocity.x >= minVelocity : playerHand.ViewSpaceVelocity.x <= -minVelocity;
+                case ViewSpaceDirection.InwardHoriz:
+                    if (playerHand.LeftHand)
+                        gesture = () => playerHand.SelfSpaceVelocity.x >= minVelocity &&
+                        playerHand.ViewSpaceVelocity.x >= minVelocity &&
+                        playerHand.SelfSpaceVelocity.MostlyX() &&
+                        playerHand.ViewSpaceVelocity.MostlyX();
+                    else
+                        gesture = () => playerHand.SelfSpaceVelocity.x >= minVelocity &&
+                        playerHand.ViewSpaceVelocity.x <= -minVelocity &&
+                        playerHand.SelfSpaceVelocity.MostlyX() &&
+                        playerHand.ViewSpaceVelocity.MostlyX();
                     break;
-                case ViewSpaceDirection.OutwardH:
-                    gesture = () => playerHand.SelfSpaceVelocity.x >= minVelocity && playerHand.leftHand ? playerHand.ViewSpaceVelocity.x <= -minVelocity : playerHand.ViewSpaceVelocity.x >= minVelocity;
+                case ViewSpaceDirection.OutwardHoriz:
+                    if (playerHand.LeftHand)
+                        gesture = () => playerHand.SelfSpaceVelocity.x >= minVelocity &&
+                        playerHand.ViewSpaceVelocity.x <= -minVelocity &&
+                        playerHand.SelfSpaceVelocity.MostlyX() &&
+                        playerHand.ViewSpaceVelocity.MostlyX();
+                    else
+                        gesture = () => playerHand.SelfSpaceVelocity.x >= minVelocity &&
+                        playerHand.ViewSpaceVelocity.x >= minVelocity &&
+                        playerHand.SelfSpaceVelocity.MostlyX() &&
+                        playerHand.ViewSpaceVelocity.MostlyX();
                     break;
             }
 
@@ -223,28 +368,64 @@ namespace AgeOfEnlightenment.GestureDetection
             switch (direction)
             {
                 case ViewSpaceDirection.Left:
-                    gesture = () => playerHand.SelfSpaceVelocity.y >= minVelocity && playerHand.ViewSpaceVelocity.x <= -minVelocity;
+                    gesture = () => playerHand.SelfSpaceVelocity.y >= minVelocity && 
+                    playerHand.ViewSpaceVelocity.x <= -minVelocity &&
+                    playerHand.SelfSpaceVelocity.MostlyY() &&
+                    playerHand.ViewSpaceVelocity.MostlyX();
                     break;
                 case ViewSpaceDirection.Right:
-                    gesture = () => playerHand.SelfSpaceVelocity.y >= minVelocity && playerHand.ViewSpaceVelocity.x >= minVelocity;
+                    gesture = () => playerHand.SelfSpaceVelocity.y >= minVelocity && 
+                    playerHand.ViewSpaceVelocity.x >= minVelocity &&
+                    playerHand.SelfSpaceVelocity.MostlyY() &&
+                    playerHand.ViewSpaceVelocity.MostlyX();
                     break;
                 case ViewSpaceDirection.Up:
-                    gesture = () => playerHand.SelfSpaceVelocity.y >= minVelocity && playerHand.ViewSpaceVelocity.y >= minVelocity;
+                    gesture = () => playerHand.SelfSpaceVelocity.y >= minVelocity && 
+                    playerHand.ViewSpaceVelocity.y >= minVelocity &&
+                    playerHand.SelfSpaceVelocity.MostlyY() &&
+                    playerHand.ViewSpaceVelocity.MostlyY();
                     break;
                 case ViewSpaceDirection.Down:
-                    gesture = () => playerHand.SelfSpaceVelocity.y >= minVelocity && playerHand.ViewSpaceVelocity.y <= -minVelocity;
+                    gesture = () => playerHand.SelfSpaceVelocity.y >= minVelocity && 
+                    playerHand.ViewSpaceVelocity.y <= -minVelocity &&
+                    playerHand.SelfSpaceVelocity.MostlyY() &&
+                    playerHand.ViewSpaceVelocity.MostlyY();
                     break;
                 case ViewSpaceDirection.Forward:
-                    gesture = () => playerHand.SelfSpaceVelocity.y >= minVelocity && playerHand.ViewSpaceVelocity.z >= minVelocity;
+                    gesture = () => playerHand.SelfSpaceVelocity.y >= minVelocity && 
+                    playerHand.ViewSpaceVelocity.z >= minVelocity &&
+                    playerHand.SelfSpaceVelocity.MostlyY() &&
+                    playerHand.ViewSpaceVelocity.MostlyZ();
                     break;
                 case ViewSpaceDirection.Back:
-                    gesture = () => playerHand.SelfSpaceVelocity.y >= minVelocity && playerHand.ViewSpaceVelocity.z <= -minVelocity;
+                    gesture = () => playerHand.SelfSpaceVelocity.y >= minVelocity && 
+                    playerHand.ViewSpaceVelocity.z <= -minVelocity &&
+                    playerHand.SelfSpaceVelocity.MostlyY() &&
+                    playerHand.ViewSpaceVelocity.MostlyZ();
                     break;
-                case ViewSpaceDirection.InwardH:
-                    gesture = () => playerHand.SelfSpaceVelocity.y >= minVelocity && playerHand.leftHand ? playerHand.ViewSpaceVelocity.x >= minVelocity : playerHand.ViewSpaceVelocity.x <= -minVelocity;
+                case ViewSpaceDirection.InwardHoriz:
+                    if(playerHand.LeftHand)
+                        gesture = () => playerHand.SelfSpaceVelocity.y >= minVelocity && 
+                        playerHand.ViewSpaceVelocity.x >= minVelocity &&
+                        playerHand.SelfSpaceVelocity.MostlyY() &&
+                        playerHand.ViewSpaceVelocity.MostlyX();
+                    else
+                        gesture = () => playerHand.SelfSpaceVelocity.y >= minVelocity && 
+                        playerHand.ViewSpaceVelocity.x <= -minVelocity &&
+                        playerHand.SelfSpaceVelocity.MostlyY() &&
+                        playerHand.ViewSpaceVelocity.MostlyX();
                     break;
-                case ViewSpaceDirection.OutwardH:
-                    gesture = () => playerHand.SelfSpaceVelocity.y >= minVelocity && !playerHand.leftHand ? playerHand.ViewSpaceVelocity.x >= minVelocity : playerHand.ViewSpaceVelocity.x <= -minVelocity;
+                case ViewSpaceDirection.OutwardHoriz:
+                    if(playerHand.LeftHand)
+                        gesture = () => playerHand.SelfSpaceVelocity.y >= minVelocity &&
+                        playerHand.ViewSpaceVelocity.x <= -minVelocity &&
+                        playerHand.SelfSpaceVelocity.MostlyY() &&
+                        playerHand.ViewSpaceVelocity.MostlyX();
+                    else
+                        gesture = () => playerHand.SelfSpaceVelocity.y >= minVelocity &&
+                        playerHand.ViewSpaceVelocity.x >= minVelocity &&
+                        playerHand.SelfSpaceVelocity.MostlyY() &&
+                        playerHand.ViewSpaceVelocity.MostlyX();
                     break;
             }
 
@@ -267,32 +448,68 @@ namespace AgeOfEnlightenment.GestureDetection
             switch (direction)
             {
                 case ViewSpaceDirection.Left:
-                    gesture = () => playerHand.SelfSpaceVelocity.y <= -minVelocity && playerHand.ViewSpaceVelocity.x <= -minVelocity;
+                    gesture = () => playerHand.SelfSpaceVelocity.y <= -minVelocity && 
+                    playerHand.ViewSpaceVelocity.x <= -minVelocity &&
+                    playerHand.SelfSpaceVelocity.MostlyY() &&
+                    playerHand.ViewSpaceVelocity.MostlyX();
                     break;
                 case ViewSpaceDirection.Right:
-                    gesture = () => playerHand.SelfSpaceVelocity.y <= -minVelocity && playerHand.ViewSpaceVelocity.x >= minVelocity;
+                    gesture = () => playerHand.SelfSpaceVelocity.y <= -minVelocity && 
+                    playerHand.ViewSpaceVelocity.x >= minVelocity &&
+                    playerHand.SelfSpaceVelocity.MostlyY() &&
+                    playerHand.ViewSpaceVelocity.MostlyX();
                     break;
                 case ViewSpaceDirection.Up:
-                    gesture = () => playerHand.SelfSpaceVelocity.y <= -minVelocity && playerHand.ViewSpaceVelocity.y >= minVelocity;
+                    gesture = () => playerHand.SelfSpaceVelocity.y <= -minVelocity && 
+                    playerHand.ViewSpaceVelocity.y >= minVelocity &&
+                    playerHand.SelfSpaceVelocity.MostlyY() &&
+                    playerHand.ViewSpaceVelocity.MostlyY();
                     break;
                 case ViewSpaceDirection.Down:
-                    gesture = () => playerHand.SelfSpaceVelocity.y <= -minVelocity && playerHand.ViewSpaceVelocity.y <= -minVelocity;
+                    gesture = () => playerHand.SelfSpaceVelocity.y <= -minVelocity && 
+                    playerHand.ViewSpaceVelocity.y <= -minVelocity &&
+                    playerHand.SelfSpaceVelocity.MostlyY() &&
+                    playerHand.ViewSpaceVelocity.MostlyY();
                     break;
                 case ViewSpaceDirection.Forward:
-                    gesture = () => playerHand.SelfSpaceVelocity.y <= -minVelocity && playerHand.ViewSpaceVelocity.z >= minVelocity;
+                    gesture = () => playerHand.SelfSpaceVelocity.y <= -minVelocity && 
+                    playerHand.ViewSpaceVelocity.z >= minVelocity &&
+                    playerHand.SelfSpaceVelocity.MostlyY() &&
+                    playerHand.ViewSpaceVelocity.MostlyZ();
                     break;
                 case ViewSpaceDirection.Back:
-                    gesture = () => playerHand.SelfSpaceVelocity.y <= -minVelocity && playerHand.ViewSpaceVelocity.z <= -minVelocity;
+                    gesture = () => playerHand.SelfSpaceVelocity.y <= -minVelocity && 
+                    playerHand.ViewSpaceVelocity.z <= -minVelocity &&
+                    playerHand.SelfSpaceVelocity.MostlyY() &&
+                    playerHand.ViewSpaceVelocity.MostlyZ();
                     break;
-                case ViewSpaceDirection.InwardH:
-                    gesture = () => playerHand.SelfSpaceVelocity.y <= -minVelocity && playerHand.leftHand ? playerHand.ViewSpaceVelocity.x >= minVelocity : playerHand.ViewSpaceVelocity.x <= -minVelocity;
+                case ViewSpaceDirection.InwardHoriz:
+                    if(playerHand.LeftHand)
+                        gesture = () => playerHand.SelfSpaceVelocity.y <= -minVelocity && 
+                        playerHand.ViewSpaceVelocity.x >= minVelocity &&
+                        playerHand.SelfSpaceVelocity.MostlyY() &&
+                        playerHand.ViewSpaceVelocity.MostlyX();
+                    else
+                        gesture = () => playerHand.SelfSpaceVelocity.y <= -minVelocity && 
+                        playerHand.ViewSpaceVelocity.x <= -minVelocity &&
+                        playerHand.SelfSpaceVelocity.MostlyY() &&
+                        playerHand.ViewSpaceVelocity.MostlyX();
                     break;
-                case ViewSpaceDirection.OutwardH:
-                    gesture = () => playerHand.SelfSpaceVelocity.y <= -minVelocity && !playerHand.leftHand ? playerHand.ViewSpaceVelocity.x >= minVelocity : playerHand.ViewSpaceVelocity.x <= -minVelocity;
+                case ViewSpaceDirection.OutwardHoriz:
+                    if(playerHand.LeftHand)
+                        gesture = () => playerHand.SelfSpaceVelocity.y <= -minVelocity && 
+                        playerHand.ViewSpaceVelocity.x >= minVelocity &&
+                        playerHand.SelfSpaceVelocity.MostlyY() &&
+                        playerHand.ViewSpaceVelocity.MostlyX();
+                    else
+                        gesture = () => playerHand.SelfSpaceVelocity.y <= -minVelocity && 
+                        playerHand.ViewSpaceVelocity.x <= -minVelocity &&
+                        playerHand.SelfSpaceVelocity.MostlyY() &&
+                        playerHand.ViewSpaceVelocity.MostlyX();
                     break;
             }
 
-            return Tuple.Create($"Slash {direction}", gesture != null ? new[] { gesture } : new Func<bool>[] { });
+            return Tuple.Create($"Reverse Slash {direction}", gesture != null ? new[] { gesture } : new Func<bool>[] { });
         }
 
         /// <summary>
@@ -315,10 +532,12 @@ namespace AgeOfEnlightenment.GestureDetection
                 case ViewSpaceDirection.Right:
                     throw new Exception("A SwingGlobal gesture can only be checked against Up or Down.");
                 case ViewSpaceDirection.Up:
-                    gesture = () => Vector3.Dot(playerHand.Velocity, Vector3.up) >= minVelocity;
+                    gesture = () => Vector3.Dot(playerHand.Velocity, Vector3.up) >= minVelocity && 
+                    playerHand.Velocity.MostlyY();
                     break;
                 case ViewSpaceDirection.Down:
-                    gesture = () => Vector3.Dot(playerHand.Velocity, Vector3.up) <= -minVelocity;
+                    gesture = () => Vector3.Dot(playerHand.Velocity, Vector3.up) <= -minVelocity && 
+                    playerHand.Velocity.MostlyY();
                     break;
                 case ViewSpaceDirection.Forward:
                     throw new Exception("A SwingGlobal gesture can only be checked against Up or Down.");
@@ -339,35 +558,163 @@ namespace AgeOfEnlightenment.GestureDetection
         {
             float minVelocity = velocity ?? SmallGestureSpeed;
 
-            Func<bool> gesture = () => playerHand.SelfSpaceVelocity.z <= -minVelocity;
+            Func<bool> gesture = () => playerHand.SelfSpaceVelocity.z <= -minVelocity && 
+            playerHand.SelfSpaceVelocity.MostlyZ();
 
             return Tuple.Create($"Global Reverse Punch", gesture != null ? new[] { gesture } : new Func<bool>[] { });
         }
-
-
-        #region Helper Functions
         /// <summary>
-        /// Gets the absolute value of a float.
+        /// This is a gesture for just punching forward in any direction, along the negative Z axis. A fistbump style gesture
         /// </summary>
-        public static float Abs(this float num) => Mathf.Abs(num);
-        /// <summary>
-        /// Returns true if the vector's X component is its largest component
-        /// </summary>
-        public static bool MostlyX(this Vector3 vec) => vec.x.Abs() > vec.y.Abs() && vec.x.Abs() > vec.z.Abs();
+        /// <param name="playerHand">The Hand that should be checked for this gesture</param>
+        /// <param name="velocity">The minimum velocity required to achieve the gesture. If not set it defaults to 2 units per second.</param>
+        /// <returns></returns>
+        public static NamedConditionSet PunchGlobal(HandPhysicsTracker playerHand, float? velocity = null)
+        {
+            float minVelocity = velocity ?? SmallGestureSpeed;
+
+            Func<bool> gesture = () => playerHand.SelfSpaceVelocity.z >= minVelocity &&
+            playerHand.SelfSpaceVelocity.MostlyZ();
+
+            return Tuple.Create($"Global Punch", gesture != null ? new[] { gesture } : new Func<bool>[] { });
+        }
 
         /// <summary>
-        /// Returns true if the vector's Y component is its largest component
+        /// This is a gesture for throwing your hand forward in any direction. This is only checking the SelfSpace velocity
         /// </summary>
-        public static bool MostlyY(this Vector3 vec) => vec.y.Abs() > vec.x.Abs() && vec.y.Abs() > vec.z.Abs();
+        /// <param name="playerHand">The Hand that should be checked for this gesture</param>
+        /// <param name="velocity">The minimum velocity required to achieve the gesture. If not set it defaults to 2 units per second.</param>
+        /// <returns></returns>
+        public static NamedConditionSet PushGlobal(HandPhysicsTracker playerHand, float? velocity = null)
+        {
+            float minVelocity = velocity ?? SmallGestureSpeed;
+
+            Func<bool> gesture = () => playerHand.SelfSpaceVelocity.x <= -minVelocity && 
+            playerHand.SelfSpaceVelocity.MostlyX();
+
+            return Tuple.Create($"Global Push", gesture != null ? new[] { gesture } : new Func<bool>[] { });
+        }
 
         /// <summary>
-        /// Returns true if the vector's Z component is its largest component
+        /// This is a gesture for throwing your hand backward in any direction. This is only checking the SelfSpace velocity
         /// </summary>
-        public static bool MostlyZ(this Vector3 vec) => vec.z.Abs() > vec.x.Abs() && vec.z.Abs() > vec.y.Abs(); 
-        #endregion
+        /// <param name="playerHand">The Hand that should be checked for this gesture</param>
+        /// <param name="velocity">The minimum velocity required to achieve the gesture. If not set it defaults to 2 units per second.</param>
+        /// <returns></returns>
+        public static NamedConditionSet ReversePushGlobal(HandPhysicsTracker playerHand, float? velocity = null)
+        {
+            float minVelocity = velocity ?? SmallGestureSpeed;
+
+            Func<bool> gesture = () => playerHand.SelfSpaceVelocity.x >= minVelocity &&
+            playerHand.SelfSpaceVelocity.MostlyX();
+
+            return Tuple.Create($"Global Reverse Push", gesture != null ? new[] { gesture } : new Func<bool>[] { });
+        }
+
+        /// <summary>
+        /// This is a gesture for slashing your hand in any direction. This is only checking the SelfSpace velocity.
+        /// </summary>
+        /// <param name="playerHand">The Hand that should be checked for this gesture</param>
+        /// <param name="velocity">The minimum velocity required to achieve the gesture. If not set it defaults to 2 units per second.</param>
+        /// <returns></returns>
+        public static NamedConditionSet SlashGlobal(HandPhysicsTracker playerHand, float? velocity = null)
+        {
+            float minVelocity = velocity ?? SmallGestureSpeed;
+
+            Func<bool> gesture = () => playerHand.SelfSpaceVelocity.y >= minVelocity &&
+            playerHand.SelfSpaceVelocity.MostlyY();
+
+            return Tuple.Create($"Global Slash", gesture != null ? new[] { gesture } : new Func<bool>[] { });
+        }
+        /// <summary>
+        /// This is a gesture for slashing your hand in any direction, but reversed. This is only checking the SelfSpace velocity.
+        /// </summary>
+        /// <param name="playerHand">The Hand that should be checked for this gesture</param>
+        /// <param name="velocity">The minimum velocity required to achieve the gesture. If not set it defaults to 2 units per second.</param>
+        /// <returns></returns>
+        public static NamedConditionSet ReverseSlashGlobal(HandPhysicsTracker playerHand, float? velocity = null)
+        {
+            float minVelocity = velocity ?? SmallGestureSpeed;
+
+            Func<bool> gesture = () => playerHand.SelfSpaceVelocity.y <= -minVelocity &&
+            playerHand.SelfSpaceVelocity.MostlyY();
+
+            return Tuple.Create($"Global Slash", gesture != null ? new[] { gesture } : new Func<bool>[] { });
+        }
+        /// <summary>
+        /// Checks if the player has their hands close enough together. You can pass through how close this needs to be
+        /// </summary>
+        /// <param name="playerHand">Which hand to check. This could technically be either one and it would return the same</param>
+        /// <param name="closenessThreshold">How close, in Unity units, the hands need to be for this to be true. If not set it defaults to .3f</param>
+        /// <returns></returns>
+        public static NamedConditionSet HandsCloseTogether(HandPhysicsTracker playerHand, float? closenessThreshold = null)
+        {
+            float threshold = closenessThreshold ?? .3f;
+
+            Func<bool> gesture = () => playerHand.DistanceToOtherHand <= threshold;
+
+            return Tuple.Create($"Closeness Check", gesture != null ? new[] { gesture } : new Func<bool>[] { });
+        }
+        /// <summary>
+        /// Checks if the player flicks their hand quick enough in a direction. This is entirely based off angular velocity/rotation. This is in relation to the hand itself
+        /// </summary>
+        /// <param name="playerHand">The hand to check</param>
+        /// <param name="direction">Which direction should the player flick. The clockwise and counterclockwise mean rotating your hand around the Z axis.</param>
+        /// <param name="velocity"></param>
+        /// <returns></returns>
+        public static NamedConditionSet SelfSpaceFlick(HandPhysicsTracker playerHand, FlickDirection direction, float? velocity = null)
+        {
+            //If you dont pass in the velocity, it just defaults to 2
+            float minVelocity = velocity ?? SmallGestureSpeed * 1.5f;
+            Func<bool> gesture = null;
+
+            switch (direction)
+            {
+                case FlickDirection.Left:
+                    gesture = () => playerHand.SelfSpaceAngularVelocity.y <= -minVelocity &&
+                    playerHand.SelfSpaceAngularVelocity.MostlyY();
+                    break;
+                case FlickDirection.Right:
+                    gesture = () => playerHand.SelfSpaceAngularVelocity.y >= minVelocity &&
+                    playerHand.SelfSpaceAngularVelocity.MostlyY();
+                    break;
+                case FlickDirection.Up:
+                    gesture = () => playerHand.SelfSpaceAngularVelocity.x >= -minVelocity &&
+                    playerHand.SelfSpaceAngularVelocity.MostlyX();
+                    break;
+                case FlickDirection.Down:
+                    gesture = () => playerHand.SelfSpaceAngularVelocity.x <= minVelocity &&
+                    playerHand.SelfSpaceAngularVelocity.MostlyX();
+                    break;
+                case FlickDirection.Clockwise:
+                    gesture = () => playerHand.SelfSpaceAngularVelocity.z >= -minVelocity &&
+                    playerHand.SelfSpaceAngularVelocity.MostlyZ();
+                    break;
+                case FlickDirection.Counterclockwise:
+                    gesture = () => playerHand.SelfSpaceAngularVelocity.z <= minVelocity &&
+                    playerHand.SelfSpaceAngularVelocity.MostlyZ();
+                    break;
+                case FlickDirection.Inward:
+                    if(playerHand.LeftHand)
+                        gesture = () => playerHand.SelfSpaceAngularVelocity.y >= minVelocity &&
+                        playerHand.SelfSpaceAngularVelocity.MostlyY();
+                    else
+                        gesture = () => playerHand.SelfSpaceAngularVelocity.y <= -minVelocity &&
+                        playerHand.SelfSpaceAngularVelocity.MostlyY();
+                    break;
+                case FlickDirection.Outward:
+                    if(playerHand.LeftHand)
+                        gesture = () => playerHand.SelfSpaceAngularVelocity.y >= minVelocity &&
+                        playerHand.SelfSpaceAngularVelocity.MostlyY();
+                    else
+                        gesture = () => playerHand.SelfSpaceAngularVelocity.y >= minVelocity &&
+                        playerHand.SelfSpaceAngularVelocity.MostlyY();
+                    break;
+            }
+
+            return Tuple.Create($"Flick {direction}", gesture != null ? new[] { gesture } : new Func<bool>[] { });
+        }
     }
-
-
     public enum ViewSpaceDirection
     {
         Left,
@@ -376,7 +723,18 @@ namespace AgeOfEnlightenment.GestureDetection
         Down,
         Forward,
         Back,
-        InwardH,
-        OutwardH
+        InwardHoriz,
+        OutwardHoriz
+    }
+    public enum FlickDirection
+    {
+        Left,
+        Right,
+        Up,
+        Down,
+        Clockwise,
+        Counterclockwise,
+        Inward,
+        Outward
     }
 }

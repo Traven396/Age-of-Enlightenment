@@ -22,37 +22,37 @@ public class IceKnife : SpellBlueprint
     {
         if (!gripPressed)
         {
-            _visualsManager.ReturnCircleToHolder(currentHand);
+            _VisualsManager.ReturnCircleToHolder(currentHand);
         }
     }
     public override void GripPress()
     {
         base.GripPress();
         
-        iTween.ScaleTo(spellCircle, Vector3.one * .5f, .7f);
-        _visualsManager.ToggleReticle(currentHand, true);
+        iTween.ScaleTo(_SpellCircle, Vector3.one * .5f, .7f);
+        _VisualsManager.ToggleReticle(currentHand, true);
     }
     public override void GripHold()
     {
         if (currentHand == 0)
         {
-            iTween.RotateUpdate(spellCircle, (_handLocation.transform.rotation * Quaternion.Euler(-90, 0, 0)).eulerAngles, .4f);
+            iTween.RotateUpdate(_SpellCircle, (_HandTransform.transform.rotation * Quaternion.Euler(-90, 0, 0)).eulerAngles, .4f);
         }
         else
         {
-            iTween.RotateUpdate(spellCircle, (_handLocation.transform.rotation * Quaternion.Euler(90, 0, 0)).eulerAngles, .4f);
+            iTween.RotateUpdate(_SpellCircle, (_HandTransform.transform.rotation * Quaternion.Euler(90, 0, 0)).eulerAngles, .4f);
         }
-        iTween.MoveUpdate(spellCircle, circleHolder.transform.TransformPoint(new Vector3(0, .05f, .1f)), .1f);
+        iTween.MoveUpdate(_SpellCircle, _CircleHolderTransform.transform.TransformPoint(new Vector3(0, .05f, .1f)), .1f);
     }
     public override void GripRelease()
     {
         base.GripRelease();
-        iTween.ScaleTo(spellCircle, Vector3.one, .1f);
+        iTween.ScaleTo(_SpellCircle, Vector3.one, .1f);
         if(shooter.latestInstantiatedObject && shooter.latestInstantiatedObject.transform.parent != null)
         {
             shooter.DespawnAllProjectiles();
         }
-        _visualsManager.ToggleReticle(currentHand, false);
+        _VisualsManager.ToggleReticle(currentHand, false);
     }
     public override void TriggerPress()
     {
@@ -60,16 +60,16 @@ public class IceKnife : SpellBlueprint
 
         if (gripPressed)
         {
-            if (Player.Instance.currentMana >= ManaCost)
+            if (CheckCurrentMana(ManaCost))
             {
                 //Spawn the projectile as a child of the spell circle
-                shooter.SpawnProjectile(spellCircle.transform);
+                shooter.SpawnProjectile(_SpellCircle.transform);
 
                 //Grow it from nothing for a visual spawn effect
                 iTween.ScaleFrom(shooter.latestInstantiatedObject, Vector3.zero, .15f);
                 
                 //Subtract the mana cost for spawning a projectile
-                Player.Instance.SubtractMana(ManaCost);
+                PlayerSingleton.Instance._Stats.SubtractMana(ManaCost);
             }
         }
     }
@@ -77,7 +77,7 @@ public class IceKnife : SpellBlueprint
     {
         if (gripPressed && shooter.latestInstantiatedObject)
         {
-            iTween.MoveUpdate(spellCircle, circleHolder.transform.TransformPoint(new Vector3(0, .05f, -.04f)), 6);
+            iTween.MoveUpdate(_SpellCircle, _CircleHolderTransform.transform.TransformPoint(new Vector3(0, .05f, -.04f)), 6);
             iTween.ScaleUpdate(shooter.latestInstantiatedObject, iTween.Hash("time", 6, "y", MaxProjectileSize * 2));
             
         }
@@ -88,7 +88,7 @@ public class IceKnife : SpellBlueprint
         if (gripPressed && shooter.latestInstantiatedObject)
         {
             shooter.SetDamage(Damage * shooter.latestInstantiatedObject.transform.localScale.z, ProjectileDamageType);
-            shooter.LaunchAllProjectiles(_handLocation.forward, LaunchSpeed);
+            shooter.LaunchAllProjectiles(_HandTransform.forward, LaunchSpeed);
         }
     }
 }

@@ -1,8 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using FoxheadDev.GestureDetection;
 
 public interface IMovement
 {
-    bool GesturePerformed(GestureManager _gestureManager, out Vector3 direction);
+    bool GesturePerformed(HandPhysicsTracker _handPhysicsTracker, out Vector3 direction);
 }

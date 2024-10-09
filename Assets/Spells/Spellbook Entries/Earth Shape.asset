@@ -15,10 +15,8 @@ MonoBehaviour:
   Name: Earth Shape
   SpellDisplayIcon: {fileID: 21300000, guid: 14a0f66a7be165c4ba476e3d7c40e390, type: 3}
   SpellComponents:
-    spellMechanics: {fileID: 3005742899795087878, guid: 2727e59a69b56274891bc99d620b9acc, type: 3}
-    spellCircle: {fileID: 776886629064782777, guid: 78a961017297a024aa1fa89f13b3c960, type: 3}
-    RightAnimationController: {fileID: 0}
-    LeftAnimationController: {fileID: 0}
+    SpellMechanics: {fileID: 3005742899795087878, guid: 2727e59a69b56274891bc99d620b9acc, type: 3}
+    SpellCircle: {fileID: 776886629064782777, guid: cd12385a9da17fd4dadff7230f7b0bd9, type: 3}
   SpellDescription: 'Pressing the trigger will allow you to begin targeting where
     you would like to spawn a pillar. Once you are satisfied, press and hold the
     grip. Then point your palm away from where you are grabbing and pull.

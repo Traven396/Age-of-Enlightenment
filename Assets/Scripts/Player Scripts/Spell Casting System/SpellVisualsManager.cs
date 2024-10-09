@@ -36,14 +36,14 @@ public class SpellVisualsManager : MonoBehaviour
         if (ctx.circle)
             SpawnNewCircle(ctx.circle, LeftRight.Right);
 
-        rightHandController.runtimeAnimatorController = ctx.newAnimator != null ? ctx.newAnimator : defaultRightController;
+        //rightHandController.runtimeAnimatorController = ctx.newAnimator != null ? ctx.newAnimator : defaultRightController;
 
         _rightPositionOffset = Vector3.zero;
         _rightRotationOffset = Vector3.zero;
 
         if (ctx.spawnedScript != null)
         {
-            ctx.spawnedScript._visualsManager = this; 
+            ctx.spawnedScript._VisualsManager = this; 
         }
     }
     public void NewLeftSpell(SpellSwapCallbackContext ctx)
@@ -52,13 +52,13 @@ public class SpellVisualsManager : MonoBehaviour
         if (ctx.circle)
             SpawnNewCircle(ctx.circle, LeftRight.Left);
 
-        leftHandController.runtimeAnimatorController = ctx.newAnimator != null ? ctx.newAnimator : defaultLeftController;
+        //leftHandController.runtimeAnimatorController = ctx.newAnimator != null ? ctx.newAnimator : defaultLeftController;
 
         _leftRotationOffset = Vector3.zero;
         _leftPositionOffset = Vector3.zero;
 
         if (ctx.spawnedScript != null)
-            ctx.spawnedScript._visualsManager = this;
+            ctx.spawnedScript._VisualsManager = this;
     }
 
     private void DespawnCircle(LeftRight side)
@@ -86,6 +86,7 @@ public class SpellVisualsManager : MonoBehaviour
 
     public void ReturnCircleToHolder(LeftRight whichHand)
     {
+        
         if (whichHand == 0)
         {
             if (Quaternion.Angle(currentLeftCircle.transform.rotation, leftCircleHolder.transform.rotation) > .1)
@@ -100,7 +101,7 @@ public class SpellVisualsManager : MonoBehaviour
         }
         else
         {
-            if(Quaternion.Angle(currentRightCircle.transform.rotation, rightCircleHolder.transform.rotation) > .1)
+            if (Quaternion.Angle(currentRightCircle.transform.rotation, rightCircleHolder.transform.rotation) > .1)
             {
                 iTween.RotateUpdate(currentRightCircle, rightCircleHolder.transform.rotation.eulerAngles, .1f);
 

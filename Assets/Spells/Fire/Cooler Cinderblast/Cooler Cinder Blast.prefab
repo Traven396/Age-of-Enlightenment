@@ -61,6 +61,7 @@ MonoBehaviour:
   gripPressedValue: 0
   GestureCompleteSound: {fileID: 8300000, guid: f08ce2b0c20924bfe844560b4770fe5a, type: 3}
   CastCompleteSound: {fileID: 8300000, guid: a2a25f37b030f5d4794b9893b0819fcd, type: 3}
+  secondarySpellCirclePrefab: {fileID: 776886629064782777, guid: 4ece181df3095f245b552d27b3004688, type: 3}
 --- !u!114 &-6237764433403053526
 MonoBehaviour:
   m_ObjectHideFlags: 0

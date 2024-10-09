@@ -15,14 +15,12 @@ MonoBehaviour:
   Name: Gravity Burst
   SpellDisplayIcon: {fileID: 21300000, guid: bb64f701c4c136944bbccede9b89a4dd, type: 3}
   SpellComponents:
-    spellMechanics: {fileID: 2859709878002125458, guid: 00c3150633a25e4408b624060b4739d7, type: 3}
-    spellCircle: {fileID: 776886629064782777, guid: 1b3e1f3e082087d47b746097b9af36c8, type: 3}
-    RightAnimationController: {fileID: 0}
-    LeftAnimationController: {fileID: 0}
+    SpellMechanics: {fileID: 2859709878002125458, guid: 00c3150633a25e4408b624060b4739d7, type: 3}
+    SpellCircle: {fileID: 776886629064782777, guid: 1b3e1f3e082087d47b746097b9af36c8, type: 3}
   SpellDescription: 'Hold down the trigger to begin charging the force blast. Upon
     release, launch all objects in front of you with a force dependent on your charge.
 
 
     This
-    can alsol deflect projectiles'
+    can also deflect projectiles'
   School: 8

@@ -30,28 +30,28 @@ public class TerraBlade : SpellBlueprint
     {
         if (!gripPressed)
         {
-            _visualsManager.ReturnCircleToHolder(currentHand);
+            _VisualsManager.ReturnCircleToHolder(currentHand);
         }
     }
     public override void GripPress()
     {
         base.GripPress();
-        iTween.ScaleTo(spellCircle, Vector3.one * .3f, .7f);
+        iTween.ScaleTo(_SpellCircle, Vector3.one * .3f, .7f);
     }
 
     public override void GripHold()
     {
         if (currentHand == 0)
         {
-            iTween.RotateUpdate(spellCircle, (circleHolder.transform.rotation * Quaternion.Euler(-90, 0, 0)).eulerAngles, .4f);
+            iTween.RotateUpdate(_SpellCircle, (_CircleHolderTransform.transform.rotation * Quaternion.Euler(-90, 0, 0)).eulerAngles, .4f);
         }
         else
         {
-            iTween.RotateUpdate(spellCircle, (circleHolder.transform.rotation * Quaternion.Euler(90, 0, 0)).eulerAngles, .4f);
+            iTween.RotateUpdate(_SpellCircle, (_CircleHolderTransform.transform.rotation * Quaternion.Euler(90, 0, 0)).eulerAngles, .4f);
         }
-        iTween.MoveUpdate(spellCircle, circleHolder.transform.position + circleHolder.transform.TransformDirection(new Vector3(0, .05f, .1f)), .1f);
+        iTween.MoveUpdate(_SpellCircle, _CircleHolderTransform.transform.position + _CircleHolderTransform.transform.TransformDirection(new Vector3(0, .05f, .1f)), .1f);
         
-        if (_gesture.GesturePerformed(_gestureManager, out var direction) || overrideButton.action.WasPressedThisFrame())
+        if (_gesture.GesturePerformed(_HandPhysicsTracker, out var direction) || overrideButton.action.WasPressedThisFrame())
         {
             if (!bladeSpawned && !alreadyShot)
             {
@@ -61,9 +61,9 @@ public class TerraBlade : SpellBlueprint
 
                     bladeSpawned = true;
 
-                    BladeSpawner.Cast(spellCircle.transform);
+                    BladeSpawner.Cast(_SpellCircle.transform);
 
-                    spellCircle.GetComponent<AudioSource>().Play();
+                    _SpellCircle.GetComponent<AudioSource>().Play();
 
                     BladeSpawner.instantiatedObject.transform.localScale = Vector3.one * .25f;
                     iTween.ScaleFrom(BladeSpawner.instantiatedObject, Vector3.zero, .8f); 
@@ -72,10 +72,10 @@ public class TerraBlade : SpellBlueprint
         }
         if (bladeSpawned)
         {
-            BladeSpawner.instantiatedObject.transform.rotation = spellCircle.transform.rotation * Quaternion.Euler(BladeSpawner.GetRotationOffset());
+            BladeSpawner.instantiatedObject.transform.rotation = _SpellCircle.transform.rotation * Quaternion.Euler(BladeSpawner.GetRotationOffset());
 
-            var distance = Vector3.Distance(BladeSpawner.instantiatedObject.transform.position, spellCircle.transform.position);
-            BladeSpawner.instantiatedRB.velocity = (spellCircle.transform.position - BladeSpawner.instantiatedObject.transform.position).normalized * 35f * distance;
+            var distance = Vector3.Distance(BladeSpawner.instantiatedObject.transform.position, _SpellCircle.transform.position);
+            BladeSpawner.instantiatedRB.velocity = (_SpellCircle.transform.position - BladeSpawner.instantiatedObject.transform.position).normalized * 35f * distance;
         }
     }
 
@@ -90,7 +90,7 @@ public class TerraBlade : SpellBlueprint
 
             Destroy(BladeSpawner.instantiatedObject, .5f);
         }
-        iTween.ScaleTo(spellCircle, Vector3.one, .7f);
+        iTween.ScaleTo(_SpellCircle, Vector3.one, .7f);
 
         alreadyShot = false;
     }
@@ -102,9 +102,9 @@ public class TerraBlade : SpellBlueprint
         {
             bladeSpawned = false;
             alreadyShot = true;
-            BladeSpawner.LaunchProjectile(spellCircle.transform, currentHand, launchSpeed);
+            BladeSpawner.LaunchProjectile(_SpellCircle.transform, currentHand, launchSpeed);
 
-            iTween.PunchPosition(spellCircle, new Vector3(0, .1f, 0f), .3f);
+            iTween.PunchPosition(_SpellCircle, new Vector3(0, .1f, 0f), .3f);
         }
     }
     public override void OnDeselect()

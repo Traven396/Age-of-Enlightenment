@@ -97,8 +97,8 @@ public class SpellListTab : MonoBehaviour, ITab
         for (int i = 0; i < currentSelectedSchool.Count; i++)
         {
             potentialSpells[i].actualItem.SetActive(true);
-            potentialSpells[i].icon.sprite = currentSelectedSchool[i + currentPage].spellDisplayIcon;
-            potentialSpells[i].title.text = currentSelectedSchool[i + currentPage].spellName;
+            potentialSpells[i].icon.sprite = currentSelectedSchool[i + currentPage].SpellDisplayIcon;
+            potentialSpells[i].title.text = currentSelectedSchool[i + currentPage].SpellName;
         }
     }
     public void NewLoad()
@@ -145,9 +145,9 @@ public class SpellListTab : MonoBehaviour, ITab
         {
             FullSpellObject currentSpell = currentSelectedSchool[arrayLocation];
 
-            _spellName.text = currentSpell.spellName;
-            _spellIcon.sprite = currentSpell.spellDisplayIcon;
-            _spellDescription.text = currentSpell.spellDescription;
+            _spellName.text = currentSpell.SpellName;
+            _spellIcon.sprite = currentSpell.SpellDisplayIcon;
+            _spellDescription.text = currentSpell.SpellDescription;
         }
     }
     public void SpellCardButton(int num)
@@ -161,11 +161,11 @@ public class SpellListTab : MonoBehaviour, ITab
     {
         if (hotbarHand == 0)
         {
-            _hotbar.ChangeLeftHotbar(hotbarIndex, currentSelectedSchool[arrayLocation].spellCouple);
+            _hotbar.ChangeLeftHotbar(hotbarIndex, currentSelectedSchool[arrayLocation].SpellCouple);
         }
         else
         {
-            _hotbar.ChangeRightHotbar(hotbarIndex, currentSelectedSchool[arrayLocation].spellCouple);
+            _hotbar.ChangeRightHotbar(hotbarIndex, currentSelectedSchool[arrayLocation].SpellCouple);
         }
     }
     #endregion
@@ -206,25 +206,25 @@ public class SpellListTab : MonoBehaviour, ITab
         //}
     }
 
-    private class SpellEqualityComparer : IEqualityComparer<FullSpellObject>
-    {
-        public bool Equals(FullSpellObject s1, FullSpellObject s2)
-        {
-            if (s2 == null && s1 == null)
-                return true;
-            else if (s1 == null || s2 == null)
-                return false;
-            else if (s1.spellName == s2.spellName && s1.spellCouple.spellMechanics == s2.spellCouple.spellMechanics)
-                return true;
-            else
-                return false;
-        }
+    //private class SpellEqualityComparer : IEqualityComparer<FullSpellObject>
+    //{
+    //    public bool Equals(FullSpellObject s1, FullSpellObject s2)
+    //    {
+    //        if (s2 == null && s1 == null)
+    //            return true;
+    //        else if (s1 == null || s2 == null)
+    //            return false;
+    //        else if (s1.spellName == s2.spellName && s1.spellCouple.spellMechanics == s2.spellCouple.spellMechanics)
+    //            return true;
+    //        else
+    //            return false;
+    //    }
 
-        public int GetHashCode(FullSpellObject obj)
-        {
-            return obj.spellName.GetHashCode();
-        }
-    }
+    //    public int GetHashCode(FullSpellObject obj)
+    //    {
+    //        return obj.spellName.GetHashCode();
+    //    }
+    //}
 
     [Serializable]
     public class MenuGrouping
