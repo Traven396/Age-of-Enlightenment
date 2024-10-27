@@ -1,0 +1,119 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &5104431253389395563
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7225099110227310626}
+  - component: {fileID: 2449437277036156020}
+  - component: {fileID: 2078044809592270954}
+  - component: {fileID: 2190524063301011429}
+  - component: {fileID: 888196226198617943}
+  m_Layer: 0
+  m_Name: Gravity Control
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7225099110227310626
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5104431253389395563}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2449437277036156020
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5104431253389395563}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e4e152fba723c404199ccef181edbeda, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  currentHand: 0
+  _PlayerRb: {fileID: 0}
+  playerPhys: {fileID: 0}
+  _MotionController: {fileID: 0}
+  _CircleHolderTransform: {fileID: 0}
+  _SpellCircle: {fileID: 0}
+  _PalmTransform: {fileID: 0}
+  _BackOfHandTransform: {fileID: 0}
+  _HandTransform: {fileID: 0}
+  _PlayerTransform: {fileID: 0}
+  _TargetManager: {fileID: 0}
+  _GestureManager: {fileID: 0}
+  _VisualsManager: {fileID: 0}
+  triggerPressedValue: 0
+  gripPressedValue: 0
+  MaxDistance: 13
+--- !u!114 &2078044809592270954
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5104431253389395563}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9519fbf27df037144a82f5ce8b3b8422, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  requiresNormal: 1
+  normalVector: {x: 0, y: 1, z: 0}
+  readyToCast: 1
+--- !u!114 &2190524063301011429
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5104431253389395563}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 945e6df227a964c44b56155c2284a633, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  objectToSpawn: {fileID: 6258862230551703505, guid: dc3c1f3439b45374586dc74034d144af, type: 3}
+  ParentToTarget: 0
+  rotationOffset: {x: 0, y: 0, z: 0}
+  LockRotation: 0
+  LockPosition: 0
+  GravityAffected: 0
+  instantiatedObject: {fileID: 0}
+  instantiatedRB: {fileID: 0}
+  spawnAmount: 1
+  shootDirection: 0
+  projectileGravity: 0
+  spreadAmount: 0
+--- !u!114 &888196226198617943
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5104431253389395563}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dedb6b72d1b95af41bfb62b208a7493d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  forceType: 1
+  forceMultiplier: 7.5
+  canReflect: 1

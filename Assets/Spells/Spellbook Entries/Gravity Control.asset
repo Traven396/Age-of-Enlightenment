@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b4ec4eefd918e524eb6ff8b0010ddfe2, type: 3}
+  m_Name: Gravity Control
+  m_EditorClassIdentifier: 
+  Name: Gravity Control
+  SpellDisplayIcon: {fileID: 21300000, guid: 03e6f50b7a998ed46a4c3f9f8cb0855e, type: 3}
+  SpellComponents:
+    SpellMechanics: {fileID: 5104431253389395563, guid: dae61d27d31f15c41bbfa02c90a5d890, type: 3}
+    SpellCircle: {fileID: 776886629064782777, guid: 1b3e1f3e082087d47b746097b9af36c8, type: 3}
+  SpellDescription: Woohoo, development is back on. Kinda
+  School: 8

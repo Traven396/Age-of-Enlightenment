@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b4ec4eefd918e524eb6ff8b0010ddfe2, type: 3}
+  m_Name: Blink
+  m_EditorClassIdentifier: 
+  Name: Blink
+  SpellDisplayIcon: {fileID: 21300000, guid: 4029a9cfeb86f134c9c5af05993eaac8, type: 3}
+  SpellComponents:
+    SpellMechanics: {fileID: 6308297836311911411, guid: 090353a8e8764bb4cbf4cc3d6c089777, type: 3}
+    SpellCircle: {fileID: 776886629064782777, guid: 46aeaa0dfe505464cb6eb9a59c886ce8, type: 3}
+  SpellDescription: We teleporting round the world with this kind of power. Ever
+    heard of Nightcrawler. Thats my boy
+  School: 8

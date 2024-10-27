@@ -2,14 +2,16 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System;
-
+using System.Linq;
 public class TargetManager : MonoBehaviour
 {
-    public LayerMask ignoreLayers;
+    public LayerMask ignoredLayers;
 
-    public Transform leftHandPosition;
+    public Transform LeftHandTransform;
 
-    public Transform rightHandPosition;
+    public Transform RightHandTransform;
+
+    public Transform BodyPosition;
 
     private LayerMask groundLayer;
 
@@ -20,6 +22,7 @@ public class TargetManager : MonoBehaviour
     private TargettableEntity currentClosestREntity = null;
     private TargettableEntity previousClosestREntity = null;
 
+    private RaycastHit[] allHits;
     #endregion
 
     public void NewSpell(SpellSwapCallbackContext ctx)
@@ -32,8 +35,115 @@ public class TargetManager : MonoBehaviour
 
     private void Start()
     {
-        ignoreLayers = ~(ignoreLayers);
+        ignoredLayers = ~(ignoredLayers);
         groundLayer = ~LayerMask.NameToLayer("Ground");
+    }
+    public void ClearCurrentTarget(LeftRight whichHand)
+    {
+        if (whichHand == 0)
+        {
+            currentClosestLEntity.Deselect();
+            currentClosestLEntity = null;
+            previousClosestLEntity = null;
+        }
+        else
+        {
+            currentClosestREntity.Deselect();
+            currentClosestREntity = null;
+            previousClosestREntity = null;
+        }
+    }
+
+    public TargettableEntity ReturnClosestTelekinesisTargetEntity(LeftRight hand, float maxDistance, float radius, Vector3 raycastDirection)
+    {
+        //Left Hand
+        if(hand == 0)
+        {
+            Debug.Log("LEFT HAND TARGETING NOT SETUP");
+            return null;
+        }
+        //Right Hand
+        else
+        {
+            allHits = Physics.SphereCastAll(RightHandTransform.position, radius, raycastDirection, maxDistance, ignoredLayers);
+
+            //If we dont hit anything with the raycast. Deselect the old one, and stop checking
+            if (allHits.Length == 0)
+            {
+                ResetClosestTarget(hand);
+                return null;
+            }
+
+            currentClosestREntity = DetermineClosestTelekinesisTarget(allHits).collider.gameObject.GetComponent<TargettableEntity>();
+
+            //If the new closest object is not the same, reset stuff
+            if(previousClosestREntity != currentClosestREntity)
+            {
+                ResetClosestTarget(hand);
+
+                previousClosestREntity = currentClosestREntity;
+
+                currentClosestREntity.Select();
+
+            }
+
+            if (currentClosestREntity)
+            {
+                if (currentClosestREntity.isSelected == false)
+                {
+                    currentClosestREntity.Select();
+                } 
+            }
+
+            return currentClosestREntity;
+
+
+        }
+    }
+
+    private void ResetClosestTarget(LeftRight whichSide)
+    {
+        if(whichSide == LeftRight.Left)
+        {
+            if (previousClosestLEntity)
+            {
+                previousClosestLEntity.Deselect();
+
+                previousClosestLEntity = null;
+            }
+        }
+        else
+        {
+            if (previousClosestREntity)
+            {
+                previousClosestREntity.Deselect();
+
+                previousClosestREntity = null;
+            }
+        }
+
+    }
+
+    RaycastHit DetermineClosestTelekinesisTarget(RaycastHit[] hits)
+    {
+        RaycastHit closestHit = hits[0];
+        var closestDistance = closestHit.distance;
+        foreach (RaycastHit hit in hits)
+        {
+            if(hit.collider.gameObject.TryGetComponent<TargettableEntity>(out var tempObject))
+            {
+                if (tempObject.TelekinesisTargettable)
+                {
+                    if (hit.distance < closestDistance)
+                    {
+                        closestDistance = hit.distance;
+                        closestHit = hit;
+                    } 
+                }
+            }
+        }
+
+        return closestHit;
     }
 
     public TargettableEntity GetClosestTeleTarget(LeftRight hand, float maxDistance, float radius)
@@ -42,7 +152,7 @@ public class TargetManager : MonoBehaviour
         {
             //RaycastHit hit;
             RaycastHit[] allHits;
-            allHits = Physics.SphereCastAll(leftHandPosition.position, radius, leftHandPosition.forward, maxDistance, ignoreLayers);
+            allHits = Physics.SphereCastAll(LeftHandTransform.position, radius, LeftHandTransform.forward, maxDistance, ignoredLayers);
             //if (Physics.SphereCast(rightHandPosition.position, radius, rightHandPosition.forward, out hit, maxDistance, ignoreLayers))
             if (allHits.Length != 0)
             {
@@ -52,7 +162,7 @@ public class TargetManager : MonoBehaviour
                     {
                         if (!testTarget.isSelected)
                         {
-                            if (!testTarget.TeleTargettable)
+                            if (!testTarget.TelekinesisTargettable)
                                 return null;
                             currentClosestLEntity = testTarget;
                             break;
@@ -90,7 +200,7 @@ public class TargetManager : MonoBehaviour
         {
             //RaycastHit hit;
             RaycastHit[] allHits;
-            allHits = Physics.SphereCastAll(rightHandPosition.position, radius, rightHandPosition.forward, maxDistance, ignoreLayers);
+            allHits = Physics.SphereCastAll(RightHandTransform.position, radius, RightHandTransform.forward, maxDistance, ignoredLayers);
             //if (Physics.SphereCast(rightHandPosition.position, radius, rightHandPosition.forward, out hit, maxDistance, ignoreLayers))
             if(allHits.Length != 0)
             {
@@ -100,7 +210,7 @@ public class TargetManager : MonoBehaviour
                     {
                         if (!testTarget.isSelected)
                         {
-                            if (!testTarget.TeleTargettable)
+                            if (!testTarget.TelekinesisTargettable)
                                 return null;
                             currentClosestREntity = testTarget;
                             break;
@@ -135,19 +245,20 @@ public class TargetManager : MonoBehaviour
             return currentClosestREntity;
         }
     }
+
     public RaycastHit RaycastFromHand(LeftRight hand, float maxDistance)
     {
         
         if (hand == 0)
         {
             RaycastHit hit;
-            Physics.Raycast(leftHandPosition.position, leftHandPosition.forward, out hit, maxDistance, ignoreLayers);
+            Physics.Raycast(LeftHandTransform.position, LeftHandTransform.forward, out hit, maxDistance, ignoredLayers);
             return hit;
         }
         else
         {
             RaycastHit hit;
-            Physics.Raycast(rightHandPosition.position, rightHandPosition.forward, out hit, maxDistance, ignoreLayers);
+            Physics.Raycast(RightHandTransform.position, RightHandTransform.forward, out hit, maxDistance, ignoredLayers);
             return hit;
         }
     }
@@ -156,14 +267,12 @@ public class TargetManager : MonoBehaviour
 
         if (hand == 0)
         {
-            RaycastHit hit;
-            Physics.Raycast(leftHandPosition.position, leftHandPosition.forward, out hit, maxDistance, groundLayer);
+            Physics.Raycast(LeftHandTransform.position, LeftHandTransform.forward, out RaycastHit hit, maxDistance, groundLayer);
             return hit;
         }
         else
         {
-            RaycastHit hit;
-            Physics.Raycast(rightHandPosition.position, rightHandPosition.forward, out hit, maxDistance, groundLayer);
+            Physics.Raycast(RightHandTransform.position, RightHandTransform.forward, out RaycastHit hit, maxDistance, groundLayer);
             return hit;
         }
     }
@@ -173,12 +282,23 @@ public class TargetManager : MonoBehaviour
         RaycastHit[] hits;
         if(hand == 0)
         {
-            hits = Physics.SphereCastAll(leftHandPosition.position, sphereRadius, leftHandPosition.forward, maxDistance, ignoreLayers);
+            hits = Physics.SphereCastAll(LeftHandTransform.position, sphereRadius, LeftHandTransform.forward, maxDistance, ignoredLayers);
         }
         else
         {
-            hits = Physics.SphereCastAll(rightHandPosition.position, sphereRadius, rightHandPosition.forward, maxDistance, ignoreLayers);
+            hits = Physics.SphereCastAll(RightHandTransform.position, sphereRadius, RightHandTransform.forward, maxDistance, ignoredLayers);
         }
         return hits;
+    }
+    public RaycastHit[] BodyBoxCastAll(float maxDistance, Vector3 boxSize)
+    {
+        RaycastHit[] PreFiltereedHits = Physics.BoxCastAll(BodyPosition.position, boxSize, Camera.main.gameObject.transform.forward, Quaternion.identity, maxDistance, ignoredLayers);
+
+        //foreach (RaycastHit hit in PreFiltereedHits)
+        //{
+        //    if(Physics.Linecast(hit.transform.position, ))
+        //}
+        //I could filter and see if the targeted objects are actually within sight of the player, but the center point of an object might be around the corner yet still be visible
+        return PreFiltereedHits;
     }
 }

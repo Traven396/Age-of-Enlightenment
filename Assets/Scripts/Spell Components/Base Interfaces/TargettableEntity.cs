@@ -5,7 +5,7 @@ using UnityEngine;
 [RequireComponent(typeof(Outline))]
 public class TargettableEntity : MonoBehaviour
 {
-    public bool TeleTargettable = false, PyroTargettable = false, MetalTargettable = false,
+    public bool TelekinesisTargettable = false, PyroTargettable = false, MetalTargettable = false,
         AquaTargettable = false, GeneralTargettable = false, EarthTargettable = false;
     private Rigidbody targetRB;
     private Outline selfOutline;
@@ -14,18 +14,22 @@ public class TargettableEntity : MonoBehaviour
     {
         targetRB = GetComponent<Rigidbody>();
         selfOutline = GetComponent<Outline>();
+
+        selfOutline.OutlineWidth = 0;
     }
     public Rigidbody GetTargetRB()
     {
-        return this.targetRB;
+        return targetRB;
     }
 
     public void Select()
     {
-        selfOutline.OutlineWidth = 3;
+        selfOutline.OutlineWidth = 5;
+        isSelected = true;
     }
     public void Deselect()
     {
         selfOutline.OutlineWidth = 0;
+        isSelected = false;
     }
 }

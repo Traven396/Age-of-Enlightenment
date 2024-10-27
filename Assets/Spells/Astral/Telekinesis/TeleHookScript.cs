@@ -18,10 +18,10 @@ public class TeleHookScript : MonoBehaviour
             var distance = Vector3.Distance(positionWithOffset, _body.transform.position);
             _body.velocity = (positionWithOffset - _body.transform.position).normalized * followSpeed * distance;
 
-            var rotationWithOffset = transform.rotation * Quaternion.Euler(rotationOffset);
-            var q = rotationWithOffset * Quaternion.Inverse(_body.transform.rotation);
-            q.ToAngleAxis(out float angle, out Vector3 axis);
-            _body.angularVelocity = angle * axis * Mathf.Deg2Rad * rotationSpeed;
+            //var rotationWithOffset = transform.rotation * Quaternion.Euler(rotationOffset);
+            //var q = rotationWithOffset * Quaternion.Inverse(_body.transform.rotation);
+            //q.ToAngleAxis(out float angle, out Vector3 axis);
+            //_body.angularVelocity = angle * axis * Mathf.Deg2Rad * rotationSpeed;
         }
 
     }

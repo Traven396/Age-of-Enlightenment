@@ -74,7 +74,7 @@ public class SmiteSpell : SpellBlueprint
 
     public override void GripHold()
     {
-        if (!swungDownPerformed)
+        if (!swungDownPerformed && _targetter.readyToCast && triggerPressed)
         {
             if(_swingDown.GesturePerformed(_HandPhysicsTracker, out Vector3 direction) && CheckCurrentMana(ManaCost))
             {

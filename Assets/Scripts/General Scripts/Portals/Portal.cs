@@ -150,13 +150,16 @@ namespace AgeOfEnlightenment.Portals
 
         private void RenderBothEyes(ScriptableRenderContext context, List<Camera> thisOne)
         {
-            if (selfRenderer.isVisible)
+            if (Active)
             {
-                if (_destinationPortal)
+                if (selfRenderer.isVisible)
                 {
-                    RenderPortalNewStyle(LeftRight.Left, context);
-                    RenderPortalNewStyle(LeftRight.Right, context);
-                }
+                    if (_destinationPortal)
+                    {
+                        RenderPortalNewStyle(LeftRight.Left, context);
+                        RenderPortalNewStyle(LeftRight.Right, context);
+                    }
+                } 
             }
         }
         private void OrientCamerasMatrixStyle(LeftRight WhichEye)

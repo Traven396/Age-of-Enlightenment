@@ -1,0 +1,79 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &6308297836311911411
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7025659941176223984}
+  - component: {fileID: -3513264169619128749}
+  - component: {fileID: -486455027719133453}
+  m_Layer: 0
+  m_Name: Blink Spell
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7025659941176223984
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6308297836311911411}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &-3513264169619128749
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6308297836311911411}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9519fbf27df037144a82f5ce8b3b8422, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  requiresNormal: 0
+  normalVector: {x: 0, y: 0, z: 0}
+  readyToCast: 1
+--- !u!114 &-486455027719133453
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6308297836311911411}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0e523af7bf33a1f4092214a11bdd966a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  currentHand: 0
+  _PlayerRb: {fileID: 0}
+  playerPhys: {fileID: 0}
+  _MotionController: {fileID: 0}
+  _CircleHolderTransform: {fileID: 0}
+  _SpellCircle: {fileID: 0}
+  _PalmTransform: {fileID: 0}
+  _BackOfHandTransform: {fileID: 0}
+  _HandTransform: {fileID: 0}
+  _PlayerTransform: {fileID: 0}
+  _TargetManager: {fileID: 0}
+  _GestureManager: {fileID: 0}
+  _VisualsManager: {fileID: 0}
+  triggerPressedValue: 0
+  gripPressedValue: 0
+  MaxDistance: 10
+  AnchorPrefab: {fileID: 2293761258320302866, guid: aa0cebd1ac7b13b4f88f2d892e82ba51, type: 3}

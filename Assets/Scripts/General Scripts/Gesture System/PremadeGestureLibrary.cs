@@ -679,11 +679,11 @@ namespace FoxheadDev.GestureDetection
                     playerHand.SelfSpaceAngularVelocity.MostlyY();
                     break;
                 case FlickDirection.Up:
-                    gesture = () => playerHand.SelfSpaceAngularVelocity.x >= -minVelocity &&
+                    gesture = () => playerHand.SelfSpaceAngularVelocity.x <= -minVelocity &&
                     playerHand.SelfSpaceAngularVelocity.MostlyX();
                     break;
                 case FlickDirection.Down:
-                    gesture = () => playerHand.SelfSpaceAngularVelocity.x <= minVelocity &&
+                    gesture = () => playerHand.SelfSpaceAngularVelocity.x >= minVelocity &&
                     playerHand.SelfSpaceAngularVelocity.MostlyX();
                     break;
                 case FlickDirection.Clockwise:
@@ -713,6 +713,30 @@ namespace FoxheadDev.GestureDetection
             }
 
             return Tuple.Create($"Flick {direction}", gesture != null ? new[] { gesture } : new Func<bool>[] { });
+        }
+        public static NamedConditionSet ZAxisFlick(HandPhysicsTracker playerHand, float? velocity = null)
+        {
+            //If you dont pass in the velocity, it just defaults to 2
+            float minVelocity = velocity ?? SmallGestureSpeed * 1.5f;
+
+            Func<bool> gesture = () => playerHand.SelfSpaceAngularVelocity.z.Abs() >= minVelocity &&
+            playerHand.SelfSpaceAngularVelocity.MostlyZ();
+
+            return Tuple.Create($"Z Axis Flick", gesture != null ? new[] { gesture } : new Func<bool>[] { });
+        }
+        /// <summary>
+        /// Checks if the hand palm direction vector is pointing the same direction as the viewspace up vector. Within a certain tolerance value
+        /// </summary>
+        /// <param name="playerHand">The hand to check</param>
+        /// <param name="tolerance">A value from 0 - 90, the difference between the two vectors must differ by max this much</param>
+        /// <returns></returns>
+        public static NamedConditionSet PalmPointUpSelfSpace(HandPhysicsTracker playerHand, float? tolerance = null)
+        {
+            float threshold = tolerance ?? 15f;
+
+            Func<bool> gesture = () => Vector3.Angle(playerHand.UniveralPalm, Camera.main.transform.up) <= threshold;
+
+            return Tuple.Create($"Palm Point Up", gesture != null ? new[] { gesture } : new Func<bool>[] { });
         }
     }
     public enum ViewSpaceDirection
