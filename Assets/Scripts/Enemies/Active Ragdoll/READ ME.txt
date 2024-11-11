@@ -1,0 +1,17 @@
+So, this is my cockamamey setup for the active ragdoll system. Yay
+
+Lemme explain how to at least set it up. If you want an explanation of the code your
+best bet is to either read it your self, or reach out to me on discord. Its a mess
+
+
+
+CHARACTER GAMEOBJECT (This can be an empty object to just hold everything. You dont need anything on this)
+	- Animator (This object has to have an animator component and a similar skeleton to your ragdoll. This is the object you set the "AnimatorRoot" reference to)
+	- Ragdoll (This is the parent object for the whole ragdoll. This shouldnt have any joints or such on it preferably. Put the RagdollAnimatorV2 and optionally the RagdollKnockoutBehavior here)
+	(Fill out the Limbs array with all RagdollLimbs you place on children objects)
+		-Hips/Any other limbs (On each of these place the RagdollLimb component. Make sure to connect the joints correctly and maybe set the rigidbody values up. Its AnimatedTarget should be its corresponding bone in the animator)
+		-There needs to be a configurable joint on each ragdoll limb object. These joints need to have the linear motion options all set to LOCKED.
+
+That should be the general gist of it. You can place a navmesh agent on the Animator object and things will work like normal. You just need to disable the agent whenever the ragdoll falls over so it doesn't keep moving.
+
+If you have any issues let me know

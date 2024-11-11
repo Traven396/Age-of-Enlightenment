@@ -9,9 +9,9 @@ namespace AgeOfEnlightenment.Enemies
     {
         //Enemy stats
         [Header("Stats")]
-        [SerializeField] public float Health;
-        [SerializeField] public float MovementSpeed;
-        [SerializeField] public float RotationSpeed;
+        [SerializeField] public float Health = 10;
+        [SerializeField] public float MovementSpeed = 3;
+        [SerializeField] public float RotationSpeed = 5;
         [SerializeField] public float VisionRange;
         [SerializeField] public float AttackRange;
         [SerializeField] public float GroundedCheckDistance = 0.1f;
@@ -119,6 +119,8 @@ namespace AgeOfEnlightenment.Enemies
 
         private void Controller_Update()
         {
+            if (lifeState == LIFE_STATE.Dead)
+                return;
             //If we see the player and can follow them, then start chasing them
             if (CanFollowPlayer && this.FindPlayer())
             {

@@ -42,13 +42,15 @@ public class TargetManager : MonoBehaviour
     {
         if (whichHand == 0)
         {
-            currentClosestLEntity.Deselect();
+            if (currentClosestLEntity)
+                currentClosestLEntity.Deselect();
             currentClosestLEntity = null;
             previousClosestLEntity = null;
         }
         else
         {
-            currentClosestREntity.Deselect();
+            if(currentClosestREntity)
+                currentClosestREntity.Deselect();
             currentClosestREntity = null;
             previousClosestREntity = null;
         }
@@ -277,16 +279,19 @@ public class TargetManager : MonoBehaviour
         }
     }
 
-    public RaycastHit[] HandSphereCastAll(LeftRight hand, float maxDistance, float sphereRadius)
+    public RaycastHit[] HandSphereCastAll(LeftRight hand, float maxDistance, float sphereRadius, Vector3 shootDirection)
     {
+        
+
         RaycastHit[] hits;
         if(hand == 0)
         {
-            hits = Physics.SphereCastAll(LeftHandTransform.position, sphereRadius, LeftHandTransform.forward, maxDistance, ignoredLayers);
+
+            hits = Physics.SphereCastAll(LeftHandTransform.position, sphereRadius, shootDirection, maxDistance, ignoredLayers);
         }
         else
         {
-            hits = Physics.SphereCastAll(RightHandTransform.position, sphereRadius, RightHandTransform.forward, maxDistance, ignoredLayers);
+            hits = Physics.SphereCastAll(RightHandTransform.position, sphereRadius, shootDirection, maxDistance, ignoredLayers);
         }
         return hits;
     }

@@ -16,6 +16,9 @@ public class CoolCinderBlast : SpellBlueprint
 
     private GameObject secondarySpellCircle;
 
+
+    private bool spellPrimed;
+
     public override void OnSelect()
     {
         base.OnSelect();
@@ -62,23 +65,28 @@ public class CoolCinderBlast : SpellBlueprint
         base.GripRelease();
 
         CancelCast();
+
+        if (spellPrimed)
+        {
+            if (CheckCurrentMana(12))
+            {
+                for (int i = 0; i < 5; i++)
+                {
+                    projectileShooter.SpawnProjectile(_PalmTransform);
+                }
+                projectileShooter.LaunchAllProjectiles(_HandPhysicsTracker.UniveralPalm, 5);
+
+                PlayerSingleton.Instance.SubtractMana(12);
+            } 
+        }
+
+        spellPrimed = false;
     }
     private void FinishCasting()
     {
         circleAudioSource.PlayOneShot(CastCompleteSound);
 
-        CancelCast();
-
-        if (CheckCurrentMana(12))
-        {
-            for (int i = 0; i < 5; i++)
-            {
-                projectileShooter.SpawnProjectile(_PalmTransform);
-            }
-            projectileShooter.LaunchAllProjectiles(_HandPhysicsTracker.UniveralPalm, 5);
-
-            PlayerSingleton.Instance.SubtractMana(12);
-        }
+        spellPrimed = true;
     }
 
     private void IncreaseCircleSizeFirst()

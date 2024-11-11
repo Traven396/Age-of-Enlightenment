@@ -75,7 +75,7 @@ public class GravityBurst : SpellBlueprint
                 spellSound.pitch = Random.Range(.35f, .45f);
                 spellSound.Play();
 
-                RaycastHit[] hits = _TargetManager.HandSphereCastAll(currentHand, castDistance, sphereRadius);
+                RaycastHit[] hits = _TargetManager.HandSphereCastAll(currentHand, castDistance, sphereRadius, _HandPhysicsTracker.UniveralPalm);
 
                 foreach (RaycastHit hit in hits)
                 {

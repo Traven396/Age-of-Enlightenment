@@ -98,7 +98,7 @@ public class BlinkSpell : SpellBlueprint
         
         _CastingSequence.Update();
 
-        if (inTargetingMode)
+        if (inTargetingMode && !triggerPressed)
         {
             hit = _TargetManager.RaycastFromHandToGround(currentHand, 10);
 
@@ -164,7 +164,7 @@ public class BlinkSpell : SpellBlueprint
         {
             if (_Targeter.readyToCast)
             {
-                _PlayerRb.transform.position = hit.point + (hit.normal * _PlayerRb.transform.position.y);
+                _PlayerRb.transform.position = hit.point + Vector3.up * .5f/*(hit.normal * _PlayerRb.transform.position.y)*/;
 
                 currentBlinkCharges -= 1;
             } 

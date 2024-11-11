@@ -34,6 +34,7 @@ public class Telekinesis : SpellBlueprint
 
     private GameObject SpawnedHookPrefab;
     private TeleHookScript SpawnedHookReference;
+    private ConfigurableJoint SpawnedHookJoint;
 
     private bool isGrabbingObject;
     private bool usedGravityBefore;
@@ -139,7 +140,8 @@ public class Telekinesis : SpellBlueprint
                 if (CurrentTarget)
                 {
                     SpawnedHookPrefab.transform.position = CurrentTarget.transform.position;
-                    SpawnedHookReference._body = CurrentTarget.GetTargetRB();
+                    //SpawnedHookReference._body = CurrentTarget.GetTargetRB();
+                    SpawnedHookJoint.connectedBody = CurrentTarget.GetTargetRB();
 
                     usedGravityBefore = CurrentTarget.GetTargetRB().useGravity;
 
@@ -189,9 +191,10 @@ public class Telekinesis : SpellBlueprint
         switch (CurrentMode)
         {
             case TelekinesisMode.Precision:
-                if (SpawnedHookReference._body)
+                if (SpawnedHookReference._body || SpawnedHookJoint.connectedBody)
                 {
                     SpawnedHookReference._body = null;
+                    SpawnedHookJoint.connectedBody = null;
 
                     CurrentTarget.GetTargetRB().useGravity = usedGravityBefore;
                     isGrabbingObject = false;
@@ -235,6 +238,7 @@ public class Telekinesis : SpellBlueprint
 
         SpawnedHookPrefab = Instantiate(_HookPrefab, _HandTransform);
         SpawnedHookReference = SpawnedHookPrefab.GetComponent<TeleHookScript>();
+        SpawnedHookJoint = SpawnedHookPrefab.GetComponent<ConfigurableJoint>();
     }
     private void SwapToPersonalMode()
     {

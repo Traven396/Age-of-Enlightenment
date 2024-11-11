@@ -115,7 +115,7 @@ public class GravityControl : SpellBlueprint
 
             if (gestureCompleted)
             {
-                RaycastHit[] hits = _TargetManager.HandSphereCastAll(currentHand, 7, 1.5f);
+                RaycastHit[] hits = _TargetManager.HandSphereCastAll(currentHand, 7, 1.5f, _HandPhysicsTracker.UniveralPalm);
 
                 foreach (RaycastHit hit in hits)
                 {
@@ -203,6 +203,6 @@ public class GravityControl : SpellBlueprint
     {
         inBurstMode = true;
 
-        iTween.ScaleAdd(_SpellCircle, Vector3.one * .25f, .2f);
+        iTween.ScaleAdd(_SpellCircle, Vector3.one * .5f, .2f);
     }
 }

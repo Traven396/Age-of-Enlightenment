@@ -27,11 +27,12 @@ namespace AgeOfEnlightenment.Enemies
         {
             if (!MainPlayer)
             {
-                MainPlayer = Object.FindObjectOfType<FrankensteinCharacterController>().transform; 
+                MainPlayer = Object.FindObjectOfType<PlayerSingleton>().transform;
             }
             if (!BreadcrumbMaker)
             {
-                BreadcrumbMaker = MainPlayer.GetComponent<LeaveBreadcrumbs>();
+                BreadcrumbMaker = MainPlayer.GetComponentInParent<LeaveBreadcrumbs>();
+                
             }
             ai.PlayerBreadcrumbs = BreadcrumbMaker;
         }
