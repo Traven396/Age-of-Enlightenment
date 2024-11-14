@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace AgeOfEnlightenment.Player
 {
-    [CreateAssetMenu(menuName = "Spellbook/Spellbook Entry")]
+    [CreateAssetMenu(menuName = "MyAssets/Spellbook Entry")]
     public class SpellbookEntry : ScriptableObject
     {
         public string Name;

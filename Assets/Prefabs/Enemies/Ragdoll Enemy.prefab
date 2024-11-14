@@ -1916,6 +1916,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8772102476914387626}
   - component: {fileID: 8684868193524939843}
+  - component: {fileID: 195527867}
   m_Layer: 8
   m_Name: Ragdoll
   m_TagString: Untagged
@@ -1978,6 +1979,81 @@ MonoBehaviour:
   AnimatedTargetRoot: {fileID: 1715525300827710644}
   storeTargetMappedState: 1
   storeTargetSampledState: 1
+--- !u!114 &195527867
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2983473324800271169}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7c868883488e98642ad338330465cea3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ragdollAnimator: {fileID: 0}
+  maxRigidbodyVelocity: 10
+  unpinnedLimbKnockout: 1
+  unpinnedTorqueWeightMultiplier: 0.3
+  forceWeightThreshold: 1
+  knockoutDistance: 1
+  maxCollisions: 30
+  collisionThreshold: 0
+  collisionResistance:
+    mode: 0
+    floatValue: 3
+    curve:
+      serializedVersion: 2
+      m_Curve: []
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+  getUpCollisionResistanceMutliplier: 2
+  getUpDelay: 4
+  minGetUpDuration: 1
+  regainForceSpeed: 1
+  getUpRegainForceSpeedMultiplier: 2
+  getUpKnockoutDistanceMult: 10
+  maxStandupVelocity: 0.4
+  getUpOffsetBack: {x: 0, y: 0, z: 0}
+  getUpOffsetStomach: {x: 0, y: 0, z: 0}
+  OnGetupFromBack:
+    animationEvents: []
+    standardEvent:
+      m_PersistentCalls:
+        m_Calls: []
+  OnGetupFromStomach:
+    animationEvents: []
+    standardEvent:
+      m_PersistentCalls:
+        m_Calls: []
+  OnLoseBalance:
+    animationEvents: []
+    standardEvent:
+      m_PersistentCalls:
+        m_Calls: []
+  OnLoseBalanceFromPinned:
+    animationEvents: []
+    standardEvent:
+      m_PersistentCalls:
+        m_Calls: []
+  OnLoseBalanceWhileGettingUp:
+    animationEvents: []
+    standardEvent:
+      m_PersistentCalls:
+        m_Calls: []
+  OnRegainBalance:
+    animationEvents: []
+    standardEvent:
+      m_PersistentCalls:
+        m_Calls: []
+  groundLayers:
+    serializedVersion: 2
+    m_Bits: 512
+  collisionLayers:
+    serializedVersion: 2
+    m_Bits: 2313
+  collisionResistanceMultipliers: []
 --- !u!1 &3116728875966411498
 GameObject:
   m_ObjectHideFlags: 0
@@ -3603,7 +3679,7 @@ GameObject:
   - component: {fileID: 1620496969}
   - component: {fileID: 2380051294081127716}
   m_Layer: 8
-  m_Name: Animator/NavMeshAgent
+  m_Name: Animator + Brain
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3684,7 +3760,8 @@ MonoBehaviour:
   CurrentLifeState: 0
   CurrentVisionState: 0
   CurrentMovementState: 1
-  MovementSpeed: 4
+  CurrentRange: 0
+  MovementSpeed: 2
   MaxHealth: 10
   CurrentHealth: 0
   WanderRange: 20
@@ -3694,8 +3771,9 @@ MonoBehaviour:
   UseSight: 1
   StayAroundStartingPoint: 1
   EyeTransform: {fileID: 4014695666017138683}
+  ListOfAttacks: []
   DrawVisionLines: 0
-  DisplayMovementTarget: 0
+  DisplayMovementTarget: 1
   EnvironmentLayers:
     serializedVersion: 2
     m_Bits: 513

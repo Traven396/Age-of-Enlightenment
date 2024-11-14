@@ -6,13 +6,18 @@ namespace AgeOfEnlightenment.Enemies
     using UnityEngine;
 
     [Serializable]
-    public abstract class BaseAttackBehavior : MonoBehaviour
+    
+    public abstract class BaseAttackBehavior : ScriptableObject
     {
         //Not sure what is necessary
-        [SerializeField] protected string NameOfAttack;
-        [SerializeField] protected float RangeOfAttack;
-        [SerializeField] protected AnimationClip AttackAnimation;
-        public abstract void Attack(PlayerSingleton TargetPlayer, Animator EnemyAnimator);
+        [SerializeField] public string NameOfAttack { get; }
+        [SerializeField] public AnimationClip AttackAnimation;
+        [SerializeField] public float EventFireTime;
+        [SerializeField] public float Cooldown;
+
+        public EnemyRange AttackRange;
+        [HideInInspector] public float cooldownTimer;
+        public abstract void Attack(PlayerSingleton TargetPlayer, EnemyPositions SpawnPositions);
 
         //Maybe some base Attack method
         //A range requirement for this attakc to be poissble
@@ -29,14 +34,25 @@ namespace AgeOfEnlightenment.Enemies
         //Buffind the caster
         //Debuffing the player
 
-
-        protected enum AttackType
+        public enum EnemyRange
         {
-            Ranged,
-            Melee,
-            Summon,
-            Status
+            Close,
+            Medium,
+            Long
         }
+    }
+
+    public struct EnemyPositions
+    {
+
+        public EnemyPositions(Transform leftHand, Transform rightHand)
+        {
+            EnemyRightHand = rightHand;
+            EnemyLeftHand = leftHand;
+        }
+
+        public Transform EnemyLeftHand { get; }
+        public Transform EnemyRightHand { get; }
     }
 
 }

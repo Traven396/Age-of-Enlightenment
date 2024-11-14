@@ -2349,86 +2349,6 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 183770442}
   m_Mesh: {fileID: 7033542491135965237, guid: 705b6ddd53f28214f82384d62dbbb7f4, type: 3}
---- !u!1 &195527864 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 2983473324800271169, guid: 688cf11a02aafd2478e9364ee5bccc09, type: 3}
-  m_PrefabInstance: {fileID: 1663762132}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &195527867
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 195527864}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7c868883488e98642ad338330465cea3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  ragdollAnimator: {fileID: 0}
-  maxRigidbodyVelocity: 10
-  unpinnedLimbKnockout: 1
-  unpinnedTorqueWeightMultiplier: 0.3
-  forceWeightThreshold: 1
-  knockoutDistance: 1
-  maxCollisions: 30
-  collisionThreshold: 0
-  collisionResistance:
-    mode: 0
-    floatValue: 3
-    curve:
-      serializedVersion: 2
-      m_Curve: []
-      m_PreInfinity: 2
-      m_PostInfinity: 2
-      m_RotationOrder: 4
-  getUpCollisionResistanceMutliplier: 2
-  getUpDelay: 4
-  minGetUpDuration: 1
-  regainForceSpeed: 1
-  getUpRegainForceSpeedMultiplier: 2
-  getUpKnockoutDistanceMult: 10
-  maxStandupVelocity: 0.4
-  getUpOffsetBack: {x: 0, y: 0, z: 0}
-  getUpOffsetStomach: {x: 0, y: 0, z: 0}
-  OnGetupFromBack:
-    animationEvents: []
-    standardEvent:
-      m_PersistentCalls:
-        m_Calls: []
-  OnGetupFromStomach:
-    animationEvents: []
-    standardEvent:
-      m_PersistentCalls:
-        m_Calls: []
-  OnLoseBalance:
-    animationEvents: []
-    standardEvent:
-      m_PersistentCalls:
-        m_Calls: []
-  OnLoseBalanceFromPinned:
-    animationEvents: []
-    standardEvent:
-      m_PersistentCalls:
-        m_Calls: []
-  OnLoseBalanceWhileGettingUp:
-    animationEvents: []
-    standardEvent:
-      m_PersistentCalls:
-        m_Calls: []
-  OnRegainBalance:
-    animationEvents: []
-    standardEvent:
-      m_PersistentCalls:
-        m_Calls: []
-  groundLayers:
-    serializedVersion: 2
-    m_Bits: 512
-  collisionLayers:
-    serializedVersion: 2
-    m_Bits: 2313
-  collisionResistanceMultipliers: []
 --- !u!1 &196716355
 GameObject:
   m_ObjectHideFlags: 0
@@ -6213,7 +6133,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7030345356188455, guid: 688cf11a02aafd2478e9364ee5bccc09, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5858874499652395382, guid: 688cf11a02aafd2478e9364ee5bccc09, type: 3}
       propertyPath: m_RootOrder
@@ -7148,27 +7068,6 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 519493897}
   m_Mesh: {fileID: 2872171153304978363, guid: 705b6ddd53f28214f82384d62dbbb7f4, type: 3}
---- !u!1 &525697311 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 5776674213943050994, guid: 042edbe444dcb994bba9dd0b9043ef02, type: 3}
-  m_PrefabInstance: {fileID: 442895258}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &525697320
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 525697311}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7510afd48de3d07409acb66b14491e33, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  BreadcrumbPrefab: {fileID: 894225900475169593, guid: 6dfa38d77da12ca4c8d303ca615a40d2, type: 3}
-  MaxPoolSize: 10
-  CrumbSpawnCooldown: 0.8
-  CrumbLifetime: 1
 --- !u!1 &537315001
 GameObject:
   m_ObjectHideFlags: 0
@@ -21020,17 +20919,29 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 1620496969, guid: 688cf11a02aafd2478e9364ee5bccc09, type: 3}
-      propertyPath: CanWander
+      propertyPath: DisplayPreferredRanges
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1620496969, guid: 688cf11a02aafd2478e9364ee5bccc09, type: 3}
-      propertyPath: MovementSpeed
-      value: 2
+      propertyPath: ListOfAttacks.Array.size
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 1620496969, guid: 688cf11a02aafd2478e9364ee5bccc09, type: 3}
-      propertyPath: DisplayMovementTarget
-      value: 1
-      objectReference: {fileID: 0}
+      propertyPath: ListOfAttacks.Array.data[0]
+      value: 
+      objectReference: {fileID: 11400000, guid: 10b2e7ab053e41b4ab16e628c152514f, type: 2}
+    - target: {fileID: 1620496969, guid: 688cf11a02aafd2478e9364ee5bccc09, type: 3}
+      propertyPath: ListOfAttacks.Array.data[1]
+      value: 
+      objectReference: {fileID: 11400000, guid: f4ee3a36923d6474ea01a69f411279c5, type: 2}
+    - target: {fileID: 1620496969, guid: 688cf11a02aafd2478e9364ee5bccc09, type: 3}
+      propertyPath: ListOfAttacks.Array.data[2]
+      value: 
+      objectReference: {fileID: 11400000, guid: a0648aa11c8fe614abc2c76a71f3f2e4, type: 2}
+    - target: {fileID: 1620496969, guid: 688cf11a02aafd2478e9364ee5bccc09, type: 3}
+      propertyPath: ListOfAttacks.Array.data[3]
+      value: 
+      objectReference: {fileID: 11400000, guid: 1451f1472187f1d44878dcebabc81962, type: 2}
     - target: {fileID: 7030345356188455, guid: 688cf11a02aafd2478e9364ee5bccc09, type: 3}
       propertyPath: m_Name
       value: Ragdoll Enemy

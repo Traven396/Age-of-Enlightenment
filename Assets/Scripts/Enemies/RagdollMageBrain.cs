@@ -6,17 +6,20 @@ namespace AgeOfEnlightenment.Enemies
     using UnityEngine;
     using UnityEngine.AI;
 
-    public class RagdollEnemyBehavior : MonoBehaviour
+    public class RagdollMageBrain : MonoBehaviour
     {
-        [SerializeField] public Enemy_Life_State CurrentLifeState;
-        [SerializeField] public Enemy_Vision_State CurrentVisionState;
-        [SerializeField] public Enemy_Movement_State CurrentMovementState;
+        public Enemy_Life_State CurrentLifeState;
+        public Enemy_Vision_State CurrentVisionState;
+        public Enemy_Movement_State CurrentMovementState;
+        public Enemy_Combat_State CurrentCombatState;
+        public BaseAttackBehavior.EnemyRange CurrentRange;
         [SerializeField] private float MovementSpeed = 4f;
+        [SerializeField] private float TurnSpeed = 4f;
         [SerializeField] private float MaxHealth = 10;
         [SerializeField] private float CurrentHealth;
         [SerializeField] private float WanderRange = 20f;
         [SerializeField] private float VisionRange = 13f;
-        [SerializeField] private float AttackRange = 6;
+        [SerializeField] private float MiddleAttackRange = 6;
         [SerializeField] private bool CanWander = false;
         [SerializeField] private bool UseSight = true;
         [SerializeField] private bool StayAroundStartingPoint = false;
@@ -25,11 +28,12 @@ namespace AgeOfEnlightenment.Enemies
         [SerializeField] private Transform EyeTransform;
 
         [Header("Attack Options")]
-        public List<BaseAttackBehavior> ListOfAttacks;
+        public List<BaseAttackBehavior> ListOfAttacks = new(4);
 
         [Header("Debug Options")]
         public bool DrawVisionLines = false;
         public bool DisplayMovementTarget = false;
+        public bool DisplayPreferredRanges = false;
 
         public LayerMask EnvironmentLayers, PlayerLayers, EnemyLayers;
 
@@ -44,8 +48,13 @@ namespace AgeOfEnlightenment.Enemies
         private Animator _Animator;
         private NavMeshAgent _Agent;
 
+        private AnimatorOverrideController constructedAnimatorController;
+        private bool isAttacking = false;
+        private float minPreferredRange;
+        private float maxPreferredRange;
 
-        private Transform PlayerTransform;
+
+        private Transform _PlayerTransform;
 
 
         private bool haveWanderTarget = false; //A boolean that is whether or not the AI has a wander position somewhere already
@@ -53,7 +62,7 @@ namespace AgeOfEnlightenment.Enemies
         private float nextWanderCooldown;
 
 
-        private RagdollEnemyBehavior TargetAI;
+        private RagdollMageBrain TargetAI;
         private Vector3 lastSeenPlayerLocation;
 
         private bool isGrounded;
@@ -70,17 +79,115 @@ namespace AgeOfEnlightenment.Enemies
 
             _RagdollAnimator = transform.parent.GetComponentInChildren<RagdollAnimatorV2>();
             if (!_RagdollAnimator)
-                Debug.Log("We dont have an animator to refer to.");
+                Debug.Log("We dont have a ragdoll animator to refer to.");
 
 
             _Animator = GetComponent<Animator>();
 
-            PlayerTransform = FindObjectOfType<PlayerSingleton>().transform;
+            _PlayerTransform = FindObjectOfType<PlayerSingleton>().transform;
 
             if (ListOfAttacks.Count == 0)
                 Debug.Log("This enemy has no attacks");
+
+
+            
         }
 
+        private void Start()
+        {
+            CreateMageAttackBrain();
+        }
+
+        private void CreateMageAttackBrain()
+        {
+            //We make a copy of the current controller but one that we can change during runtime. This way we can add the correct animations to each of the spell states
+            constructedAnimatorController = new AnimatorOverrideController(_Animator.runtimeAnimatorController);
+            constructedAnimatorController.name = "Override Controller";
+            _Animator.runtimeAnimatorController = constructedAnimatorController;
+
+
+            int longRangeCounter = 0, mediumRangeCounter = 0, closeRangeCounter = 0;
+
+            foreach (BaseAttackBehavior currentAttack in ListOfAttacks)
+            {
+                if (currentAttack.AttackRange == BaseAttackBehavior.EnemyRange.Long)
+                    longRangeCounter++;
+                if (currentAttack.AttackRange == BaseAttackBehavior.EnemyRange.Medium)
+                    mediumRangeCounter++;
+                if (currentAttack.AttackRange == BaseAttackBehavior.EnemyRange.Close)
+                    closeRangeCounter++;
+
+                var spellCount = longRangeCounter + mediumRangeCounter + closeRangeCounter;
+
+                if (currentAttack.AttackAnimation)
+                {
+                    
+                    constructedAnimatorController["Spell " + spellCount + " Default Animation"] = currentAttack.AttackAnimation;
+
+                    AnimationEvent tempEvent = new();
+
+                    tempEvent.time = currentAttack.AttackAnimation.length;
+                    tempEvent.functionName = "Spell" + spellCount + "Finished";
+
+                    constructedAnimatorController["Spell " + spellCount + " Default Animation"].AddEvent(tempEvent);
+                    
+                }
+            }
+
+            if(longRangeCounter > mediumRangeCounter && longRangeCounter > closeRangeCounter)
+            {
+                CurrentRange = BaseAttackBehavior.EnemyRange.Long;
+
+                maxPreferredRange = MiddleAttackRange * 2;
+                minPreferredRange = MiddleAttackRange * 1.5f;
+            }
+            else if (mediumRangeCounter > longRangeCounter && mediumRangeCounter > closeRangeCounter)
+            {
+                CurrentRange = BaseAttackBehavior.EnemyRange.Medium;
+
+                maxPreferredRange = MiddleAttackRange * 1.4f;
+                minPreferredRange = MiddleAttackRange * 0.9f;
+            }
+            else if(closeRangeCounter > longRangeCounter && closeRangeCounter > mediumRangeCounter)
+            {
+                CurrentRange = BaseAttackBehavior.EnemyRange.Close;
+
+                maxPreferredRange = 3;
+                minPreferredRange = 1f;
+            }
+            else
+            {
+                CurrentRange = BaseAttackBehavior.EnemyRange.Medium;
+                Debug.Log("We had a tie for an enemy. This should be fixed somehow but what are ya gonna do for random stuff");
+            }
+
+            if (VisionRange < maxPreferredRange)
+                VisionRange = maxPreferredRange;
+        }
+
+        #region Spell finish methods
+        public void Spell1Finished()
+        {
+            _Animator.SetTrigger("FinishSpell1");
+            isAttacking = false;
+        }
+        public void Spell2Finished()
+        {
+            _Animator.SetTrigger("FinishSpell2");
+            isAttacking = false;
+        }
+        public void Spell3Finished()
+        {
+            _Animator.SetTrigger("FinishSpell3");
+            isAttacking = false;
+        }
+        public void Spell4Finished()
+        {
+            _Animator.SetTrigger("FinishSpell4");
+
+             isAttacking = false;
+        }
+        #endregion
         private void Update()
         {
             EnemyControllerUpdate();
@@ -104,9 +211,14 @@ namespace AgeOfEnlightenment.Enemies
 
         private void OnDrawGizmos()
         {
-
             if (DisplayMovementTarget)
-                Gizmos.DrawSphere(CurrentMovementTarget, .8f);
+                Gizmos.DrawSphere(CurrentMovementTarget, .3f);
+
+            if (DisplayPreferredRanges && Application.isPlaying)
+            {
+                Gizmos.DrawWireSphere(_PlayerTransform.position, minPreferredRange);
+                Gizmos.DrawWireSphere(_PlayerTransform.position, maxPreferredRange);
+            }
         }
 
         private void IncrementTimers()
@@ -134,10 +246,51 @@ namespace AgeOfEnlightenment.Enemies
 
             //How are we moving
             DetermineMovementState();
+
+            //Are we in a state where we can try and attack the player
+            DetermineCombatState();
+        }
+
+        private void DetermineCombatState()
+        {
+            if (CurrentVisionState != Enemy_Vision_State.CanSeePlayer)
+            {
+                CurrentCombatState = Enemy_Combat_State.NotCombatReady;
+
+                Debug.Log("Cant see the player so no combat");
+
+                return;
+            }
+            if(CurrentLifeState == Enemy_Life_State.Ragdoll)
+            {
+                CurrentCombatState = Enemy_Combat_State.NotCombatReady;
+
+                Debug.Log("We are ragdoll so no combat");
+
+                return;
+            }
+
+            if(CurrentMovementState == Enemy_Movement_State.Wandering ||
+                CurrentMovementState == Enemy_Movement_State.Falling ||
+                CurrentMovementState == Enemy_Movement_State.ChasingOtherAI ||
+                CurrentMovementState == Enemy_Movement_State.ChasingLastPlayerLocation ||
+                CurrentMovementState == Enemy_Movement_State.FallenOver)
+            {
+                CurrentCombatState = Enemy_Combat_State.NotCombatReady;
+
+                Debug.Log("We arent moving near the player so no combat");
+
+                return;
+            }
+
+            CurrentCombatState = Enemy_Combat_State.CombatReady;
+
         }
 
         private void DetermineMovementState()
         {
+            var distToPlayer = Vector3.Distance(transform.position, _PlayerTransform.position);
+
             //Are we falling over, or already fallen over
 
             //I need to go through the code for the active ragdolls and see if I can figure out a way to detect loss of balance. Maybe through an event
@@ -153,9 +306,23 @@ namespace AgeOfEnlightenment.Enemies
                 {
                     if (CurrentVisionState == Enemy_Vision_State.CanSeePlayer) 
                     {
-                        CurrentMovementState = Enemy_Movement_State.ChasingPlayer;
+                        if (distToPlayer >= maxPreferredRange)
+                            CurrentMovementState = Enemy_Movement_State.ChasingPlayer;
+                        else if (distToPlayer <= minPreferredRange)
+                            CurrentMovementState = Enemy_Movement_State.Retreating;
+                        else
+                        {
+                            CurrentMovementState = Enemy_Movement_State.Standing;
 
 
+                            Vector3 lookPos = _PlayerTransform.position - _Agent.transform.position;
+                            
+                            lookPos.y = 0;
+
+                            Quaternion rotation = Quaternion.LookRotation(lookPos);
+                            
+                            _Agent.transform.rotation = Quaternion.Slerp(_Agent.transform.rotation, rotation, TurnSpeed);
+                        }
                         return;
                     }
 
@@ -267,7 +434,7 @@ namespace AgeOfEnlightenment.Enemies
                 {
                     foreach (Collider collider in nearbyEnemies)
                     {
-                        if (collider.TryGetComponent(out RagdollEnemyBehavior currentEnemy))
+                        if (collider.TryGetComponent(out RagdollMageBrain currentEnemy))
                         {
                             if (currentEnemy != this)
                             {
@@ -286,20 +453,20 @@ namespace AgeOfEnlightenment.Enemies
 
         private void CheckForPlayer()
         {
-            if (PlayerTransform)
+            if (_PlayerTransform)
             {
-                if (Vector3.Distance(_Agent.transform.position, PlayerTransform.position) <= VisionRange)
+                if (Vector3.Distance(_Agent.transform.position, _PlayerTransform.position) <= VisionRange)
                 {
                     //Do we use sight to find the player
                     if (UseSight)
                     {
-                        if (Physics.Linecast(EyeTransform.position, PlayerTransform.position, ~(PlayerLayers | EnemyLayers)))
+                        if (Physics.Linecast(EyeTransform.position, _PlayerTransform.position, ~(PlayerLayers | EnemyLayers)))
                         {
 
                             if (CurrentVisionState == Enemy_Vision_State.CanSeePlayer)
                             {
                                 if (DrawVisionLines)
-                                    Debug.DrawLine(EyeTransform.position, PlayerTransform.position, Color.red, 10);
+                                    Debug.DrawLine(EyeTransform.position, _PlayerTransform.position, Color.red, 10);
                             }
 
 
@@ -311,10 +478,10 @@ namespace AgeOfEnlightenment.Enemies
                         {
                             //If we dont hit anything, we can see the player and should transition to that state
                             CurrentVisionState = Enemy_Vision_State.CanSeePlayer;
-                            lastSeenPlayerLocation = PlayerTransform.position;
+                            lastSeenPlayerLocation = _PlayerTransform.position;
 
                             if (DrawVisionLines)
-                                Debug.DrawLine(EyeTransform.position, PlayerTransform.position, Color.blue);
+                                Debug.DrawLine(EyeTransform.position, _PlayerTransform.position, Color.blue);
                         }
                     }
                     else
@@ -322,7 +489,7 @@ namespace AgeOfEnlightenment.Enemies
                         //If we dont use sight, just check some kind of search range for the player.
                         //If they are within range we see them and should begin chasing
                         CurrentVisionState = Enemy_Vision_State.CanSeePlayer;
-                        lastSeenPlayerLocation = PlayerTransform.position;
+                        lastSeenPlayerLocation = _PlayerTransform.position;
                     }
                 }
                 else
@@ -332,7 +499,7 @@ namespace AgeOfEnlightenment.Enemies
                         CurrentVisionState = Enemy_Vision_State.CanSeeNothing;
 
                         if (DrawVisionLines)
-                            Debug.DrawLine(EyeTransform.position, PlayerTransform.position, Color.green, 10);
+                            Debug.DrawLine(EyeTransform.position, _PlayerTransform.position, Color.green, 10);
                     }
                 }
 
@@ -379,6 +546,11 @@ namespace AgeOfEnlightenment.Enemies
                         ChasePlayer();
                     }
 
+                    if(CurrentMovementState == Enemy_Movement_State.Retreating)
+                    {
+                        Retreat();
+                    }
+
                     if(CurrentMovementState == Enemy_Movement_State.ChasingOtherAI)
                     {
                         ChaseOtherAI();
@@ -390,7 +562,31 @@ namespace AgeOfEnlightenment.Enemies
 
                     if(CurrentMovementState == Enemy_Movement_State.AttackingPlayer)
                     {
-                        Debug.Log("We've gots to make some kind of attacking method here. Modular is the hope but for right now. GRRRRRRRR");
+                        if (!isAttacking)
+                        {
+                            var num = UnityEngine.Random.Range(2, 5);
+                            Debug.Log(num);
+                            switch (num)
+                            {
+                                case 1:
+                                    _Animator.SetTrigger("CastSpell1");
+                                    isAttacking = true;
+                                    break;
+                                case 2:
+                                    _Animator.SetTrigger("CastSpell2");
+                                    isAttacking = true;
+                                    break;
+                                case 3:
+                                    _Animator.SetTrigger("CastSpell3");
+                                    isAttacking = true;
+                                    break;
+                                case 4:
+                                    _Animator.SetTrigger("CastSpell4");
+                                    isAttacking = true;
+                                    break;
+                            } 
+                        }
+                        
                     }
 
                     if(CurrentMovementState == Enemy_Movement_State.Wandering)
@@ -499,28 +695,35 @@ namespace AgeOfEnlightenment.Enemies
 
         }
         #endregion
-        #region Chase Player Methods
+        #region Combat Movement 
 
+        private void Retreat()
+        {
+            CurrentMovementTarget = (_Agent.transform.position - _PlayerTransform.position).normalized + _Agent.transform.position;
+
+            _Agent.SetDestination(CurrentMovementTarget);
+        }
         private void ChasePlayer()
         {
-            CurrentMovementTarget = PlayerTransform.position;
+            CurrentMovementTarget = _PlayerTransform.position;
 
-            var distToPlayer = Vector3.Distance(transform.position, PlayerTransform.position);
+            //var distToPlayer = Vector3.Distance(transform.position, PlayerTransform.position);
 
-            if (distToPlayer >= AttackRange)
-            {
-                _Agent.SetDestination(CurrentMovementTarget);
-            }
-            else
-            {
-                Debug.Log("Grrrr. Attacking.... Rawr");
-                _Agent.SetDestination(_Agent.transform.position);
-                //The agent shouldnt move anymore and we transition to the AttackingPLayerState
+            //if (distToPlayer >= MiddleAttackRange)
+            //{
+            //    _Agent.SetDestination(CurrentMovementTarget);
+            //}
+            //else
+            //{
+            //    _Agent.SetDestination(_Agent.transform.position);
+            //    //The agent shouldnt move anymore and we transition to the AttackingPLayerState
 
 
-                CurrentMovementState = Enemy_Movement_State.AttackingPlayer;
-            }
+            //    CurrentMovementState = Enemy_Movement_State.Standing;
 
+            //}
+
+            _Agent.SetDestination(CurrentMovementTarget);
         }
         private void ChaseOtherAI()
         {
@@ -556,12 +759,18 @@ namespace AgeOfEnlightenment.Enemies
         Ragdoll, //This is for when the enemy has been knocked over or is completely in ragdoll mode for any reason
         Dead //The enemy health has reached 0 and is going to fall over
     }
+    public enum Enemy_Combat_State
+    {
+        CombatReady,
+        NotCombatReady
+    }
     public enum Enemy_Movement_State
     {
         Wandering,
         Standing,
         FallenOver,
         Falling,
+        Retreating,
         ChasingPlayer,
         AttackingPlayer,
         ChasingLastPlayerLocation,
