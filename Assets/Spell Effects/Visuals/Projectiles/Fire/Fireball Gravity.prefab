@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 4110934354569937089}
   - component: {fileID: -7162847181483833411}
   - component: {fileID: -3198254597191579584}
-  m_Layer: 3
+  m_Layer: 11
   m_Name: Fireball Gravity
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -193,8 +193,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   LifeTime: 3
   HitEffectScaler: 0.8
+  PointTowardsMotion: 0
   BodyParent: {fileID: 3825754138343204399}
   TrailParent: {fileID: 3506350676401448392}
+  DebugMode: 0
 --- !u!114 &-3198254597191579584
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -221,7 +223,7 @@ GameObject:
   - component: {fileID: 8724450609782433090}
   - component: {fileID: 6053463403933018279}
   - component: {fileID: 275481200880477620}
-  m_Layer: 3
+  m_Layer: 11
   m_Name: fire_ob
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5042,7 +5044,7 @@ GameObject:
   - component: {fileID: 2233557924566562730}
   - component: {fileID: 1453388694338539322}
   - component: {fileID: 5300318986144783285}
-  m_Layer: 3
+  m_Layer: 11
   m_Name: outer_glow
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -9854,7 +9856,7 @@ GameObject:
   - component: {fileID: 7860088840147084578}
   - component: {fileID: 6535766757471798144}
   - component: {fileID: 2421949270954937507}
-  m_Layer: 3
+  m_Layer: 11
   m_Name: flame_trail
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -14666,7 +14668,7 @@ GameObject:
   - component: {fileID: 2176734939779112865}
   - component: {fileID: 8845000678255998930}
   - component: {fileID: 4399872244036806249}
-  m_Layer: 3
+  m_Layer: 11
   m_Name: fire_orb_2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -19485,7 +19487,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1728730312414761725}
-  m_Layer: 3
+  m_Layer: 11
   m_Name: Trails
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -19517,7 +19519,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 543277684284251046}
-  m_Layer: 3
+  m_Layer: 11
   m_Name: Body
   m_TagString: Untagged
   m_Icon: {fileID: 0}

@@ -31,7 +31,7 @@ public class NettleBurst : SpellBlueprint
     public override void TriggerHold()
     {
         base.TriggerHold();
-        Debug.Log("We Holding");
+        
         if (currentHand == 0)
         {
             iTween.RotateUpdate(_SpellCircle, (_HandTransform.transform.rotation * Quaternion.Euler(-90, 0, 0)).eulerAngles, .4f);

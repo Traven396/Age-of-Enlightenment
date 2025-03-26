@@ -121,18 +121,18 @@ using System.Collections.Generic;
 		//Cast a single ray into '_direction' from '_origin';
 		private void CastRay(Vector3 _origin, Vector3 _direction)
 		{
-        hasDetectedHit = Physics.Raycast(_origin, _direction, out RaycastHit _hit, castLength, layermask, QueryTriggerInteraction.Ignore);
+			hasDetectedHit = Physics.Raycast(_origin, _direction, out RaycastHit _hit, castLength, layermask, QueryTriggerInteraction.Ignore);
 
-        if (hasDetectedHit)
-			{
-				hitPosition = _hit.point;
-				hitNormal = _hit.normal;
+			if (hasDetectedHit)
+				{
+					hitPosition = _hit.point;
+					hitNormal = _hit.normal;
 
-				hitColliders.Add(_hit.collider);
-				hitTransforms.Add(_hit.transform);
+					hitColliders.Add(_hit.collider);
+					hitTransforms.Add(_hit.transform);
 
-				hitDistance = _hit.distance;
-			}
+					hitDistance = _hit.distance;
+				}
 		}
 
 		//Calculate a direction in world coordinates based on the local axes of this gameobject's transform component;

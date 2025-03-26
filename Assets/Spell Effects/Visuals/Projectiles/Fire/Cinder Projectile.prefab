@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2432497712718677326}
-  m_Layer: 3
+  m_Layer: 11
   m_Name: Trails
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -45,7 +45,7 @@ GameObject:
   - component: {fileID: 1093837717200804932}
   - component: {fileID: 3823355480956804088}
   - component: {fileID: 8292348624424708793}
-  m_Layer: 3
+  m_Layer: 11
   m_Name: Ember
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4857,7 +4857,7 @@ GameObject:
   - component: {fileID: 7261705083700360297}
   - component: {fileID: 8168568534454630647}
   - component: {fileID: 5269103170815213788}
-  m_Layer: 3
+  m_Layer: 11
   m_Name: Inner Glow
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -9667,7 +9667,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5773672867834065764}
-  m_Layer: 3
+  m_Layer: 11
   m_Name: Body
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -9701,7 +9701,7 @@ GameObject:
   - component: {fileID: 4346485589771814188}
   - component: {fileID: 5467871661433690011}
   - component: {fileID: 7728731226969939259}
-  m_Layer: 3
+  m_Layer: 11
   m_Name: Smoke
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -14514,7 +14514,7 @@ GameObject:
   - component: {fileID: 7529255553250271314}
   - component: {fileID: 2779163370629989530}
   - component: {fileID: 1786885688205914580}
-  m_Layer: 3
+  m_Layer: 11
   m_Name: Cinder Projectile
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -14581,8 +14581,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   LifeTime: 0.3
   HitEffectScaler: 1
+  PointTowardsMotion: 0
   BodyParent: {fileID: 7760239846683069633}
   TrailParent: {fileID: 3777519467439607874}
+  DebugMode: 0
 --- !u!1 &8609382192606100584
 GameObject:
   m_ObjectHideFlags: 0
@@ -14594,7 +14596,7 @@ GameObject:
   - component: {fileID: 2670137296772258154}
   - component: {fileID: 5846434417163234320}
   - component: {fileID: 4154220937542186297}
-  m_Layer: 3
+  m_Layer: 11
   m_Name: InnerGlowTrail
   m_TagString: Untagged
   m_Icon: {fileID: 0}

@@ -1,10 +1,10 @@
 namespace AgeOfEnlightenment.Enemies
 {
-    using System;
     using System.Collections;
     using System.Collections.Generic;
     using UnityEngine;
     using UnityEngine.AI;
+    using System.Linq;
 
     public class RagdollMageBrain : MonoBehaviour
     {
@@ -12,30 +12,36 @@ namespace AgeOfEnlightenment.Enemies
         public Enemy_Vision_State CurrentVisionState;
         public Enemy_Movement_State CurrentMovementState;
         public Enemy_Combat_State CurrentCombatState;
-        public BaseAttackBehavior.EnemyRange CurrentRange;
+        public EnemyRange CurrentRange;
         [SerializeField] private float MovementSpeed = 4f;
         [SerializeField] private float TurnSpeed = 4f;
         [SerializeField] private float MaxHealth = 10;
         [SerializeField] private float CurrentHealth;
         [SerializeField] private float WanderRange = 20f;
         [SerializeField] private float VisionRange = 13f;
-        [SerializeField] private float MiddleAttackRange = 6;
+        [SerializeField] private float StandardAttackRange = 6;
         [SerializeField] private bool CanWander = false;
         [SerializeField] private bool UseSight = true;
         [SerializeField] private bool StayAroundStartingPoint = false;
+        [SerializeField] [Range(0, 1)] private float CowardiceFactor = 0.7f;
 
         [Space(10)]
         [SerializeField] private Transform EyeTransform;
 
         [Header("Attack Options")]
         public List<BaseAttackBehavior> ListOfAttacks = new(4);
+        public Transform LeftHandTransform;
+        public Transform RightHandTransform;
+
+        private List<BaseAttackBehavior> ProactiveAttacks = new List<BaseAttackBehavior>();
+        private List<BaseAttackBehavior> ReactiveAttacks = new List<BaseAttackBehavior>();
 
         [Header("Debug Options")]
         public bool DrawVisionLines = false;
         public bool DisplayMovementTarget = false;
         public bool DisplayPreferredRanges = false;
 
-        public LayerMask EnvironmentLayers, PlayerLayers, EnemyLayers;
+        public LayerMask EnvironmentLayers, PlayerLayers, EnemyLayers, PlayerProjectileLayers;
 
 
         //The setup will be a NavMeshAgent that is the actual object causing movement to the points
@@ -47,26 +53,37 @@ namespace AgeOfEnlightenment.Enemies
         private RagdollAnimatorV2 _RagdollAnimator;
         private Animator _Animator;
         private NavMeshAgent _Agent;
+        private CapsuleCollider _Collider;
 
         private AnimatorOverrideController constructedAnimatorController;
-        private bool isAttacking = false;
         private float minPreferredRange;
         private float maxPreferredRange;
+        private double attackCooldownModifier = 1;
+        private float distToPlayer;
 
 
         private Transform _PlayerTransform;
+        private PlayerSingleton _PlayerSingleton;
 
 
         private bool haveWanderTarget = false; //A boolean that is whether or not the AI has a wander position somewhere already
         //private Vector3 currentWanderTarget = Vector3.zero; //A position somewhere on the map that the AI is going to wander to next.
         private float nextWanderCooldown;
+        private float nextAttackCooldown;
 
+        private float[] proactiveAttackCooldowns;
+        private float[] reactiveAttackCooldowns;
 
         private RagdollMageBrain TargetAI;
         private Vector3 lastSeenPlayerLocation;
 
         private bool isGrounded;
         private Vector3 CurrentMovementTarget;
+        private bool brainCreatedAlready = false;
+
+
+        private List<SpellProjectile> CurrentScaryProjectiles = new();
+
 
         private void Awake()
         {
@@ -83,109 +100,240 @@ namespace AgeOfEnlightenment.Enemies
 
 
             _Animator = GetComponent<Animator>();
-
-            _PlayerTransform = FindObjectOfType<PlayerSingleton>().transform;
-
-            if (ListOfAttacks.Count == 0)
-                Debug.Log("This enemy has no attacks");
+            _Collider = GetComponent<CapsuleCollider>();
 
 
-            
+
+            _PlayerSingleton = FindObjectOfType<PlayerSingleton>();
+            _PlayerTransform = _PlayerSingleton.transform;
         }
 
         private void Start()
         {
-            CreateMageAttackBrain();
+            if(ListOfAttacks.Count != 0 && !brainCreatedAlready)
+            {
+                CreateMageAttackBrain();
+            }
         }
 
-        private void CreateMageAttackBrain()
+        public void CreateMageAttackBrain()
         {
-            //We make a copy of the current controller but one that we can change during runtime. This way we can add the correct animations to each of the spell states
-            constructedAnimatorController = new AnimatorOverrideController(_Animator.runtimeAnimatorController);
-            constructedAnimatorController.name = "Override Controller";
-            _Animator.runtimeAnimatorController = constructedAnimatorController;
-
-
-            int longRangeCounter = 0, mediumRangeCounter = 0, closeRangeCounter = 0;
-
-            foreach (BaseAttackBehavior currentAttack in ListOfAttacks)
+            if (!brainCreatedAlready)
             {
-                if (currentAttack.AttackRange == BaseAttackBehavior.EnemyRange.Long)
-                    longRangeCounter++;
-                if (currentAttack.AttackRange == BaseAttackBehavior.EnemyRange.Medium)
-                    mediumRangeCounter++;
-                if (currentAttack.AttackRange == BaseAttackBehavior.EnemyRange.Close)
-                    closeRangeCounter++;
+                //We make a copy of the current controller but one that we can change during runtime. This way we can add the correct animations to each of the spell states
+                if (!_Animator)
+                    _Animator = GetComponent<Animator>();
 
-                var spellCount = longRangeCounter + mediumRangeCounter + closeRangeCounter;
+                constructedAnimatorController = new AnimatorOverrideController(_Animator.runtimeAnimatorController);
+                constructedAnimatorController.name = "Override Controller";
+                _Animator.runtimeAnimatorController = constructedAnimatorController;
 
-                if (currentAttack.AttackAnimation)
+                int longRangeCounter = 0, mediumRangeCounter = 0, closeRangeCounter = 0;
+
+                //foreach (BaseAttackBehavior currentAttack in ListOfAttacks)
+                //{
+
+                //    if (currentAttack.TimingOfAttack == AttackTiming.Proactive)
+                //        ProactiveAttacks.Add(currentAttack);
+                //    else
+                //        ReactiveAttacks.Add(currentAttack);
+
+                //    if (currentAttack.AttackRange == EnemyRange.Long)
+                //        longRangeCounter++;
+                //    if (currentAttack.AttackRange == EnemyRange.Medium)
+                //        mediumRangeCounter++;
+                //    if (currentAttack.AttackRange == EnemyRange.Close)
+                //        closeRangeCounter++;
+
+
+                //    var spellCount = longRangeCounter + mediumRangeCounter + closeRangeCounter;
+
+                //    if (currentAttack.AttackAnimation)
+                //    {
+
+                //        constructedAnimatorController["Spell " + spellCount + " Default Animation"] = currentAttack.AttackAnimation;
+
+                //        AnimationEvent tempEvent = new();
+
+                //        if (currentAttack.EventFireTime > currentAttack.AttackAnimation.length)
+                //        {
+                //            tempEvent.time = currentAttack.AttackAnimation.length;
+                //            Debug.Log("Chosen length is longer than animation length. Animation: " + currentAttack.NameOfAttack);
+                //        }
+                //        else
+                //        {
+                //            tempEvent.time = currentAttack.EventFireTime;
+                //        }
+
+
+                //        //Upon finishing the animation an event needs to be fired. It will be passed a float to determine which attack was just used. Then that attack's timer will be set
+                //        //The method for finished attack accepts a float, and compares it to the array of cooldown timers.
+
+                //        tempEvent.functionName = "Spell" + spellCount + "Finished";
+                //        tempEvent.floatParameter = spellCount;
+
+                //        if (constructedAnimatorController["Spell " + spellCount + " Default Animation"].events.Length == 0)
+                //            constructedAnimatorController["Spell " + spellCount + " Default Animation"].AddEvent(tempEvent);
+
+                //    }
+                //}
+
+                for (int i = 0; i < ListOfAttacks.Count; i++)
                 {
-                    
-                    constructedAnimatorController["Spell " + spellCount + " Default Animation"] = currentAttack.AttackAnimation;
+                    var currentAttack = ListOfAttacks[i];
+
+
+                    if (currentAttack.AttackRange == EnemyRange.Long)
+                        longRangeCounter++;
+                    if (currentAttack.AttackRange == EnemyRange.Medium)
+                        mediumRangeCounter++;
+                    if (currentAttack.AttackRange == EnemyRange.Close)
+                        closeRangeCounter++;
+
 
                     AnimationEvent tempEvent = new();
 
-                    tempEvent.time = currentAttack.AttackAnimation.length;
-                    tempEvent.functionName = "Spell" + spellCount + "Finished";
 
-                    constructedAnimatorController["Spell " + spellCount + " Default Animation"].AddEvent(tempEvent);
-                    
+                    if (currentAttack.EventFireTime > currentAttack.AttackAnimation.length)
+                    {
+                        tempEvent.time = currentAttack.AttackAnimation.length;
+                        Debug.Log("Chosen length is longer than animation length. Animation: " + currentAttack.NameOfAttack);
+                    }
+                    else
+                    {
+                        tempEvent.time = currentAttack.EventFireTime;
+                    }
+
+
+                    if (currentAttack.TimingOfAttack == AttackTiming.Proactive)
+                    {
+                        string stateName = "Proactive Spell " + (ProactiveAttacks.Count + 1) + " Default Animation";
+
+                        constructedAnimatorController[stateName] = currentAttack.AttackAnimation;
+
+                        tempEvent.functionName = "ProactiveFinished";
+                        tempEvent.floatParameter = ProactiveAttacks.Count;
+
+                        Debug.Log("Proactive event: " + i + " " + " count: " + ProactiveAttacks.Count);
+
+                        //We check to make sure it doesn't already have an event so that if an enemy ends up having multiple copies of the same attack it doenst double the events
+                        if (constructedAnimatorController[stateName].events.Length == 0)
+                            constructedAnimatorController[stateName].AddEvent(tempEvent);
+
+
+                        ProactiveAttacks.Add(currentAttack);
+                    }
+                    else
+                    {
+                        string stateName = "Reactive Spell " + (ReactiveAttacks.Count + 1) + " Default Animation";
+
+
+                        constructedAnimatorController[stateName] = currentAttack.AttackAnimation;
+
+                        tempEvent.functionName = "ReactiveFinished";
+                        tempEvent.floatParameter = ReactiveAttacks.Count;
+
+                        if (constructedAnimatorController[stateName].events.Length == 0)
+                            constructedAnimatorController[stateName].AddEvent(tempEvent);
+
+
+                        ReactiveAttacks.Add(currentAttack);
+                    }
                 }
-            }
 
-            if(longRangeCounter > mediumRangeCounter && longRangeCounter > closeRangeCounter)
-            {
-                CurrentRange = BaseAttackBehavior.EnemyRange.Long;
 
-                maxPreferredRange = MiddleAttackRange * 2;
-                minPreferredRange = MiddleAttackRange * 1.5f;
-            }
-            else if (mediumRangeCounter > longRangeCounter && mediumRangeCounter > closeRangeCounter)
-            {
-                CurrentRange = BaseAttackBehavior.EnemyRange.Medium;
 
-                maxPreferredRange = MiddleAttackRange * 1.4f;
-                minPreferredRange = MiddleAttackRange * 0.9f;
-            }
-            else if(closeRangeCounter > longRangeCounter && closeRangeCounter > mediumRangeCounter)
-            {
-                CurrentRange = BaseAttackBehavior.EnemyRange.Close;
+                if (longRangeCounter > mediumRangeCounter && longRangeCounter > closeRangeCounter)
+                {
+                    CurrentRange = EnemyRange.Long;
 
-                maxPreferredRange = 3;
-                minPreferredRange = 1f;
-            }
-            else
-            {
-                CurrentRange = BaseAttackBehavior.EnemyRange.Medium;
-                Debug.Log("We had a tie for an enemy. This should be fixed somehow but what are ya gonna do for random stuff");
-            }
+                    maxPreferredRange = StandardAttackRange * 2;
+                    minPreferredRange = StandardAttackRange * 1.5f;
 
-            if (VisionRange < maxPreferredRange)
-                VisionRange = maxPreferredRange;
+                    attackCooldownModifier = 1.4;
+                }
+                else if (mediumRangeCounter > longRangeCounter && mediumRangeCounter > closeRangeCounter)
+                {
+                    CurrentRange = EnemyRange.Medium;
+
+                    maxPreferredRange = StandardAttackRange * 1.4f;
+                    minPreferredRange = StandardAttackRange * 0.9f;
+
+                    attackCooldownModifier = 1;
+                }
+                else if (closeRangeCounter > longRangeCounter && closeRangeCounter > mediumRangeCounter)
+                {
+                    CurrentRange = EnemyRange.Close;
+
+                    maxPreferredRange = 3;
+                    minPreferredRange = 1f;
+
+                    attackCooldownModifier = 0.7;
+                }
+                else
+                {
+                    CurrentRange = EnemyRange.Medium;
+                    Debug.Log("We had a tie for an enemy. This should be fixed somehow but what are ya gonna do for random stuff");
+
+                    maxPreferredRange = StandardAttackRange * 1.4f;
+                    minPreferredRange = StandardAttackRange * 0.9f;
+
+                    attackCooldownModifier = 1;
+                }
+
+                if (VisionRange < maxPreferredRange)
+                    VisionRange = maxPreferredRange;
+
+                proactiveAttackCooldowns = new float[ProactiveAttacks.Count];
+
+                reactiveAttackCooldowns = new float[ReactiveAttacks.Count];
+
+
+                brainCreatedAlready = true;
+            }
         }
 
         #region Spell finish methods
+
+        public void ProactiveFinished(int numOfAttack)
+        {
+            Debug.Log("Proactive " + numOfAttack);
+
+            _Animator.SetTrigger("FinishSpell" + (numOfAttack++));
+
+            ProactiveAttacks[numOfAttack].Attack(_PlayerSingleton, new EnemyPositions(LeftHandTransform, RightHandTransform, transform));
+            proactiveAttackCooldowns[numOfAttack] = ProactiveAttacks[numOfAttack].Cooldown;
+        }
+        public void ReactiveFinished(int numOfAttack)
+        {
+            Debug.Log(numOfAttack);
+
+            ReactiveAttacks[numOfAttack].Attack(_PlayerSingleton, new EnemyPositions(LeftHandTransform, RightHandTransform, transform));
+            reactiveAttackCooldowns[numOfAttack] = ReactiveAttacks[numOfAttack].Cooldown;
+        }
         public void Spell1Finished()
         {
             _Animator.SetTrigger("FinishSpell1");
-            isAttacking = false;
+
+            //These methods will acall the Attack method in the SO to actually spawn stuff and shoot it
+            ListOfAttacks[0].Attack(_PlayerSingleton, new EnemyPositions(LeftHandTransform, RightHandTransform, transform));
+
         }
         public void Spell2Finished()
         {
             _Animator.SetTrigger("FinishSpell2");
-            isAttacking = false;
+
+            ListOfAttacks[1].Attack(_PlayerSingleton, new EnemyPositions(LeftHandTransform, RightHandTransform, transform));
         }
         public void Spell3Finished()
         {
             _Animator.SetTrigger("FinishSpell3");
-            isAttacking = false;
+            ListOfAttacks[2].Attack(_PlayerSingleton, new EnemyPositions(LeftHandTransform, RightHandTransform, transform));
         }
         public void Spell4Finished()
         {
             _Animator.SetTrigger("FinishSpell4");
-
-             isAttacking = false;
+            ListOfAttacks[3].Attack(_PlayerSingleton, new EnemyPositions(LeftHandTransform, RightHandTransform, transform));
         }
         #endregion
         private void Update()
@@ -195,6 +343,11 @@ namespace AgeOfEnlightenment.Enemies
             IncrementTimers();
 
             AnimationUpdate();
+
+            foreach (var item in CurrentScaryProjectiles)
+            {
+                Debug.Log(item.name);
+            }
         }
 
         private void AnimationUpdate()
@@ -223,13 +376,37 @@ namespace AgeOfEnlightenment.Enemies
 
         private void IncrementTimers()
         {
+            float timeStep = Time.deltaTime;
+
             if(nextWanderCooldown > 0)
             {
-                nextWanderCooldown -= Time.deltaTime;
+                nextWanderCooldown -= timeStep;
+            }
+
+            if (nextAttackCooldown > 0)
+                nextAttackCooldown -= timeStep;
+
+            if (proactiveAttackCooldowns.Length > 0)
+            {
+                for (int i = 0; i < proactiveAttackCooldowns.Length; i++)
+                {
+                    if (proactiveAttackCooldowns[i] > 0)
+                        proactiveAttackCooldowns[i] -= timeStep;
+                }
+            }
+
+            if (reactiveAttackCooldowns.Length > 0)
+            {
+
+                for (int i = 0; i < reactiveAttackCooldowns.Length; i++)
+                {
+                    if (reactiveAttackCooldowns[i] > 0)
+                        reactiveAttackCooldowns[i] -= timeStep;
+                }
             }
         }
 
-        #region StateMethods
+        #region State Methods
         private void UpdateEnemyState()
         {
             //Check if we have died
@@ -257,15 +434,11 @@ namespace AgeOfEnlightenment.Enemies
             {
                 CurrentCombatState = Enemy_Combat_State.NotCombatReady;
 
-                Debug.Log("Cant see the player so no combat");
-
                 return;
             }
             if(CurrentLifeState == Enemy_Life_State.Ragdoll)
             {
                 CurrentCombatState = Enemy_Combat_State.NotCombatReady;
-
-                Debug.Log("We are ragdoll so no combat");
 
                 return;
             }
@@ -278,8 +451,6 @@ namespace AgeOfEnlightenment.Enemies
             {
                 CurrentCombatState = Enemy_Combat_State.NotCombatReady;
 
-                Debug.Log("We arent moving near the player so no combat");
-
                 return;
             }
 
@@ -289,7 +460,7 @@ namespace AgeOfEnlightenment.Enemies
 
         private void DetermineMovementState()
         {
-            var distToPlayer = Vector3.Distance(transform.position, _PlayerTransform.position);
+            distToPlayer = Vector3.Distance(transform.position, _PlayerTransform.position);
 
             //Are we falling over, or already fallen over
 
@@ -378,6 +549,10 @@ namespace AgeOfEnlightenment.Enemies
         #region Vision Methods
         private void DetermineVisionState()
         {
+            CheckForScaryProjectiles();
+
+
+
             //If we are close enough and can see the player, we see them
             CheckForPlayer();
 
@@ -385,7 +560,7 @@ namespace AgeOfEnlightenment.Enemies
                 return;
 
             //If we cant see the player but can see another AI that can see the player, follow them
-            CheckForOtherAi();
+            CheckForOtherAI();
 
             if (CurrentVisionState == Enemy_Vision_State.CanSeeAI)
                 return;
@@ -394,7 +569,7 @@ namespace AgeOfEnlightenment.Enemies
             CurrentVisionState = Enemy_Vision_State.CanSeeNothing;
         }
 
-        private void CheckForOtherAi()
+        private void CheckForOtherAI()
         {
             //Are we already following an AI?
             //If we are can we still see them?
@@ -504,7 +679,58 @@ namespace AgeOfEnlightenment.Enemies
                 }
 
             }
-        } 
+        }
+
+        private void CheckForScaryProjectiles()
+        {
+            Collider[] inRangeProjectiles = Physics.OverlapSphere(EyeTransform.position, VisionRange, PlayerProjectileLayers);
+
+            if(inRangeProjectiles.Length != 0)
+            {
+                foreach (Collider projectileCollider in inRangeProjectiles)
+                {
+                    SpellProjectile projectileSpellComponnent = projectileCollider.GetComponent<SpellProjectile>();
+                    if (!projectileSpellComponnent)
+                        projectileSpellComponnent = projectileCollider.GetComponentInParent<SpellProjectile>();
+
+                    if (!projectileSpellComponnent)
+                    {
+                        Debug.Log("Uh oh");
+                        continue;
+                    }
+
+                    //Can we see the projectile at all
+                    if (!Physics.Linecast(EyeTransform.position, projectileSpellComponnent.transform.position, ~(PlayerLayers | EnemyLayers)))
+                    {
+                        //We first get the direction from the projectile anywhere to the center of our collider.
+                        Vector3 scaryDirection = (_Collider.bounds.center - projectileCollider.transform.position).normalized;
+
+                        //float scarinessFactor = Vector3.Dot(scaryDirection, projectileSpellComponnent.GetRigidbody().velocity.normalized);
+                        float scarinessAngle = Vector3.Angle(scaryDirection, projectileSpellComponnent.GetRigidbody().velocity.normalized);
+
+                        //Debug.DrawRay(projectileCollider.transform.position, scaryDirection);
+                        Debug.Log(Mathf.Round(scarinessAngle));
+
+                        if (scarinessAngle <= 30 && scarinessAngle != 0)
+                        {
+                            if (!CurrentScaryProjectiles.Contains(projectileSpellComponnent))
+                                CurrentScaryProjectiles.Add(projectileSpellComponnent);
+                        }
+                        else
+                        {
+                            if (CurrentScaryProjectiles.Contains(projectileSpellComponnent))
+                                CurrentScaryProjectiles.Remove(projectileSpellComponnent);
+                        } 
+                    }
+
+
+                    if (!projectileCollider.gameObject.activeInHierarchy)
+                        CurrentScaryProjectiles.Remove(projectileSpellComponnent);
+                }
+            }
+
+
+        }
         #endregion
 
         private void DetermineBalanceState()
@@ -539,7 +765,6 @@ namespace AgeOfEnlightenment.Enemies
                 case Enemy_Life_State.Alive:
 
                     
-
                     //We should wander if we dont see the player, dont see an AI that can see the player, and we arent traveling to where we last saw the player
                     if(CurrentMovementState == Enemy_Movement_State.ChasingPlayer)
                     {
@@ -560,33 +785,9 @@ namespace AgeOfEnlightenment.Enemies
                         ChaseLastSeenLocation();
                     }
 
-                    if(CurrentMovementState == Enemy_Movement_State.AttackingPlayer)
+                    if(CurrentCombatState == Enemy_Combat_State.CombatReady)
                     {
-                        if (!isAttacking)
-                        {
-                            var num = UnityEngine.Random.Range(2, 5);
-                            Debug.Log(num);
-                            switch (num)
-                            {
-                                case 1:
-                                    _Animator.SetTrigger("CastSpell1");
-                                    isAttacking = true;
-                                    break;
-                                case 2:
-                                    _Animator.SetTrigger("CastSpell2");
-                                    isAttacking = true;
-                                    break;
-                                case 3:
-                                    _Animator.SetTrigger("CastSpell3");
-                                    isAttacking = true;
-                                    break;
-                                case 4:
-                                    _Animator.SetTrigger("CastSpell4");
-                                    isAttacking = true;
-                                    break;
-                            } 
-                        }
-                        
+                        AttackPlayer();
                     }
 
                     if(CurrentMovementState == Enemy_Movement_State.Wandering)
@@ -695,8 +896,147 @@ namespace AgeOfEnlightenment.Enemies
 
         }
         #endregion
-        #region Combat Movement 
+        #region "Combat" Methods 
 
+        private void FightPlayer()
+        {
+            //IN this state we need to both attempt to block incoming projectiles if they are coming at us
+            //and still make sure that we are attacking them.
+            //Potentially dodging attacks
+            if(CurrentScaryProjectiles.Count > 0)
+            {
+
+            }
+
+
+            //AttackPlayer();
+        }
+
+        private void BlockIncomingAttacks()
+        {
+            //We first need to order the list based on which attacks are highest priority.
+            //Damage, closeness, speed it is approaching
+            //Maybe later on it would prioritise damage types that would hurt it more?
+
+            OrganizeProjectileList();
+
+
+            //Then we 
+
+        }
+        private void OrganizeProjectileList()
+        {
+            CurrentScaryProjectiles = CurrentScaryProjectiles.OrderByDescending(pro => pro.GetDamage())
+                .ThenByDescending(pro => Vector3.Distance(_Collider.bounds.center, pro.transform.position))
+                .ToList();
+        }
+        private void AttemptBlock()
+        {
+            //We need to somehow verify that the animator is not already playing an attack
+
+            foreach (SpellProjectile projectile in CurrentScaryProjectiles)
+            {
+                if(Vector3.Distance(_Collider.bounds.center, projectile.transform.position) > .7f)
+                {
+                    //There are multiple issues I am running into when trying to work this through in my head
+                    //1. How do we determine if a projectile is too close to attempt to block? Does each attack have it's own BlockSpeed or something?
+                        //Maybe we use attack range for that aspect? CloseRange block attacks can be done instantly
+                    //2. Do we just call the Attack method and pass along the projectile attack? I don't think so because then it would never be told where the projectile it
+                    //we would need to create a seperate method for this that allows for blocking, passing along a target rather than a player?
+                    //3. The actual block spell must cast before the animation starts due to that adding a massive delay to it
+                    //4. The blocking uses a different transition setup than the regular attacks, rather than having a trigger for the end it instead just has a transition with exit time
+                    //5. How do we verify that the player is not already in some kind of attack animation? There is no state for already attacking
+                        //We could setup some kind of simple boolean that gets set to true when the attack is called, and then reset in Proactive/Reactive finished methods
+                    //6. I very much feel that I am setting this up in a way that is not optimal. I def should do research into how people normally setup characters with animations
+                }
+            }
+        }
+        private void AttackPlayer() { 
+                    
+            if(nextAttackCooldown <= 0)
+            {
+                if (ProactiveAttacks.Count == 0)
+                    return;
+
+                bool validAttack = false;
+
+                int loopCounter = 0;
+
+                var nextAttack = Random.Range(0, ProactiveAttacks.Count);
+
+                while (!validAttack)
+                {
+                    //Check to see if the chosen attack is in the valid range.
+                    //If its not go to the next attack in the list, using modulus to loop back around
+                    //If it is valid then we have the number of the next attack to launch
+                    validAttack = AttackInRange(ProactiveAttacks[nextAttack]);
+
+                    if (!validAttack)
+                        nextAttack = (nextAttack + 1) % (ProactiveAttacks.Count - 1);
+                    else
+                        break;
+
+                    loopCounter++;
+                    if (loopCounter > 50)
+                        break;
+                }
+
+                _Animator.SetTrigger("CastSpell" + (nextAttack + 1));
+
+                nextAttackCooldown = Random.Range(2, 4) * (float)attackCooldownModifier;
+            }
+        
+        
+        }
+
+        private bool AttackInRange(BaseAttackBehavior attackToTest)
+        {
+            EnemyRange currentRangeToAttack;
+
+            if (distToPlayer <= 4)
+                currentRangeToAttack = EnemyRange.Close;
+            else if (distToPlayer <= 10)
+                currentRangeToAttack = EnemyRange.Medium;
+            else
+                currentRangeToAttack = EnemyRange.Long;
+
+            if (currentRangeToAttack == EnemyRange.Close)
+            {
+                if (attackToTest.AttackRange == EnemyRange.Close)
+                    return true;
+
+                if (attackToTest.AttackRange == EnemyRange.Medium)
+                    return true;
+
+                if (attackToTest.AttackRange == EnemyRange.Long)
+                    return false;
+            }
+            else if(currentRangeToAttack == EnemyRange.Medium)
+            {
+                if (attackToTest.AttackRange == EnemyRange.Close)
+                    return false;
+
+                if (attackToTest.AttackRange == EnemyRange.Medium)
+                    return true;
+
+                if (attackToTest.AttackRange == EnemyRange.Long)
+                    return true;
+            }
+            else if (currentRangeToAttack == EnemyRange.Long)
+            {
+                if (attackToTest.AttackRange == EnemyRange.Close)
+                    return false;
+
+                if (attackToTest.AttackRange == EnemyRange.Medium)
+                    return false;
+
+                if (attackToTest.AttackRange == EnemyRange.Long)
+                    return true;
+            }
+
+            return false;
+            //If somehow this is reached in the code then we know that the computer is probably on fire. Gods save us all when that happens lol
+        }
         private void Retreat()
         {
             CurrentMovementTarget = (_Agent.transform.position - _PlayerTransform.position).normalized + _Agent.transform.position;

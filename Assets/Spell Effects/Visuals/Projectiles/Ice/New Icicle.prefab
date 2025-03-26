@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2680518050934033049}
   - component: {fileID: 1284368229130603876}
-  m_Layer: 3
+  m_Layer: 11
   m_Name: Body
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -58,7 +58,7 @@ GameObject:
   - component: {fileID: -7250421303252649800}
   - component: {fileID: -9120505352310369469}
   - component: {fileID: 5676163130565431652}
-  m_Layer: 3
+  m_Layer: 11
   m_Name: New Icicle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -221,7 +221,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 733366224352117344}
-  m_Layer: 3
+  m_Layer: 11
   m_Name: Trails
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -256,7 +256,7 @@ GameObject:
   - component: {fileID: 8839153081263917694}
   - component: {fileID: 4639870822666688005}
   - component: {fileID: 3598370214904421404}
-  m_Layer: 3
+  m_Layer: 11
   m_Name: mist_trail
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5068,7 +5068,7 @@ GameObject:
   - component: {fileID: 6272738320674701230}
   - component: {fileID: 6963380663617892363}
   - component: {fileID: 5135812869120869569}
-  m_Layer: 3
+  m_Layer: 11
   m_Name: Icicle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5151,7 +5151,7 @@ GameObject:
   - component: {fileID: 8371880292146749408}
   - component: {fileID: 4970959438657825776}
   - component: {fileID: 3285651060263526263}
-  m_Layer: 3
+  m_Layer: 11
   m_Name: sparkle_trail
   m_TagString: Untagged
   m_Icon: {fileID: 0}

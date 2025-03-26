@@ -194,7 +194,15 @@ public class SpellProjectile : MonoBehaviour
     {
         return _shooter;
     }
+    public Rigidbody GetRigidbody()
+    {
+        return _rb;
+    }
 
+    public float GetDamage()
+    {
+        return _damageAmount;
+    }
 }
 public enum DamageType
 {

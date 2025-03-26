@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 7362935212119665198}
   - component: {fileID: 8280747446512408328}
   - component: {fileID: 9049902625253665083}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Outer Glow
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4831,7 +4831,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4965103257703342099}
   - component: {fileID: 8203797864349538529}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Trail Renderer
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4970,7 +4970,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3158785250336289816}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Body
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5005,7 +5005,7 @@ GameObject:
   - component: {fileID: 4954467956218690896}
   - component: {fileID: 8317609538244539125}
   - component: {fileID: 6091930517994178111}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Inner Body
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5087,7 +5087,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1284534995982556356}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Trail
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5122,7 +5122,7 @@ GameObject:
   - component: {fileID: 5688947317451202477}
   - component: {fileID: 1414179655318996822}
   - component: {fileID: 3810143034697335713}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Cloud
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -9943,7 +9943,7 @@ GameObject:
   - component: {fileID: 671978665812987347}
   - component: {fileID: 2853904491893262605}
   - component: {fileID: 6451508340978596491}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Seed Projectile
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -10011,7 +10011,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2442832464272751476}
   - component: {fileID: 7447719247241461705}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Collider
   m_TagString: Untagged
   m_Icon: {fileID: 0}

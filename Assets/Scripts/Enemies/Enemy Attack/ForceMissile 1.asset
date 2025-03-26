@@ -12,9 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a0b9a22c78109084381014447cc4baa2, type: 3}
   m_Name: ForceMissile 1
   m_EditorClassIdentifier: 
+  NameOfAttack: Long Range Attack 1
   AttackAnimation: {fileID: 7400000, guid: c078f0d92a0dc774cbdd9d17c61da384, type: 2}
   EventFireTime: 1
   Cooldown: 3
-  AttackRange: 0
+  AttackRange: 2
   cooldownTimer: 0
-  ProjectilePrefab: {fileID: 0}
+  ProjectilePrefab: {fileID: 3377519581244352296, guid: 7384bfb70ea38db4ab83a21544dac3d4, type: 3}
+  LaunchSpeed: 6
